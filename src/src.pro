@@ -19,7 +19,7 @@ contains(cov, true) {
 }
 SOURCES += main.cpp \
     notifier.cpp \
-    batterybusinesslogic.cpp \
+\#    batterybusinesslogic.cpp \
     pincodequeryui.cpp \
     pincodequerybusinesslogic.cpp \
     sysuid.cpp \
@@ -31,7 +31,7 @@ SOURCES += main.cpp \
     usbhal.cpp \
     shutdowndialog.cpp \
     shutdowndialogbusinesslogic.cpp \
-    batterybusinesslogicadaptor.cpp \
+\#    batterybusinesslogicadaptor.cpp \
     displaybusinesslogic.cpp \
     systemuigconf.cpp \
     displaybusinesslogicadaptor.cpp \
@@ -40,7 +40,7 @@ SOURCES += main.cpp \
     phonenetworkbusinesslogicadaptor.cpp
 HEADERS += main.h \
     notifier.h \
-    batterybusinesslogic.h \
+\#    batterybusinesslogic.h \
     pincodequeryui.h \
     pincodequerybusinesslogic.h \
     sysuid.h \
@@ -52,7 +52,7 @@ HEADERS += main.h \
     usbhal.h \
     shutdowndialog.h \
     shutdowndialogbusinesslogic.h \
-    batterybusinesslogicadaptor.h \
+\#    batterybusinesslogicadaptor.h \
     displaybusinesslogic.h \
     systemuigconf.h \
     displaybusinesslogicadaptor.h \

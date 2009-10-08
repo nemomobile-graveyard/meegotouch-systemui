@@ -30,10 +30,10 @@ Sysuid::Sysuid() : QObject()
     /* Pincode query variables */
     pinCodeQueryLogic = new PinCodeQueryBusinessLogic();
 
-    /* Battery */         
+    /* Battery *
     batteryLogic = new BatteryBusinessLogic(systemUIGConf);
     batteryLogicAdaptor = new BatteryBusinessLogicAdaptor(dbusObject(), batteryLogic);
-
+    */
     /* Display */
     displayLogic = new DisplayBusinessLogic(systemUIGConf);
     displayLogicAdaptor = new DisplayBusinessLogicAdaptor(dbusObject(), displayLogic);
@@ -56,10 +56,12 @@ Sysuid::Sysuid() : QObject()
 
     /* Lockscreen */
     lockScreenLogic = new LockScreenBusinessLogic();
+    /*
     connect(lockScreenLogic, SIGNAL(lockScreenOff()),
             batteryLogic, SLOT(initBattery()));
     connect(batteryLogic, SIGNAL(batteryCharging()),
             lockScreenLogic, SLOT(sleepModeOff()));
+    */
     connect(eventHandler, SIGNAL(shortPowerKeyPressOccured()),
             lockScreenLogic, SLOT(shortPowerKeyPressOccured()));
     connect(shutdownLogic, SIGNAL(dialogOpen(bool)),
@@ -113,11 +115,13 @@ Sysuid::~Sysuid()
     systemUIGConf = NULL;
     delete pinCodeQueryLogic;
     pinCodeQueryLogic = NULL;
+/*
     delete batteryLogic;
     batteryLogic = NULL;
     delete batteryLogicAdaptor;
     batteryLogicAdaptor = NULL;
-    delete displayLogic;    
+*/
+    delete displayLogic;
     displayLogic = NULL;
     delete displayLogicAdaptor;
     displayLogicAdaptor = NULL;

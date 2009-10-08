@@ -6,8 +6,8 @@
 
 #include "systemuigconf.h"
 #include "pincodequerybusinesslogic.h"
-#include "batterybusinesslogic.h"
-#include "batterybusinesslogicadaptor.h"
+//#include "batterybusinesslogic.h"
+//#include "batterybusinesslogicadaptor.h"
 #include "displaybusinesslogic.h"
 #include "displaybusinesslogicadaptor.h"
 #include "phonenetworkbusinesslogic.h"
@@ -16,6 +16,9 @@
 #include "shutdowndialogbusinesslogic.h"
 #include "eventhandler.h"
 #include "notifier.h"
+
+class BatteryBusinessLogic;
+class BatteryBusinessLogicAdaptor;
 
 class Sysuid : public QObject
 {
