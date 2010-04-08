@@ -68,9 +68,10 @@ LockScreenUI::createContent ()
 
     DuiApplicationPage::createContent();
 
-    DuiLayout* layout = new DuiLayout;
+    //DuiLayout* layout = new DuiLayout;
     DuiLayout* widgets = createWidgets();
 
+#if 0
     QSize size = Sysuid::sysuid()->applicationWindow().sceneManager()->visibleSceneSize(Dui::Landscape);
 
     DuiGridLayoutPolicy* l_policy = new DuiGridLayoutPolicy(layout);
@@ -90,7 +91,9 @@ LockScreenUI::createContent ()
     layout->setLandscapePolicy(l_policy);
     layout->setPortraitPolicy(p_policy);
 
-    centralWidget()->setLayout(layout);
+#endif
+    //centralWidget()->setLayout(layout);
+    centralWidget()->setLayout(widgets);
 
     connect(slider, SIGNAL(unlocked()), this, SLOT(sliderUnlocked()));
 }
@@ -98,6 +101,8 @@ LockScreenUI::createContent ()
 void 
 LockScreenUI::sliderUnlocked ()
 {
+    SYS_DEBUG ("");
+
     disappear ();
     slider->reset ();
     emit unlocked ();
@@ -106,7 +111,9 @@ LockScreenUI::sliderUnlocked ()
 DuiLayout *
 LockScreenUI::createWidgets ()
 {
-    DuiLayout* layout = new DuiLayout(this);
+    SYS_DEBUG ("");
+    DuiLayout* layout = new DuiLayout();
+
     DuiGridLayoutPolicy* policy = new DuiGridLayoutPolicy(layout);
 
     policy->setColumnAlignment (0, Qt::AlignCenter);
@@ -146,6 +153,8 @@ LockScreenUI::createWidgets ()
 void 
 LockScreenUI::updateDateTime ()
 {
+    SYS_DEBUG ("");
+
     if (isContentCreated () == false)
         return;
 
