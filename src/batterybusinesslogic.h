@@ -132,6 +132,7 @@ private slots:
     void batteryLevelChanged(Maemo::QmBattery::Level level);
     void batteryEnergyLevelChanged(int energyLevel);
     void batteryStatusChanged(Maemo::QmBattery::State state);
+    void batteryCurrent (int current);
     void batteryChargerEvent(Maemo::QmBattery::ChargerType type);
     void devicePSMStateChanged(Maemo::QmDeviceMode::PSMState PSMState);
     void utiliseLED(bool activate, const QString &pattern);

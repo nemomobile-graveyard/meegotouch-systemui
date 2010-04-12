@@ -1,3 +1,5 @@
+/* -*- Mode: C; indent-tabs-mode: s; c-basic-offset: 4; tab-width: 4 -*- */
+/* vim:set et ai sw=4 ts=4 sts=4: tw=80 cino="(0,W2s,i2s,t0,l1,:0" */
 /****************************************************************************
 **
 ** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
@@ -197,22 +199,28 @@ BatteryBusinessLogic::BatteryBusinessLogic (
     initSystemUIGConfKeys ();
 
     /* connect to QmSystem signals */
+    SYS_DEBUG ("Connecting batteryLevelChanged");
     connect (m_Battery,
              SIGNAL (batteryLevelChanged (Maemo::QmBattery::Level)),
              this,
              SLOT (batteryLevelChanged (Maemo::QmBattery::Level)));
-    connect (m_Battery,
-             SIGNAL (batteryStatusChanged (Maemo::QmBattery::State)),
-             this,
-             SLOT (batteryStatusChanged (Maemo::QmBattery::State)));
-    connect (m_Battery,
-             SIGNAL (batteryEnergyLevelChanged(int)),
-             this,
-             SLOT(batteryEnergyLevelChanged(int)));
-    connect (m_Battery,
-             SIGNAL (chargerEvent (Maemo::QmBattery::ChargerType)),
-             this,
-             SLOT (batteryChargerEvent (Maemo::QmBattery::ChargerType)));
+
+    SYS_DEBUG ("Connecting batteryStatusChanged");
+    connect (m_Battery, SIGNAL (batteryStatusChanged (Maemo::QmBattery::State)),
+             this, SLOT (batteryStatusChanged (Maemo::QmBattery::State)));
+
+    SYS_DEBUG ("Connecting batteryEnergyLevelChanged");
+    connect (m_Battery, SIGNAL (batteryEnergyLevelChanged(int)),
+             this, SLOT(batteryEnergyLevelChanged(int)));
+
+    SYS_DEBUG ("Connecting chargerEvent");
+    connect (m_Battery, SIGNAL (chargerEvent (Maemo::QmBattery::ChargerType)),
+             this, SLOT (batteryChargerEvent (Maemo::QmBattery::ChargerType)));
+    
+    SYS_DEBUG ("Connecting batteryCurrent");
+    connect (m_Battery, SIGNAL (batteryCurrent(int)),
+             this, SLOT (batteryCurrent(int)));
+
     connect (m_DeviceMode,
              SIGNAL (devicePSMStateChanged (Maemo::QmDeviceMode::PSMState)),
              this,
@@ -398,6 +406,13 @@ BatteryBusinessLogic::batteryEnergyLevelChanged (
     emit batteryBarValueChanged (batteryBarValue(percentage));
     emit remainingTimeValuesChanged (remainingTimeValues());
     checkPSMThreshold ();
+}
+
+void
+BatteryBusinessLogic::batteryCurrent (
+		int   current)
+{
+    SYS_DEBUG ("*** current = %d", current);
 }
 
 void 
@@ -595,17 +610,29 @@ BatteryBusinessLogic::PSMThresholdValue()
 void 
 BatteryBusinessLogic::batteryStatus ()
 {
-    SYS_DEBUG ("");
+    Maemo::QmBattery::State state;
+    SYS_DEBUG ("What is the state now???!");
+
+    state = m_Battery->getState();
+    SYS_DEBUG ("*** state = %d", (int) state);
     switch (m_Battery->getState()) {
         case QmBattery::StateCharging:
+	    SYS_DEBUG ("QmBattery::StateCharging");
             emit batteryCharging (animationRate(m_Battery->getChargerType()));
             break;
 
         case QmBattery::StateNotCharging:
-        case QmBattery::StateChargingFailed:
+	    SYS_DEBUG ("QmBattery::StateNotCharging");
             emit batteryNotCharging();
             break;
+
+        case QmBattery::StateChargingFailed:
+	    SYS_DEBUG ("QmBattery::StateChargingFailed");
+            emit batteryNotCharging();
+            break;
+
         default:
+	    SYS_DEBUG ("UNKNOWN STATE");
             break;
     }
 }
