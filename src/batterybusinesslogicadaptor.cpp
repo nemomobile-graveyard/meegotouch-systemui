@@ -22,7 +22,7 @@
 #include "batterybusinesslogicadaptor.h"
 #include "batterybusinesslogic.h"
 
-#define DEBUG
+#undef DEBUG
 #include "debug.h"
 
 BatteryBusinessLogicAdaptor::BatteryBusinessLogicAdaptor (

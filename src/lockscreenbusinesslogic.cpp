@@ -34,7 +34,7 @@
 // sets the _NET_WM_STATE attribute according to the message.
 #include <X11/Xatom.h>
 
-#undef DEBUG
+#define DEBUG
 #include "debug.h"
 
 LockScreenBusinessLogic::LockScreenBusinessLogic (
@@ -81,6 +81,7 @@ LockScreenBusinessLogic::locksChanged (
         Maemo::QmLocks::Lock  lock, 
         Maemo::QmLocks::State state)
 {
+    SYS_DEBUG ("");
     if (lock == QmLocks::Device)
         return;
 
@@ -103,6 +104,8 @@ LockScreenBusinessLogic::displayStateChanged (
         Maemo::QmDisplayState::DisplayState state)
 {
     knownDisplay = state;
+
+    SYS_DEBUG ("");
 
     switch (state) {
         case Maemo::QmDisplayState::Off:

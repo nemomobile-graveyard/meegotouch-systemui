@@ -22,7 +22,7 @@
 #include "QDBusInterface"
 #include "lockscreenbusinesslogicadaptor.h"
 
-#undef DEBUG
+#define DEBUG
 #include "debug.h"
 
 LockScreenBusinessLogicAdaptor::LockScreenBusinessLogicAdaptor (
@@ -70,6 +70,7 @@ LockScreenBusinessLogicAdaptor::tklock_open (
     Q_UNUSED(flicker);
     Q_UNUSED(silent);
 
+    SYS_DEBUG ("");
 #if 1
     SYS_DEBUG (
 "\n*** service   = '%s'"
