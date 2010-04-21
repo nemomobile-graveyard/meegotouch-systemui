@@ -1,3 +1,9 @@
+system-ui (0.15.3-1) harmattan; urgency=low
+
+  * Drop duicompositor dependency
+
+ -- David Kedves <dkedves@blumsoft.eu>  Wed, 21 Apr 2010 10:14:33 +0200
+
 system-ui (0.15.2-1) harmattan; urgency=low
 
   * Updating notifications when modifying event type file
