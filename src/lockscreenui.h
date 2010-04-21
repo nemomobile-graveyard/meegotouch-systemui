@@ -29,7 +29,6 @@ class DuiImageWidget;
 class DuiButton;
 class DuiLayout;
 class UnlockSlider;
-class DuiImageWidget;
 
 class LockScreenUI : public DuiApplicationPage
 {
@@ -52,11 +51,10 @@ private:
     DuiLayout* createWidgets ();
 
 private:
-    DuiLabel *m_TimeLabel;
-    DuiLabel *m_DateLabel;
-    DuiImageWidget *m_ImgSource;
-    DuiImageWidget *m_ImgTarget;
+    DuiLabel *timeLabel; // qtn_scrlock_current_time
+    DuiLabel *dateLabel; // qtn_scrlock_current_daydate
+
     UnlockSlider *slider;
 };
 
-#endif
+#endif // LOCKSCREENUI_H

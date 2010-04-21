@@ -610,8 +610,7 @@ BatteryBusinessLogic::PSMThresholdValue()
 void 
 BatteryBusinessLogic::batteryStatus ()
 {
-    QmBattery::State state;
-
+    Maemo::QmBattery::State state;
     SYS_DEBUG ("What is the state now???!");
 
     state = m_Battery->getState();
