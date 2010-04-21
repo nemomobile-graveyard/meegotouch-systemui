@@ -65,7 +65,6 @@ PluginList::PluginList(DuiWindow *applicationWindow, DuiApplicationPage *applica
     addPlugin(DUISTATUSINDICATORMENU_PLUGIN_DIR "/libclockalarm.so");
     addPlugin(DUISTATUSINDICATORMENU_PLUGIN_DIR "/libconnectivity.so");
     addPlugin(DUISTATUSINDICATORMENU_PLUGIN_DIR "/libpresence.so");
-    addPlugin(DUISTATUSINDICATORMENU_PLUGIN_DIR "/libbattery.so");
     addPlugin(DUISTATUSINDICATORMENU_PLUGIN_DIR "/libvolume.so");
     addPlugin(DUISTATUSINDICATORMENU_PLUGIN_DIR "/libaccessories.so");
 
