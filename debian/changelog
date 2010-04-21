@@ -1,8 +1,8 @@
-system-ui (0.13.5-2) harmattan; urgency=low
+system-ui (0.13.5-3) harmattan; urgency=low
 
   * Drop duicompositor dependency
 
- -- David Kedves <dkedves@blumsoft.eu>  Wed, 21 Apr 2010 09:38:33 +0200
+ -- David Kedves <dkedves@blumsoft.eu>  Wed, 21 Apr 2010 10:34:39 +0200
 
 system-ui (0.13.5-1) harmattan; urgency=low
 
