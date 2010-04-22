@@ -32,7 +32,6 @@
 #include "statusareawindow_stub.h"
 #include "unlockwidgets_stub.h"
 #include "sysuidrequest_stub.h"
-#include "statusindicatormenuwindow_stub.h"
 
 maemosec::storage::~storage()
 {

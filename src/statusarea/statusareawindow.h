@@ -22,14 +22,12 @@
 
 #include <MWindow>
 #include <MNamespace>
-#include "qmdisplaystate.h"
 
 class QGraphicsScene;
 class StatusArea;
 
 /*!
- * Creates a window which contains a status area. This window is not a top level window and is not visible.
- *  It renders the contents of the scene to a shared pixmap which is then shown by libmeegotouch.
+ * Creates a window which contains a status area.
  */
 class StatusAreaWindow : public MWindow
 {
@@ -49,17 +47,20 @@ public:
      */
     virtual ~StatusAreaWindow();
 
-private slots:
-   /*!
-    * \brief A slot for notifying that the scene has changed and needs to be painted
-    */
-    virtual void sceneChanged(const QList<QRectF> &region);
-
     /*!
-     * \brief A slot for setting if the scene renders to pixmap or not.
-     * \param Maemo::QmDisplayState::DisplayState. When Maemo::QmDisplayState::Off / Maemo::QmDisplayState::Dimmed the scene does not render. When Maemo::QmDisplayState::On scene renders to pixmap
+     * Returns the status area of this window.
+     *
+     * \return the status area of this window
      */
-    void setSceneRender(Maemo::QmDisplayState::DisplayState state);
+    StatusArea *statusArea() const;
+
+private slots:
+    /*!
+     * \brief Rotates the status area to a new orientation
+     *
+     * \param angle the new angle
+     */
+    void rotate(const M::OrientationAngle &angle);
 
 signals:
     /*!
@@ -73,29 +74,6 @@ private:
 
     //! The status area to be displayed in this window
     StatusArea *statusArea_;
-
-    //! Shared Pixmap between libmeegotouch and systemui for the status area.
-    QPixmap* statusAreaPixmap;
-
-    //! creates a pixmap and writes the handle to a temp file
-    bool createSharedPixmapHandle();
-
-    //! set the status bar size with information from style
-    void setSizeFromStyle();
-
-    //! Status Area dimensions.
-    uint statusAreaHeight;
-    uint statusAreaWidth;
- 
-    //! Keep track of device display state
-    Maemo::QmDisplayState* displayState;
-    //! Keep track whether scene should render or not
-    bool renderScene;
-
-#ifdef UNIT_TEST
-    friend class Ut_StatusAreaWindow;
-#endif
-
 };
 
 #endif /* STATUSAREAWINDOW_H_ */

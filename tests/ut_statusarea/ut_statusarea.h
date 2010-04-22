@@ -16,26 +16,28 @@
 ** of this file.
 **
 ****************************************************************************/
-#ifndef _UT_STATUSAREAWINDOW_
-#define _UT_STATUSAREAWINDOW_
+#ifndef _UT_STATUSBAR_
+#define _UT_STATUSBAR_
 
 #include <QtTest/QtTest>
-#include "qmdisplaystate.h"
+#include <QObject>
+#include <QPointF>
+#include "statusareamodel.h"
+#include "statusareastyle.h"
 
-class StatusAreaWindow;
+class StatusArea;
 class MApplication;
 
-class Ut_StatusAreaWindow : public QObject
+class Ut_StatusArea : public QObject
 {
     Q_OBJECT
 
-private:
-    StatusAreaWindow *statusAreaWindow;
-    MApplication *app;
+public:
+    static bool mApplicationIfProxyLaunchCalled;
 
-signals:
-    void changed(QList<QRectF> rectList);
-    void displayStateChanged(Maemo::QmDisplayState::DisplayState);
+private:
+    StatusArea *statusArea;
+    MApplication *app;
 
 private slots:
     // Executed once before every test case
@@ -46,26 +48,11 @@ private slots:
     void initTestCase();
     // Executed once after last test case
     void cleanupTestCase();
-    // Test scene changed events render the scene
-    void testSceneChanged();
-    // Test rendering happens when display state is on
-    void testSceneRenderControlDisplayStateOn();
-    // Test rendering does not happen when display state is off
-    void testSceneRenderControlDisplayStateOff();
-    // Test rendering does not happen when display state is dimmed
-    void testSceneRenderControlDisplayStateDimmed();
+
+    // Tests the showing of status indicator menu with swipe
+    void testWhenSwipeStatusAreaStatusIndicatorMenuAppears();
+    // Test when swipe less than a particular amount, status indicator will not be triggered.
+    void testWhenSwipeLessThanThresholdStatusIndicatorMenuDoesNotAppear();
 };
 
-class RenderTestsHelper: public QObject
-{
-    Q_OBJECT
-public:
-    RenderTestsHelper(){}
-    ~RenderTestsHelper();
-    QList<QRectF>* setupRenderTests(Ut_StatusAreaWindow* testClass, StatusAreaWindow* statusAreaWindow);
-private:
-    QList<QRectF>* rectList;
-    void setupRect();
-};
-
-#endif //_UT_STATUSAREAWINDOW_
+#endif //_UT_STATUSBAR_
