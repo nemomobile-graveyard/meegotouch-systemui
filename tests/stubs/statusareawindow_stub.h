@@ -29,7 +29,6 @@ public:
     virtual void StatusAreaWindowConstructor();
     virtual void StatusAreaWindowDestructor();
     virtual void sceneChanged(const QList<QRectF> &region);
-    virtual void setSceneRender(Maemo::QmDisplayState::DisplayState state);
 };
 
 void StatusAreaWindowStub::StatusAreaWindowConstructor()
@@ -47,13 +46,6 @@ void StatusAreaWindowStub::sceneChanged(const QList<QRectF> &region)
     QList<ParameterBase *> params;
     params.append(new Parameter<QList<QRectF> >(region));
     stubMethodEntered("sceneChanged", params);
-}
-
-void StatusAreaWindowStub::setSceneRender(Maemo::QmDisplayState::DisplayState state)
-{
-    QList<ParameterBase *> params;
-    params.append(new Parameter<Maemo::QmDisplayState::DisplayState>(state));
-    stubMethodEntered("setSceneRender", params);
 }
 
 
@@ -76,11 +68,6 @@ StatusAreaWindow::~StatusAreaWindow()
 void StatusAreaWindow::sceneChanged(const QList<QRectF> &region)
 {
     return gStatusAreaWindowStub->sceneChanged(region);
-}
-
-void StatusAreaWindow::setSceneRender(Maemo::QmDisplayState::DisplayState state)
-{
-    return gStatusAreaWindowStub->setSceneRender(state);
 }
 
 #endif

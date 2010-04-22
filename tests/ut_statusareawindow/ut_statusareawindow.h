@@ -20,7 +20,6 @@
 #define _UT_STATUSAREAWINDOW_
 
 #include <QtTest/QtTest>
-#include "qmdisplaystate.h"
 
 class StatusAreaWindow;
 class MApplication;
@@ -33,9 +32,8 @@ private:
     StatusAreaWindow *statusAreaWindow;
     MApplication *app;
 
-signals:
-    void changed(QList<QRectF> rectList);
-    void displayStateChanged(Maemo::QmDisplayState::DisplayState);
+    signals:
+            void changed(QList<QRectF> rectList);
 
 private slots:
     // Executed once before every test case
@@ -48,24 +46,6 @@ private slots:
     void cleanupTestCase();
     // Test scene changed events render the scene
     void testSceneChanged();
-    // Test rendering happens when display state is on
-    void testSceneRenderControlDisplayStateOn();
-    // Test rendering does not happen when display state is off
-    void testSceneRenderControlDisplayStateOff();
-    // Test rendering does not happen when display state is dimmed
-    void testSceneRenderControlDisplayStateDimmed();
-};
-
-class RenderTestsHelper: public QObject
-{
-    Q_OBJECT
-public:
-    RenderTestsHelper(){}
-    ~RenderTestsHelper();
-    QList<QRectF>* setupRenderTests(Ut_StatusAreaWindow* testClass, StatusAreaWindow* statusAreaWindow);
-private:
-    QList<QRectF>* rectList;
-    void setupRect();
 };
 
 #endif //_UT_STATUSAREAWINDOW_

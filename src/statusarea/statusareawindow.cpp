@@ -34,14 +34,11 @@ StatusAreaWindow::StatusAreaWindow(QWidget *parent) :
     MWindow(NULL, parent),
     scene(new QGraphicsScene),
     statusArea_(new StatusArea(NULL,this)),
-    statusAreaPixmap(NULL),
-    displayState(new Maemo::QmDisplayState()),
-    renderScene(true)
+    statusAreaPixmap(NULL)
 {
     scene->addItem(statusArea_);
     // Get signaled when the scene changes
     connect(scene, SIGNAL(changed(QList<QRectF>)), this, SLOT(sceneChanged(QList<QRectF>)));
-    connect(displayState, SIGNAL(displayStateChanged(Maemo::QmDisplayState::DisplayState)), this, SLOT(setSceneRender(Maemo::QmDisplayState::DisplayState)));
     setSizeFromStyle();
     if(!createSharedPixmapHandle()) {
         qWarning() << "Shared Pixmap was not created. Status area will not render";
@@ -78,12 +75,11 @@ StatusAreaWindow::~StatusAreaWindow()
     delete statusArea_;
     delete scene;
     delete statusAreaPixmap;
-    delete displayState;
 }
 
 void StatusAreaWindow::sceneChanged(const QList<QRectF> &region)
 {
-    if (!region.empty() && !statusAreaPixmap->isNull() && renderScene) {
+    if (!region.empty() && !statusAreaPixmap->isNull()) {
         QPainter painter(statusAreaPixmap);
         QRectF changeRect(0,0,0,0);
         foreach(const QRectF & r, region) {
@@ -100,17 +96,3 @@ void StatusAreaWindow::sceneChanged(const QList<QRectF> &region)
         }
     }
 }
-
-void StatusAreaWindow::setSceneRender(Maemo::QmDisplayState::DisplayState state)
-{
-    switch(state) {
-    case Maemo::QmDisplayState::Dimmed:
-    case Maemo::QmDisplayState::Off:
-        renderScene = false;
-        break;
-    case Maemo::QmDisplayState::On:
-        renderScene = true;
-        break;
-    }
-}
-
