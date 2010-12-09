@@ -23,20 +23,9 @@
 
 LockScreenBusinessLogic::LockScreenBusinessLogic(QObject* parent) :
     QObject(parent),
-    lockScreenWindow(new LockScreenWindow),
-    eventEaterWindow(new EventEater)
+    lockScreenWindow(NULL),
+    eventEaterWindow(NULL)
 {
-    // Install a close event eater for the windows
-    CloseEventEater *closeEventEater = new CloseEventEater(this);
-    lockScreenWindow->installEventFilter(closeEventEater);
-    eventEaterWindow->installEventFilter(closeEventEater);
-
-    connect(lockScreenWindow, SIGNAL(unlocked()), this, SLOT(unlockScreen()));
-    connect(lockScreenWindow, SIGNAL(unlocked()), this, SIGNAL(unlockConfirmed()));
-
-    // Hide the event eater when it is clicked
-    connect(eventEaterWindow, SIGNAL(inputEventReceived()), this, SLOT(hideEventEater()));
-
 #ifdef HAVE_QMSYSTEM
     connect(&displayState, SIGNAL(displayStateChanged(MeeGo::QmDisplayState::DisplayState)), this, SLOT(displayStateChanged(MeeGo::QmDisplayState::DisplayState)));
     connect(&locks, SIGNAL(stateChanged(MeeGo::QmLocks::Lock, MeeGo::QmLocks::State)), this, SLOT(locksChanged(MeeGo::QmLocks::Lock, MeeGo::QmLocks::State)));
@@ -59,7 +48,7 @@ void LockScreenBusinessLogic::unlockScreen()
 void LockScreenBusinessLogic::displayStateChanged(MeeGo::QmDisplayState::DisplayState state)
 {
     // When the screen is unlocked, the lockscreen is visible the lock screen needs to be reset
-    if (state == MeeGo::QmDisplayState::On && lockScreenWindow->isVisible()) {
+    if (state == MeeGo::QmDisplayState::On && lockScreenWindow != NULL && lockScreenWindow->isVisible()) {
         lockScreenWindow->reset();
         lockScreenWindow->setFocus();
     }
@@ -74,6 +63,14 @@ void LockScreenBusinessLogic::hideEventEater()
 void LockScreenBusinessLogic::toggleScreenLockUI(bool toggle)
 {
     if (toggle) {
+        if (lockScreenWindow == NULL) {
+            // Create the lock screen window if it doesn't exist yet
+            lockScreenWindow = new LockScreenWindow;
+            lockScreenWindow->installEventFilter(new CloseEventEater(this));
+            connect(lockScreenWindow, SIGNAL(unlocked()), this, SLOT(unlockScreen()));
+            connect(lockScreenWindow, SIGNAL(unlocked()), this, SIGNAL(unlockConfirmed()));
+        }
+
         // Whenever we're showing the lock screen we need to reset its state
         lockScreenWindow->reset();
 
@@ -83,7 +80,7 @@ void LockScreenBusinessLogic::toggleScreenLockUI(bool toggle)
 
         lockScreenWindow->raise();
     } else {
-        if (lockScreenWindow->isVisible()) {
+        if (lockScreenWindow != NULL && lockScreenWindow->isVisible()) {
             lockScreenWindow->hide();
         }
     }
@@ -92,12 +89,19 @@ void LockScreenBusinessLogic::toggleScreenLockUI(bool toggle)
 void LockScreenBusinessLogic::toggleEventEater(bool toggle)
 {
     if (toggle) {
+        if (eventEaterWindow == NULL) {
+            // Create the event eater window if it doesn't exist yet
+            eventEaterWindow = new EventEater;
+            eventEaterWindow->installEventFilter(new CloseEventEater(this));
+            connect(eventEaterWindow, SIGNAL(inputEventReceived()), this, SLOT(hideEventEater()));
+        }
+
         if (!eventEaterWindow->isVisible()) {
             eventEaterWindow->show();
             eventEaterWindow->showFullScreen();
         }
     } else {
-        if (eventEaterWindow->isVisible()) {
+        if (eventEaterWindow != NULL && eventEaterWindow->isVisible()) {
             eventEaterWindow->hide();
         }
     }
