@@ -89,6 +89,8 @@ class Ut_MCompositorNotificationSink : public QTimer
 
 public:
 private:
+    void emitDisplayEntered();
+
     MApplication *app;
     MCompositorNotificationSink *sink;
     MockNotificationManager *notificationManager;
