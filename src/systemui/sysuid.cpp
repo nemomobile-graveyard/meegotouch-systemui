@@ -30,8 +30,8 @@
 #include "shutdownbusinesslogic.h"
 #include "statusarearenderer.h"
 #include "statusarearendereradaptor.h"
+#include "statusindicatormenubusinesslogic.h"
 #include "statusindicatormenuadaptor.h"
-#include "statusindicatormenuwindow.h"
 #include "notificationmanager.h"
 #include "mcompositornotificationsink.h"
 #include "ngfnotificationsink.h"
@@ -48,7 +48,8 @@ static const QString DBUS_SERVICE = "com.nokia.systemui";
 static const QString DBUS_PATH = "/";
 static int NOTIFICATION_RELAY_INTERVAL = 5000;
 
-Sysuid::Sysuid(QObject* parent) : QObject(parent)
+Sysuid::Sysuid(QObject* parent) :
+        QObject(parent)
 {
     instance_ = this;
 
@@ -78,9 +79,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
         abort();
     }
 
-    // Create a close event eater for the windows
-    CloseEventEater *closeEventEater = new CloseEventEater(this);
-
     // Create a status area renderer for rendering the shared status area pixmap
     statusAreaRenderer = new StatusAreaRenderer(this);
     new StatusAreaRendererAdaptor(statusAreaRenderer);
@@ -88,13 +86,12 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     bus.registerObject("/statusbar", statusAreaRenderer);
 
     // Create a status indicator menu
-    statusIndicatorMenuWindow = new StatusIndicatorMenuWindow;
-    statusIndicatorMenuWindow->installEventFilter(closeEventEater);
-    new StatusIndicatorMenuAdaptor(statusIndicatorMenuWindow);
+    statusIndicatorMenuBusinessLogic = new StatusIndicatorMenuBusinessLogic(this);
+    connect(statusIndicatorMenuBusinessLogic, SIGNAL(statusIndicatorMenuVisibilityChanged(bool)), statusAreaRenderer, SIGNAL(statusIndicatorMenuVisibilityChanged(bool)));
+    connect(statusIndicatorMenuBusinessLogic, SIGNAL(statusIndicatorMenuVisibilityChanged(bool)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
+    new StatusIndicatorMenuAdaptor(statusIndicatorMenuBusinessLogic);
     bus.registerService("com.meego.core.MStatusIndicatorMenu");
-    bus.registerObject("/statusindicatormenu", statusIndicatorMenuWindow);
-    connect(statusIndicatorMenuWindow, SIGNAL(visibilityChanged(bool)), statusAreaRenderer, SIGNAL(statusIndicatorMenuVisibilityChanged(bool)));
-    connect(statusIndicatorMenuWindow, SIGNAL(visibilityChanged(bool)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
+    bus.registerObject("/statusindicatormenu", statusIndicatorMenuBusinessLogic);
 
     // Connect the notification signals for the compositor notification sink
     connect (notificationManager_, SIGNAL(notificationUpdated (const Notification &)),
@@ -141,21 +138,19 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
 
     // Update the enabled status of compositor notification sink based on screen and device locks
 #ifdef HAVE_QMSYSTEM
-    connect (&qmLocks, SIGNAL(stateChanged (MeeGo::QmLocks::Lock, MeeGo::QmLocks::State)), this,
-                       SLOT(updateCompositorNotificationSinkEnabledStatus()));
+    connect (&qmLocks, SIGNAL(stateChanged (MeeGo::QmLocks::Lock, MeeGo::QmLocks::State)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
 #endif
     updateCompositorNotificationSinkEnabledStatus();
 
     // Instantiate the volume-control UI
     volumeBarWindow = new VolumeBarWindow;
-    volumeBarWindow->installEventFilter(closeEventEater);
+    volumeBarWindow->installEventFilter(new CloseEventEater(this));
 }
 
 Sysuid::~Sysuid()
 {
     delete sysUidRequest;
     delete volumeBarWindow;
-    delete statusIndicatorMenuWindow;
     delete notifierNotificationSink_;
     delete unlockNotificationSink_;
     delete ngfNotificationSink;
@@ -219,7 +214,7 @@ void Sysuid::applyUseMode()
 
 void Sysuid::updateCompositorNotificationSinkEnabledStatus()
 {
-    mCompositorNotificationSink->setDisabled(statusIndicatorMenuWindow->isVisible()
+    mCompositorNotificationSink->setDisabled(statusIndicatorMenuBusinessLogic->isStatusIndicatorMenuVisible()
 #ifdef HAVE_QMSYSTEM
                                              || qmLocks.getState(MeeGo::QmLocks::Device) == MeeGo::QmLocks::Locked
                                              || qmLocks.getState(MeeGo::QmLocks::TouchAndKeyboard) == MeeGo::QmLocks::Locked
