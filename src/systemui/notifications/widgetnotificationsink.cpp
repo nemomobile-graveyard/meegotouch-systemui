@@ -60,7 +60,7 @@ MBanner *WidgetNotificationSink::createInfoBanner(Notification::NotificationType
 {
     // Create a banner on the basis of notification type
     MBanner *infoBanner = new MBanner;
-    infoBanner->setObjectName(type == Notification::ApplicationEvent ? "EventBanner" : "SystemBanner");
+    infoBanner->setStyleName(type == Notification::ApplicationEvent ? MBannerType::FullEventBanner : MBannerType::SystemBanner);
     infoBanner->setProperty(TITLE_TEXT_PROPERTY, infoBannerTitleText(parameters));
     infoBanner->setProperty(SUBTITLE_TEXT_PROPERTY, infoBannerSubtitleText(parameters));
     infoBanner->setProperty(GENERIC_TEXT_PROPERTY, infoBannerGenericText(parameters));
@@ -91,19 +91,19 @@ bool WidgetNotificationSink::containsText(const Notification &notification)
 void WidgetNotificationSink::updateTitles(MBanner *infoBanner)
 {
     if (privacySetting != NULL && privacySetting->value().toBool()) {
-        // Privacy is honored and privacy mode is enabled: use a generic text in the banner
+        // Privacy is honored and privacy mode is enabled
+        // We switch to the private style it takes care to hide the subtitle
+        infoBanner->setStyleName(MBannerType::PrivateEventBanner);
         infoBanner->setTitle(infoBanner->property(GENERIC_TEXT_PROPERTY).toString());
-        infoBanner->setSubtitle(QString());
     } else {
         // Privacy is not honored or privacy mode is disabled: use the given text in the banner
-        if (infoBanner->objectName() == "EventBanner") {
+        if (infoBanner->styleName() == MBannerType::FullEventBanner) {
             // Event banner: use both title and subtitle text
             infoBanner->setTitle(infoBanner->property(TITLE_TEXT_PROPERTY).toString());
             infoBanner->setSubtitle(infoBanner->property(SUBTITLE_TEXT_PROPERTY).toString());
         } else {
-            // System banner: use subtitle text only
+            // System banner: use title text only
             infoBanner->setTitle(infoBanner->property(SUBTITLE_TEXT_PROPERTY).toString());
-            infoBanner->setSubtitle(QString());
         }
     }
 }
