@@ -66,3 +66,9 @@ MBannerStyle {
     disappear-timeout: 10000;
     margin-bottom: 0.9mm;
 }
+MBannerStyle #FullEventBanner.Landscape {
+    minimum-size: 48mm 9.6mm;
+    maximum-size: 100% 12mm;
+    preferred-size: 100% -1mm;
+}
+
