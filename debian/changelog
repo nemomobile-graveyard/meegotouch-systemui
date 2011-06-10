@@ -1,6 +1,7 @@
 system-ui (1.0.10~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#264503 - [TASK] Call icon on status area in ongoing call state should be changed to white
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Fri, 10 Jun 2011 12:38:15 +0300
 
