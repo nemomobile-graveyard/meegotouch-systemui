@@ -1,9 +1,8 @@
-system-ui (1.0.12~1) unstable; urgency=low
+system-ui (1.0.12-1) unstable; urgency=low
 
-  * [UNRELEASED]
   * Fixes: NB#264744 - During device update (SSU) tens of empty notification banners with different icons are shown
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Fri, 10 Jun 2011 14:43:08 +0300
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 13 Jun 2011 12:27:00 +0300
 
 system-ui (1.0.11-1) unstable; urgency=low
 
