@@ -1,6 +1,7 @@
 system-ui (1.0.13~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#265924 - Nasty white flicker when powering off the device
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 13 Jun 2011 12:38:58 +0300
 
