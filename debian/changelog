@@ -1,10 +1,9 @@
-system-ui (1.0.13~1) unstable; urgency=low
+system-ui (1.0.13-1) unstable; urgency=high
 
-  * [UNRELEASED]
   * Fixes: NB#265924 - Nasty white flicker when powering off the device
   * Fixes: NB#263307 - Button §qtn_tui_clear§ is clipped in notification toolbar in Russian Language
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 13 Jun 2011 12:38:58 +0300
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 16 Jun 2011 12:56:54 +0300
 
 system-ui (1.0.12-1) unstable; urgency=low
 
