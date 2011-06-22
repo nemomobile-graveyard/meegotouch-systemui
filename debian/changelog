@@ -1,9 +1,8 @@
-system-ui (1.0.14~1) unstable; urgency=low
+system-ui (1.0.14-1) unstable; urgency=low
 
-  * [UNRELEASED]
   * Fixes: NB#265053 - The screen flickers when the touch screen lock transitions to the standby screen
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 16 Jun 2011 12:57:26 +0300
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Wed, 22 Jun 2011 14:49:28 +0300
 
 system-ui (1.0.13-1) unstable; urgency=high
 
