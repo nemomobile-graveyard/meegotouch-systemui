@@ -1,6 +1,7 @@
 system-ui (1.0.15~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#268139 - Unable to lock the device and time is not displayed in lock mode
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Wed, 22 Jun 2011 14:50:00 +0300
 
