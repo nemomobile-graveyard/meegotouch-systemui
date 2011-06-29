@@ -34,14 +34,14 @@ MCompositorNotificationSink::MCompositorNotificationSink() :
         sinkDisabled(false),
         allPreviewsDisabled(false),
         window(NULL),
-        currentBanner(NULL)
+        currentBanner(NULL),
+        touchScreenLockActive(false)
 {
     notificationPreviewMode = new MGConfItem(NOTIFICATION_PREVIEW_ENABLED, this);
     changeNotificationPreviewMode();
     connect(notificationPreviewMode, SIGNAL(valueChanged()), this, SLOT(changeNotificationPreviewMode()));
 #ifdef HAVE_QMSYSTEM
     connect(&displayState, SIGNAL(displayStateChanged(MeeGo::QmDisplayState::DisplayState)), this, SLOT(changeNotificationPreviewMode()));
-    connect(&qmLocks, SIGNAL(stateChanged(MeeGo::QmLocks::Lock, MeeGo::QmLocks::State)), this, SLOT(changeNotificationPreviewMode()));
 #endif
     // Setup the timer which makes the banner disappear
     connect(&bannerTimer, SIGNAL(timeout()), this, SLOT(disappearCurrentBanner()));
@@ -281,7 +281,7 @@ void MCompositorNotificationSink::changeNotificationPreviewMode()
 
 #ifdef HAVE_QMSYSTEM
     // Always disable all previews when the display is off and the touch screen is locked
-    allPreviewsDisabled |= (displayState.get() == MeeGo::QmDisplayState::Off && qmLocks.getState(MeeGo::QmLocks::TouchAndKeyboard) == MeeGo::QmLocks::Locked);
+    allPreviewsDisabled |= (touchScreenLockActive && displayState.get() == MeeGo::QmDisplayState::Off);
 #endif
 }
 
@@ -325,4 +325,10 @@ bool MCompositorNotificationSink::currentApplicationHasPreviewsDisabled()
     }
 
     return previewsDisabled;
+}
+
+void MCompositorNotificationSink::setTouchScreenLockActive(bool active)
+{
+    touchScreenLockActive = active;
+    changeNotificationPreviewMode();
 }
