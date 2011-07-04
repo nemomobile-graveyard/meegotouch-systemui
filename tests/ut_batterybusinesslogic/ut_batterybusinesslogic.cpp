@@ -70,9 +70,12 @@ bool MNotification::remove ()
     return false;
 }
 
+void QTimer::start()
+{
+    id = 1;
+}
 
-void
-Ut_BatteryBusinessLogic::initTestCase ()
+void Ut_BatteryBusinessLogic::initTestCase()
 {
     /* Add testsuite initialization here */
 }
@@ -404,5 +407,12 @@ void Ut_BatteryBusinessLogic::testWhenChargingStopsThenNotificationRemoved()
     QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery"));
 }
 
+void Ut_BatteryBusinessLogic::testWhenChargingStopsMoreThanNSecondAfterBeingStartedThenNotificationNotRemoved()
+{
+    m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
+    m_logic->notificationTimer.stop();
+    m_logic->chargingStateChanged(MeeGo::QmBattery::StateNotCharging);
+    QCOMPARE(gMNotificationRemoveEventType.count(), 0);
+}
 
 QTEST_MAIN(Ut_BatteryBusinessLogic)

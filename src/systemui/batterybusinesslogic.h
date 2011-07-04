@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QTime>
+#include <QTimer>
 
 #ifdef HAVE_QMSYSTEM
   #include <qmled.h>
@@ -127,8 +128,9 @@ private:
     void removeNotification(const QString &eventType);
     QString chargingImageId ();
 
-    LowBatteryNotifier              *m_LowBatteryNotifier;
-    MNotification                   *m_notification;
+    LowBatteryNotifier *m_LowBatteryNotifier;
+    MNotification *m_notification;
+    QTimer notificationTimer;
 #ifdef HAVE_QMSYSTEM
     MeeGo::QmBattery                *m_Battery;
     MeeGo::QmDeviceMode             *m_DeviceMode;
