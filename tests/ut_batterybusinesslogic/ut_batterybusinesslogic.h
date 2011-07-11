@@ -44,6 +44,7 @@ private slots:
     void testWhenChargingStopsThenNotificationRemoved();
     void testWhenChargingStopsWhenConnectedToWallChargerThenNotificationRemoved();
     void testWhenChargingStopsMoreThanNSecondAfterBeingStartedThenNotificationNotRemoved();
+    void testSetTouchScreenLockActive();
 
 private:
     BatteryBusinessLogic*   m_logic;

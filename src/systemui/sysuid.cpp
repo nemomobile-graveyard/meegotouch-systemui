@@ -123,6 +123,7 @@ Sysuid::Sysuid(QObject* parent) :
     new ScreenLockBusinessLogicAdaptor(screenLockBusinessLogic);
     connect(screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
     connect(screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), mCompositorNotificationSink, SLOT(setTouchScreenLockActive(bool)));
+    connect(screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), batteryBusinessLogic, SLOT(setTouchScreenLockActive(bool)));
 
     // MCE expects the service to be registered on the system bus
     QDBusConnection systemBus = QDBusConnection::systemBus();

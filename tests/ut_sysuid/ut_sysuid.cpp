@@ -22,14 +22,10 @@
 #include <QDBusConnection>
 #include <MApplication>
 #include <MLocale>
-#include "ngfnotificationsink.h"
-#include "testcontextitem.h"
-#include "sysuid.h"
+#include "batterybusinesslogic_stub.h"
 #include "lockscreen_stub.h"
-#include "lowbatterynotifier_stub.h"
 #include "statusarearenderer_stub.h"
 #include "statusarearendereradaptor_stub.h"
-#include "batterybusinesslogic_stub.h"
 #include "screenlockbusinesslogic_stub.h"
 #include "screenlockbusinesslogicadaptor_stub.h"
 #include "contextframeworkitem_stub.h"
@@ -56,6 +52,9 @@
 #include "eventeater_stub.h"
 #include "closeeventeater_stub.h"
 #include "diskspacenotifier_stub.h"
+#include "ngfnotificationsink.h"
+#include "testcontextitem.h"
+#include "sysuid.h"
 
 bool gQmLocksDeviceLock = false;
 bool gQmLocksScreenLock = false;
@@ -219,6 +218,7 @@ void Ut_Sysuid::testSignalConnections()
     QVERIFY(disconnect(sysuid->notifierNotificationSink_, SIGNAL(notifierSinkActive(bool)), sysuid->notificationManager, SLOT(removeUnseenFlags(bool))));
     QVERIFY(disconnect(sysuid->screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), sysuid, SLOT(updateCompositorNotificationSinkEnabledStatus())));
     QVERIFY(disconnect(sysuid->screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), sysuid->mCompositorNotificationSink, SLOT(setTouchScreenLockActive(bool))));
+    QVERIFY(disconnect(sysuid->screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), sysuid->batteryBusinessLogic, SLOT(setTouchScreenLockActive(bool))));
     QVERIFY(disconnect(sysuid->usbUi, SIGNAL(dialogShown()), sysuid->screenLockBusinessLogic, SLOT(unlockScreen())));
 
 #ifdef HAVE_QMSYSTEM
