@@ -1,9 +1,8 @@
-system-ui (1.0.17~1) unstable; urgency=low
+system-ui (1.0.17-1) unstable; urgency=low
 
-  * [UNRELEASED]
   * Fixes: NB#271768 - Battery low notifications sound/beeps not heard when on call
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 07 Jul 2011 16:43:13 +0300
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 11 Jul 2011 16:48:55 +0300
 
 system-ui (1.0.16-1) unstable; urgency=low
 
