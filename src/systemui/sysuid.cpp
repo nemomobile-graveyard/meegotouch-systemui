@@ -189,6 +189,7 @@ void Sysuid::loadTranslations()
     locale.installTrCatalog("connectivity");
     locale.installTrCatalog("volume");
     locale.installTrCatalog("memory-usage");
+    locale.installTrCatalog("cellular-adaptation");
 
     // and the engineering english ones
     locale.installTrCatalog("systemui");
