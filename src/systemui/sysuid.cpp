@@ -41,6 +41,7 @@
 #include "notifiernotificationsink.h"
 #include "closeeventeater.h"
 #include "diskspacenotifier.h"
+#include "lowmemorynotifier.h"
 #include <QX11Info>
 
 Sysuid* Sysuid::instance_ = NULL;
@@ -152,8 +153,9 @@ Sysuid::Sysuid(QObject* parent) :
     volumeExtensionArea->setOutOfProcessFilter(QRegExp("$^"));
     volumeExtensionArea->init();
 
-    // Create the disk space notification
+    // Create the notifiers
     new DiskSpaceNotifier(this);
+    new LowMemoryNotifier(this);
 }
 
 Sysuid::~Sysuid()
