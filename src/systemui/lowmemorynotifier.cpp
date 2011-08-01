@@ -18,8 +18,6 @@
 ****************************************************************************/
 
 #include <MMessageBox>
-#include <MLabel>
-#include <QTimer>
 #include <memnotify/memory_notification.hpp>
 #include "lowmemorynotifier.h"
 
