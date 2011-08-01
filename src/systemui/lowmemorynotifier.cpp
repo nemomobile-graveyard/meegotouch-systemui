@@ -25,7 +25,8 @@
 
 LowMemoryNotifier::LowMemoryNotifier(QObject *parent) : QObject(parent),
     memoryNotification(MEMNOTIFY::MemoryNotification::defaultObject("sysuid")),
-    messageBox(new MMessageBox("The system is running low on memory. Please close some running applications to free up resources."))
+    //% "The system is running low on memory. Please close some running applications to free up resources."
+    messageBox(new MMessageBox(qtTrId("qtn_comm_memory_low_body")))
 {
     connect(&memoryNotification, SIGNAL(notified(const QString&, const bool)), this, SLOT(handleLowMemoryNotification(const QString&, const bool)));
     if (memoryNotification.valid() && memoryNotification.enable()) {
@@ -33,6 +34,8 @@ LowMemoryNotifier::LowMemoryNotifier(QObject *parent) : QObject(parent),
     }
 
     messageBox->setSystem(true);
+    //% "Memory low"
+    messageBox->setTitle(qtTrId("qtn_comm_memory_low"));
     messageBox->setIconId("icon-m-bootloader-warning");
 }
 
