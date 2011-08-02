@@ -92,6 +92,8 @@ private:
             const QString &icon = QString(""));
     void removeNotification(const QString &eventType);
     QString chargingImageId ();
+    void startLowBatteryNotifier();
+    void stopLowBatteryNotifier();
 
     LowBatteryNotifier *m_LowBatteryNotifier;
     MNotification *m_notification;

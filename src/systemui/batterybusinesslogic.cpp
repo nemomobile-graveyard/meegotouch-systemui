@@ -82,11 +82,8 @@ void BatteryBusinessLogic::chargingStateChanged(MeeGo::QmBattery::ChargingState 
         if (m_Battery->getChargerType() == MeeGo::QmBattery::USB_100mA) {
             sendNotification(NotificationNoEnoughPower);
         } else {
-            // The low battery notifications should not be sent when the battery is actually charging.
-            if (m_LowBatteryNotifier != 0) {
-                delete m_LowBatteryNotifier;
-                m_LowBatteryNotifier = 0;
-            }
+            // The low battery notifications should not be sent when the battery is charging
+            stopLowBatteryNotifier();
 
             sendNotification(NotificationCharging);
         }
@@ -107,22 +104,18 @@ void BatteryBusinessLogic::batteryStateChanged(MeeGo::QmBattery::BatteryState st
 {
     switch(state) {
     case MeeGo::QmBattery::StateFull:
+        stopLowBatteryNotifier();
         sendNotification(NotificationChargingComplete);
         break;
 
     case MeeGo::QmBattery::StateOK:
-        /* no-operation here... */
+        stopLowBatteryNotifier();
         break;
 
     case MeeGo::QmBattery::StateLow:
         if (m_Battery->getChargingState() != MeeGo::QmBattery::StateCharging) {
-            if (m_LowBatteryNotifier == 0) {
-                m_LowBatteryNotifier = new LowBatteryNotifier();
-                connect(m_LowBatteryNotifier, SIGNAL(lowBatteryAlert()), this, SLOT(lowBatteryAlert()));
-                m_LowBatteryNotifier->setTouchScreenLockActive(touchScreenLockActive);
-            }
-
-            m_LowBatteryNotifier->sendLowBatteryAlert();
+            // The low battery notifications should be sent only if the battery is not charging
+            startLowBatteryNotifier();
         }
         break;
 
@@ -316,5 +309,24 @@ void BatteryBusinessLogic::setTouchScreenLockActive(bool active)
     touchScreenLockActive = active;
     if (m_LowBatteryNotifier != NULL) {
         m_LowBatteryNotifier->setTouchScreenLockActive(active);
+    }
+}
+
+void BatteryBusinessLogic::startLowBatteryNotifier()
+{
+    if (m_LowBatteryNotifier == NULL) {
+        m_LowBatteryNotifier = new LowBatteryNotifier();
+        connect(m_LowBatteryNotifier, SIGNAL(lowBatteryAlert()), this, SLOT(lowBatteryAlert()));
+    }
+
+    m_LowBatteryNotifier->setTouchScreenLockActive(touchScreenLockActive);
+    m_LowBatteryNotifier->sendLowBatteryAlert();
+}
+
+void BatteryBusinessLogic::stopLowBatteryNotifier()
+{
+    if (m_LowBatteryNotifier != NULL) {
+        delete m_LowBatteryNotifier;
+        m_LowBatteryNotifier = NULL;
     }
 }
