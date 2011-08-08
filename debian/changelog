@@ -1,6 +1,7 @@
 system-ui (1.1.7~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#276034 - [TASK] Operator name should be replaced with "No coverage" when in limited service state and there is no network available
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 08 Aug 2011 14:50:27 +0300
 
