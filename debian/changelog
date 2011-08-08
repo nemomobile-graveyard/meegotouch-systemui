@@ -1,9 +1,8 @@
-system-ui (1.1.6~1) unstable; urgency=low
+system-ui (1.1.6-1) unstable; urgency=low
 
-  * [UNRELEASED]
   * Fixes: NB#249391 - [TASK] Notifier improvement
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 04 Aug 2011 17:17:02 +0300
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 08 Aug 2011 14:49:50 +0300
 
 system-ui (1.1.5-1) unstable; urgency=low
 
