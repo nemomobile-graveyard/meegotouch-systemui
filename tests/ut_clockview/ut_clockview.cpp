@@ -27,17 +27,6 @@
 #include <QGraphicsLinearLayout>
 #include "applicationcontext.h"
 
-// MWidgetController stubs
-ClockModel clockModel;
-MWidgetModel *MWidgetController::model()
-{
-    return &clockModel;
-}
-const MWidgetModel *MWidgetController::model() const
-{
-    return &clockModel;
-}
-
 // MLabel stub
 void MLabel::setAlignment(Qt::Alignment alignment)
 {
@@ -61,6 +50,7 @@ TestClockView::TestClockView(Clock *controller) : ClockView(controller)
 }
 
 QString Ut_ClockView::timeAsString;
+ClockModel clockModel;
 
 // Called before the first testfunction is executed
 void Ut_ClockView::initTestCase()
