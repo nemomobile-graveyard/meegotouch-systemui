@@ -1,8 +1,8 @@
-system-ui (1.1.8~1) unstable; urgency=low
+system-ui (1.1.8-1) unstable; urgency=low
 
-  * [UNRELEASED]
+  * Fixes: NB#275357 - [TASK] Low memory notification dialog
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 08 Aug 2011 17:28:03 +0300
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 08 Aug 2011 20:54:18 +0300
 
 system-ui (1.1.7-1) unstable; urgency=low
 
