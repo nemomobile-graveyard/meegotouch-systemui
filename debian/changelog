@@ -1,6 +1,7 @@
 system-ui (1.1.11~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#278398 - COREWEB: /usr/bin/sysuid '__aeabi_ldiv0 StatusIndicatorAnimationView::setupAnimationTimeline StatusIndicatorAnimationView::applyStyle StatusIndicatorIconView::applyStyle'
 
  -- Pauli Lehtinen <pauli.lehtinen@nokia.com>  Fri, 19 Aug 2011 16:02:05 +0300
 
