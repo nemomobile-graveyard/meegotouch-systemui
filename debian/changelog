@@ -1,3 +1,9 @@
+system-ui (1.0.24~1) unstable; urgency=low
+
+  * [UNRELEASED]
+
+ -- Pauli Lehtinen <pauli.lehtinen@nokia.com>  Tue, 30 Aug 2011 16:28:13 +0300
+
 system-ui (1.0.23-1) unstable; urgency=low
 
   * Fixes: NB#280172 - Disable Low Memory Notification Dialog
