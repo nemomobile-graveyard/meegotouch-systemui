@@ -1,6 +1,7 @@
 system-ui (1.1.13~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#265870 - Randomly when a notification comes, the window underneatch is changed to show something for 1s
 
  -- Pankaj Saharan <pankaj.saharan@nokia.com>  Wed, 31 Aug 2011 12:02:22 +0300
 
