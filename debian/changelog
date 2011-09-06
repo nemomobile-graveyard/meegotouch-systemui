@@ -1,6 +1,7 @@
 system-ui (1.1.14~1) unstable; urgency=low
 
   * [UNRELESED]
+  * Fixes: NB#255218 - Status Menu open/close transition is incorrect
 
  -- Eetu Lehmusvuo <ext-eetu.6.lehmusvuo@nokia.com>  Fri, 2 Sep 2011 15:52:32 +0300
 
