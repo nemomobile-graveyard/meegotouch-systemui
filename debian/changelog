@@ -1,8 +1,8 @@
-system-ui (1.1.15~1) unstable; urgency=low
+system-ui (1.1.15-1) unstable; urgency=low
 
-  * [UNRELEASED]
+  * Fixes: NB#280501 - Inconsistent placement of information banners and system banners when status area is not visible
 
- -- Vesa Halttunen <vesa.halttunen@nokia.com>  Tue, 06 Sep 2011 17:26:14 +0300
+ -- Adrian Yanes <ext-adrian.yanes@nokia.com>  Fri, 09 Sep 2011 10:34:45 +0200
 
 system-ui (1.1.14-1) unstable; urgency=low
 
