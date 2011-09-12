@@ -1,3 +1,9 @@
+system-ui (1.1.17~1) unstable; urgency=low
+
+  * [UNRELEASED]
+
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 12 Sep 2011 15:43:47 +0300
+
 system-ui (1.1.16-1) unstable; urgency=low
 
   * Fixes: NB#281758 - There is a black bar on top of the Nokia ripple animation and/or PIN query dialog during boot
