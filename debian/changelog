@@ -1,3 +1,9 @@
+system-ui (1.1.19~1) unstable; urgency=low
+
+  * [UNRELEASED]
+
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Wed, 28 Sep 2011 12:01:22 +0300
+
 system-ui (1.1.18-1) unstable; urgency=low
 
   * Fixes: NB#284231 - [TASK] Move away from hardcoded font in launcherbutton
