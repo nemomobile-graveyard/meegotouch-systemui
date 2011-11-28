@@ -26,5 +26,5 @@ desktop_entry.path = $$M_APPLICATION_EXTENSION_DATA_DIR
 desktop_entry.files = *.desktop
 
 INSTALLS += \
-    target \
-    desktop_entry
+    target 
+
