@@ -27,4 +27,6 @@ HEADERS += \
     $$SRCDIR/xeventlistener.h \
     $$SRCDIR/xeventlistenerwidget.h
 
+LIBS += -lX11
+
 include(../common_bot.pri)

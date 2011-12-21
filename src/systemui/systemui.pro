@@ -17,7 +17,7 @@ QT += dbus gui meegographicssystemhelper
 
 INCLUDEPATH += ../libnotificationsystem
 QMAKE_LIBDIR += ../../lib
-LIBS += -lnotificationsystem
+LIBS += -lnotificationsystem -lX11 -lXdamage -lmeegotouchviews
 
 SYSTEMUI_SOURCE_DIR = .
 DEFINES += NOTIFICATIONS_EVENT_TYPES=\'$$quote(\"$$M_NOTIFICATIONS_EVENT_TYPES_DIR\")\'

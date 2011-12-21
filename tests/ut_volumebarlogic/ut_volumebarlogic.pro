@@ -22,4 +22,6 @@ SOURCES += \
     $$ROOTSRCDIR/extensions/volume/volumebarlogic.cpp \
     $$STUBSDIR/stubbase.cpp
 
+LIBS += -lX11
+
 include(../common_bot.pri)

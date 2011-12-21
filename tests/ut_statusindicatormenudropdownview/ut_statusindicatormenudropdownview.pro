@@ -21,4 +21,6 @@ HEADERS += \
     $$SRCDIR/statusindicatormenu/notificationarea.h \
     $$SRCDIR/sysuid.h
 
+LIBS += -lmeegotouchviews
+
 include(../common_bot.pri)

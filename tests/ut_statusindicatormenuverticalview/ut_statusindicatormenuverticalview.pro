@@ -20,6 +20,8 @@ HEADERS += \
     $$SRCDIR/statusindicatormenu/statusindicatormenu.h \
     $$SRCDIR/statusindicatormenu/statusindicatormenustyle.h
 
+LIBS += -lmeegotouchviews
+
 STYLE_HEADERS += $$SRCDIR/statusindicatormenu/statusindicatormenustyle.h
 
 include(../common_bot.pri)

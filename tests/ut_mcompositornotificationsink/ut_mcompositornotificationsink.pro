@@ -31,4 +31,6 @@ HEADERS += \
     $$LIBNOTIFICATIONSRCDIR/notificationparameters.h \
     $$STUBSDIR/stubbase.h
 
+LIBS += -lX11
+
 include(../common_bot.pri)

@@ -29,4 +29,6 @@ HEADERS += \
     $$ROOTSRCDIR/extensions/screenlock/screenlockextension.h \
     $$SRCDIR/x11wrapper.h
 
+LIBS += -lXdamage
+
 include(../common_bot.pri)
