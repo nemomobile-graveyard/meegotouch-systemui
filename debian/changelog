@@ -1,5 +1,12 @@
+system-ui (1.2.22~1) unstable; urgency=low
+
+  * [UNRELEASED]
+
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 22 Dec 2011 12:39:58 +0200
+
 system-ui (1.2.21-1) unstable; urgency=low
 
+  * Fixes: NB#293261 - private mode applet's help button appears delayed
   * Fixes: NB#290848 - sysuid needs to share X drawables in a secure manner
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 22 Dec 2011 12:39:08 +0200
