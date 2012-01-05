@@ -1,6 +1,7 @@
 system-ui (1.2.22~1) unstable; urgency=low
 
   * [UNRELEASED]
+  * Fixes: NB#290848 - sysuid needs to share X drawables in a secure manner
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 22 Dec 2011 12:39:58 +0200
 
