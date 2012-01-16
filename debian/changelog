@@ -1,6 +1,12 @@
+system-ui (1.2.24~1) unstable; urgency=low
+
+  * [UNRELEASED]
+
+ -- Vesa Halttunen <vesa.halttunen@nokia.com>  Mon, 16 Jan 2012 12:34:02 +0200
+
 system-ui (1.2.23-1) unstable; urgency=low
 
-  * Fixes: NB#290848 - sysuid needs to share X drawables in a secure manner
+  * Fixes: NB#289939 - [TASK] Different icons shown on status area for "ad-hoc" wlan
 
  -- Vesa Halttunen <vesa.halttunen@nokia.com>  Thu, 05 Jan 2012 15:07:30 +0200
 
