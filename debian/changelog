@@ -1,4 +1,4 @@
-system-ui (1.2.24-1) unstable; urgency=low
+system-ui (1.2.24-2) unstable; urgency=low
 
   * Fixes: NB#295751 - Device shows OS update message after SSU from PR1 40-4 to PR2 50-5
 
