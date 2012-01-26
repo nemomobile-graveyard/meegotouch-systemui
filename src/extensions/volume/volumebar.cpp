@@ -120,7 +120,7 @@ void VolumeBar::updateContents()
     if (icon->imageId() != iconID) {
         icon->setImage(iconID, style()->iconSize());
     }
-
+    
     // Set the new percentage value
     if (!isOnDisplay()) {
         // Do not animate unnecessarily when we're not on display
@@ -136,7 +136,7 @@ void VolumeBar::updateContents()
 
 void VolumeBar::setTargetPercentage(qreal percentage)
 {
-    visibilityTimer.stop();
+  visibilityTimer.stop();
 
     targetPercentage = percentage;
 

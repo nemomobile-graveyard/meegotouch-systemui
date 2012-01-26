@@ -20,13 +20,19 @@
 #define VOLUMEBARLOGIC_H
 
 #include <QObject>
-#include <dbus/dbus.h>
+#include <QPointer>
+#include <QTimer>
+#include <QDebug>
 
-#if (HAVE_LIBRESOURCEQT && HAVE_QMSYSTEM)
+#if (HAVE_LIBRESOURCEQT)
 #include <policy/resource-set.h>
-#include <qmkeys.h>
 #endif
 
+#include <linux/input.h>
+#include "pulseaudio_thread.h"
+#include "keysniffer.h"
+
+#define VOLUMECLICKTIMEOUT 3000
 class VolumeBarWindow;
 
 //! Provides informations and actions on PulseAudio MainVolume API
@@ -58,18 +64,16 @@ public slots:
     void stepsUpdated (quint32 value, quint32 maxvalue);
 
 private slots:
-    //! an internal method which queries the actual values from PulseAudio
-    void initValues ();
 
-#if (HAVE_LIBRESOURCEQT && HAVE_QMSYSTEM)
     /*!
      * Internal slot to handle the hardware volume-key presses (see QmKeys API documentation)
      *
      * \param key the key type
      * \param state the key new state
      */
-    void hwKeyEvent (MeeGo::QmKeys::Key key, MeeGo::QmKeys::State state);
+    void hwKeyEvent (uint key, int state);
 
+#if (HAVE_LIBRESOURCEQT)
     //! An internal slot to handle the case when we got the hardware volume keys resource
     void hwKeyResourceAcquired();
 
@@ -77,47 +81,35 @@ private slots:
     void hwKeyResourceLost();
 #endif
 
+signals:
+    void changeVolume(quint32 value);
+    
 private:
     Q_DISABLE_COPY(VolumeBarLogic)
 
-    /*! an internal method which registers a signal handler to
-     * listen for PulseAudio MainVolume1 StepsUpdated signal
-     */
-    void addSignalMatch ();
-
-    /*! opens a private D-Bus connection for PulseAudio daemon, and optionally
-     * calls initValues () after successfully connection.
-     * \param init An option where can be enabled the initialization.
-     */
-    void openConnection (bool init = false);
-
-    //! a method for ensure the connection to PulseAudio daemon
-    void ping ();
-
-    /*! the signal handler for PulseAudios MainVolume1 signal
-     * \param conn The D-Bus connection structure
-     * \param message The signal message
-     * \param logic The VolumeBarLogic instance who is handling this signal
-     */
-    static void stepsUpdatedSignal (DBusConnection *conn, DBusMessage *message, VolumeBarLogic *logic);
-
+    /*! opens a client application for PulseAudio daemon*/
+    void openConnection ();
+    
     //! Volume bar window
     VolumeBarWindow *volumeBarWindow;
 
-    //! A member for accessing D-Bus connection structure
-    DBusConnection  *dbus_conn;
-
     //! The current volume level (< currentmax)
-    quint32     currentvolume;
+    quint32 currentvolume;
     //! The stepcount of volume
-    quint32     currentmax;
+    quint32 currentmax;
 
-#if (HAVE_LIBRESOURCEQT && HAVE_QMSYSTEM)
-    //! an QmKeys instance to get signals about volume-key presses
-    MeeGo::QmKeys *hwkeys;
+    //! an keysniffer instance to get signals about volume-key presses
+    QPointer<keySniffer> hwkeys;
+    
+    //! Pulseaudio thread class to be used for pulseaudio asynchronous communications.
+    QPointer<pulseaudio_thread> mPAThread;
+    
+    //! Timer to handle possible frozen volumebar
+    QPointer<QTimer> mHideTimer;   
 
+#if (HAVE_LIBRESOURCEQT)
     //! A resource object for volume(zoom)-hardware keys
-    ResourcePolicy::ResourceSet *hwkeyResource;
+    ResourcePolicy::ResourceSet *hwkeyResource;      
 #endif
 
 #ifdef UNIT_TEST

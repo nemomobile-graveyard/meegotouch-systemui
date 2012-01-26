@@ -45,16 +45,6 @@ private:
     MApplication *app;
     VolumeBarLogic *volumeBarLogic;
     void resetStubs();
-
-public:
-    static bool dbus_message_new_method_call;
-    static bool dbus_message_append_args;
-    static bool dbus_connection_send_with_reply_and_block;
-    static bool dbus_message_iter_recurse;
-    static bool dbus_message_iter_get_arg_type;
-    static bool dbus_message_iter_get_basic;
-    static bool dbus_message_iter_next;
-    static bool dbus_connection_get_is_connected;
 };
 
 #endif

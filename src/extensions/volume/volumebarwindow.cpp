@@ -52,10 +52,10 @@ VolumeBarWindow::~VolumeBarWindow()
 
 void VolumeBarWindow::setVolume(qreal percentage)
 {
-    logic->setVolume(percentage * (logic->maxVolume() - 1));
+  logic->setVolume(percentage * (logic->maxVolume() - 1));
 }
 
 void VolumeBarWindow::updateVolume()
 {
-    volumeBar->setTargetPercentage(logic->volume() / (qreal)(logic->maxVolume() - 1));
+  volumeBar->setTargetPercentage(logic->volume() / (qreal)(logic->maxVolume() - 1));
 }

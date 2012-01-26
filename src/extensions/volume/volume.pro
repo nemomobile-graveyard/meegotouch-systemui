@@ -8,7 +8,6 @@ include(../../../localconfig.pri)
 
 TEMPLATE      = lib
 CONFIG       += plugin gui meegotouch system-ui link_pkgconfig
-QT           += dbus
 INCLUDEPATH  += \
     ../../libnotificationsystem \
     ../../systemui \
@@ -19,7 +18,9 @@ QMAKE_LIBDIR += $$LOCALLIBSDIR
 STYLE_HEADERS += volumebarstyle.h
 
 HEADERS += \
+    pulseaudio_thread.h \    
     volumeextension.h \
+    keysniffer.h \
     volumebarlogic.h \
     volumebar.h \
     volumebarwindow.h \
@@ -27,7 +28,9 @@ HEADERS += \
     ../../systemui/closeeventeater.h
 
 SOURCES += \
+    pulseaudio_thread.cpp \    
     volumeextension.cpp \
+    keysniffer.cpp \
     volumebarlogic.cpp \
     volumebar.cpp \
     volumebarwindow.cpp \
@@ -45,8 +48,7 @@ contains(DEFINES, HAVE_LIBRESOURCEQT) {
 }
 
 PKGCONFIG += \
-    dbus-1 \
-    dbus-glib-1
+    libpulse
 
 target.path += $$M_APPLICATION_EXTENSION_DIR
 
