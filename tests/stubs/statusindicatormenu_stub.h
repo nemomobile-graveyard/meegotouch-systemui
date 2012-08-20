@@ -15,6 +15,7 @@ class StatusIndicatorMenuStub : public StubBase {
   virtual void hideStatusIndicatorMenu();
   virtual void setStatusIndicatorMenuInterface(MApplicationExtensionInterface *extension);
   virtual void launchControlPanelAndHide();
+  virtual void launchPowerOffDialog();
 };
 
 // 2. IMPLEMENT STUB
@@ -42,6 +43,10 @@ void StatusIndicatorMenuStub::setStatusIndicatorMenuInterface(MApplicationExtens
 
 void StatusIndicatorMenuStub::launchControlPanelAndHide() {
   stubMethodEntered("launchControlPanelAndHide");
+}
+
+void StatusIndicatorMenuStub::launchPowerOffDialog() {
+  stubMethodEntered("launchPowerOffDialog");
 }
 
 
@@ -74,6 +79,10 @@ void StatusIndicatorMenu::setStatusIndicatorMenuInterface(MApplicationExtensionI
 
 void StatusIndicatorMenu::launchControlPanelAndHide() {
   gStatusIndicatorMenuStub->launchControlPanelAndHide();
+}
+
+void StatusIndicatorMenu::launchPowerOffDialog() {
+  gStatusIndicatorMenuStub->launchPowerOffDialog();
 }
 
 #endif

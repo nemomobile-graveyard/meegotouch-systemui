@@ -70,6 +70,7 @@ void Ut_StatusIndicatorMenu::init()
 {
     statusIndicatorMenu = new StatusIndicatorMenu();
     connect(this, SIGNAL(settingsButtonClicked()), statusIndicatorMenu, SLOT(launchControlPanelAndHide()));
+    connect(this, SIGNAL(powerOffButtonClicked()), statusIndicatorMenu, SLOT(launchPowerOffDialog()));
     connect(this, SIGNAL(extensionInstantiated(MApplicationExtensionInterface*)), statusIndicatorMenu, SLOT(setStatusIndicatorMenuInterface(MApplicationExtensionInterface*)));
 }
 
@@ -94,6 +95,13 @@ void Ut_StatusIndicatorMenu::cleanupTestCase()
 void Ut_StatusIndicatorMenu::testSettingsButtonClicked()
 {
     emit settingsButtonClicked();
+
+    QVERIFY(mApplicationIfProxyLaunchCalled);
+}
+
+void Ut_StatusIndicatorMenu::testPowerOffButtonClicked()
+{
+    emit powerOffButtonClicked();
 
     QVERIFY(mApplicationIfProxyLaunchCalled);
 }
