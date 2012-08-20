@@ -31,6 +31,7 @@ class Ut_StatusIndicatorMenu : public QObject
 
 signals:
     void settingsButtonClicked();
+    void powerOffButtonClicked();
     void extensionInstantiated(MApplicationExtensionInterface*);
 
 private:
@@ -49,6 +50,7 @@ private slots:
 
     // Test cases
     void testSettingsButtonClicked();
+    void testPowerOffButtonClicked();
     void testExtensionInstantiated();
     void testSignals();
 };

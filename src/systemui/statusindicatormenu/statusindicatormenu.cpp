@@ -17,6 +17,7 @@
 **
 ****************************************************************************/
 #include <MApplicationIfProxy>
+#include <MMessageBox>
 #include "statusindicatormenu.h"
 #include "statusindicatormenudropdownview.h"
 
@@ -25,6 +26,9 @@ const QString StatusIndicatorMenu::CONTROL_PANEL_SERVICE_NAME = "com.nokia.DuiCo
 StatusIndicatorMenu::StatusIndicatorMenu(QGraphicsItem *parent) :
     MApplicationMenu()
 {
+#ifdef HAVE_QMSYSTEM
+    m_State = NULL;
+#endif
     Q_UNUSED(parent);
 }
 
@@ -49,6 +53,23 @@ void StatusIndicatorMenu::launchControlPanelAndHide()
     }
 
     hideStatusIndicatorMenu();
+}
+
+void StatusIndicatorMenu::launchPowerOffDialog()
+{
+    // % "Are you sure you want to power off the device?"
+    MMessageBox box(qtTrId("qtn_stat_menu_poweroff_query"), M::YesButton | M::NoButton);
+    int result = box.exec();
+    if (result == QMessageBox::Yes) {
+#ifdef HAVE_QMSYSTEM
+        if (m_State == NULL) {
+            m_State = new MeeGo::QmSystemState(this);
+        }
+        m_State->set(MeeGo::QmSystemState::ShuttingDown);
+#else
+        start("halt -p");
+#endif
+    }
 }
 
 void StatusIndicatorMenu::showStatusIndicatorMenu()

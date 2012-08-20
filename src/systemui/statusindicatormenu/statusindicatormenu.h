@@ -23,6 +23,10 @@
 #include <MApplicationMenu>
 #include "mstatusindicatormenuextensioninterface.h"
 
+#ifdef HAVE_QMSYSTEM
+#include <qmsystemstate.h>
+#endif
+
 class StatusIndicatorMenuWindow;
 
 /*!
@@ -73,10 +77,21 @@ private slots:
      */
     void launchControlPanelAndHide();
 
+    /*!
+     * \brief Slot for getting information about poweroff button clicks
+     */
+    void launchPowerOffDialog();
+
+
 private: // methods
 
     //! The name of the control panel service
     const static QString CONTROL_PANEL_SERVICE_NAME;
+
+#ifdef HAVE_QMSYSTEM
+    //! System state
+    MeeGo::QmSystemState *m_State;
+#endif
 
 #ifdef UNIT_TEST
     friend class Ut_StatusIndicatorMenu;

@@ -131,13 +131,22 @@ QGraphicsWidget* StatusIndicatorMenuDropDownView::createTopRow()
     settingsButton->setIconID("icon-m-status-menu-settings");
     connect(settingsButton, SIGNAL(clicked()), controller, SLOT(launchControlPanelAndHide()));
 
-    // Put the extension area and the settings button to a horizontal layout
+    // Create a button for triggering the powerOff dialog
+    //% "Power off"
+    MButton *powerOffButton = new MButton(qtTrId("qtn_stat_menu_poweroff"));
+    powerOffButton->setObjectName("StatusIndicatorMenuTopRowExtensionButton");
+    powerOffButton->setViewType(MButton::iconType);
+    powerOffButton->setIconID("icon-m-status-menu-poweroff");
+    connect(powerOffButton, SIGNAL(clicked()), controller, SLOT(launchPowerOffDialog()));
+
+    // Put the extension area and the buttons to a horizontal layout
     QGraphicsLinearLayout *topRowLayout = new QGraphicsLinearLayout(Qt::Horizontal);
     topRowLayout->setContentsMargins(0, 0, 0, 0);
     topRowLayout->setSpacing(0);
     topRowLayout->addStretch();
     topRowLayout->addItem(settingsPluginsExtensionArea);
     topRowLayout->addItem(settingsButton);
+    topRowLayout->addItem(powerOffButton);
     topRowLayout->addStretch();
 
     // Create a container widget for extension area and settings button layout
