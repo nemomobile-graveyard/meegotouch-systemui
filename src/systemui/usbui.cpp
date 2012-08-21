@@ -49,8 +49,13 @@ UsbUi::UsbUi(QObject *parent) : MDialog(),
     layout(new QGraphicsLinearLayout(Qt::Vertical)),
     chargingLabel(new MLabel()),
     massStorageItem(new MBasicListItem(MBasicListItem::SingleTitle)),
+#ifdef NOKIA
     oviSuiteItem(new MBasicListItem(MBasicListItem::SingleTitle)),
     sdkItem(new MBasicListItem(MBasicListItem::SingleTitle))
+#endif /* NOKIA */
+    MTPItem(new MBasicListItem(MBasicListItem::SingleTitle)),
+    DeveloperItem(new MBasicListItem(MBasicListItem::SingleTitle))
+    
 {
     setParent(parent);
     setModal(false);
@@ -92,6 +97,7 @@ UsbUi::UsbUi(QObject *parent) : MDialog(),
     connect(massStorageItem, SIGNAL(clicked()), this, SLOT(setMassStorageMode()));
     layout->addItem(massStorageItem);
 
+#ifdef NOKIA
     oviSuiteItem->setStyleName("CommonSmallPanelInverted");
     connect(oviSuiteItem, SIGNAL(clicked()), this, SLOT(setOviSuiteMode()));
     layout->addItem(oviSuiteItem);
@@ -100,6 +106,15 @@ UsbUi::UsbUi(QObject *parent) : MDialog(),
     connect(sdkItem, SIGNAL(clicked()), this, SLOT(setSDKMode()));
     connect(developerMode, SIGNAL(valueChanged()), this, SLOT(updateSDKItemVisibility()));
     updateSDKItemVisibility();
+#endif /* NOKIA */
+
+    MTPItem->setStyleName("CommonSmallPanelInverted");
+    connect(MTPItem, SIGNAL(clicked()), this, SLOT(setMTPMode()));
+    layout->addItem(MTPItem);
+
+    DeveloperItem->setStyleName("CommonSmallPanelInverted");
+    connect(DeveloperItem, SIGNAL(clicked()), this, SLOT(setDeveloperMode()));
+    layout->addItem(DeveloperItem);
 
     MWidget *centralWidget = new MWidget;
     centralWidget->setLayout(layout);
@@ -124,10 +139,35 @@ UsbUi::UsbUi(QObject *parent) : MDialog(),
 
 UsbUi::~UsbUi()
 {
+    MWidget *centralWidget = new MWidget;
+    centralWidget->setLayout(layout);
+    setCentralWidget(centralWidget);
+
+    connect(qApp, SIGNAL(localeSettingsChanged()), this, SLOT(retranslateUi()));
+    retranslateUi();
+
+    if (errorCodeToTranslationID.isEmpty()) {
+        errorCodeToTranslationID.insert("qtn_usb_filessystem_inuse", "qtn_usb_filessystem_inuse");
+        errorCodeToTranslationID.insert("mount_failed", "qtn_usb_mount_failed");
+    }
+
+#ifdef HAVE_QMSYSTEM
+    connect(usbMode, SIGNAL(modeChanged(MeeGo::QmUSBMode::Mode)), this, SLOT(applyUSBMode(MeeGo::QmUSBMode::Mode)));
+    connect(usbMode, SIGNAL(error(const QString &)), this, SLOT(showError(const QString &)));
+
+    // Lazy initialize to improve startup time
+    QTimer::singleShot(500, this, SLOT(applyCurrentUSBMode()));
+#endif
+}
+
+#ifdef NOKIA
+UsbUi::~UsbUi()
+{
     if (sdkItem->parentLayoutItem() == NULL) {
         delete sdkItem;
     }
 }
+#endif /* NOKIA */
 
 #ifdef HAVE_QMSYSTEM
 void UsbUi::applyCurrentUSBMode()
@@ -157,6 +197,7 @@ void UsbUi::hideDialog(bool acceptDialog)
     }
 }
 
+#ifdef NOKIA
 void UsbUi::setOviSuiteMode()
 {
     hideDialog(true);
@@ -164,17 +205,6 @@ void UsbUi::setOviSuiteMode()
 #ifdef HAVE_QMSYSTEM
     // Set the USB mode after a small delay to allow the dialog to close smoothly
     requestedUSBMode = MeeGo::QmUSBMode::OviSuite;
-    QTimer::singleShot(100, this, SLOT(setRequestedUSBMode()));
-#endif
-}
-
-void UsbUi::setMassStorageMode()
-{
-    hideDialog(true);
-
-#ifdef HAVE_QMSYSTEM
-    // Set the USB mode after a small delay to allow the dialog to close smoothly
-    requestedUSBMode = MeeGo::QmUSBMode::MassStorage;
     QTimer::singleShot(100, this, SLOT(setRequestedUSBMode()));
 #endif
 }
@@ -189,7 +219,40 @@ void UsbUi::setSDKMode()
     QTimer::singleShot(100, this, SLOT(setRequestedUSBMode()));
 #endif
 }
+#endif /* NOKIA */
 
+void UsbUi::setMassStorageMode()
+{
+    hideDialog(true);
+
+#ifdef HAVE_QMSYSTEM
+    // Set the USB mode after a small delay to allow the dialog to close smoothly
+    requestedUSBMode = MeeGo::QmUSBMode::MassStorage;
+    QTimer::singleShot(100, this, SLOT(setRequestedUSBMode()));
+#endif
+}
+
+void UsbUi::setMTPMode()
+{ 
+   hideDialog(true);
+
+#ifdef HAVE_QMSYSTEM
+    // Set the USB mode after a small delay to allow the dialog to close smoothly
+    requestedUSBMode = MeeGo::QmUSBMode::MTP;
+    QTimer::singleShot(100, this, SLOT(setRequestedUSBMode()));
+#endif
+}
+
+void UsbUi::setDeveloperMode()
+{ 
+   hideDialog(true);
+
+#ifdef HAVE_QMSYSTEM
+    // Set the USB mode after a small delay to allow the dialog to close smoothly
+    requestedUSBMode = MeeGo::QmUSBMode::Developer;
+    QTimer::singleShot(100, this, SLOT(setRequestedUSBMode()));
+#endif
+}
 #ifdef HAVE_QMSYSTEM
 void UsbUi::setRequestedUSBMode()
 {
@@ -216,6 +279,8 @@ void UsbUi::applyUSBMode(MeeGo::QmUSBMode::Mode mode)
     case MeeGo::QmUSBMode::OviSuite:
     case MeeGo::QmUSBMode::MassStorage:
     case MeeGo::QmUSBMode::SDK:
+    case MeeGo::QmUSBMode::MTP:
+    case MeeGo::QmUSBMode::Developer:
         // Hide the mode selection dialog and show a mode notification
         hideDialog(false);
         showNotification(mode);
@@ -244,6 +309,7 @@ void UsbUi::showNotification(MeeGo::QmUSBMode::Mode mode)
         body = qtTrId("qtn_usb_storage_active");
         break;
     case MeeGo::QmUSBMode::SDK:
+    case MeeGo::QmUSBMode::Developer:
         //% "SDK mode in use"
         body = qtTrId("qtn_usb_sdk_active");
         break;
@@ -279,12 +345,19 @@ void UsbUi::retranslateUi()
     chargingLabel->setText(qtTrId("qtn_usb_charging"));
     //% "Mass Storage mode"
     massStorageItem->setTitle(qtTrId("qtn_usb_mass_storage"));
+#ifdef NOKIA
     //% "Ovi Suite mode"
     oviSuiteItem->setTitle(qtTrId("qtn_usb_ovi_suite"));
     //% "SDK mode"
     sdkItem->setTitle(qtTrId("qtn_usb_sdk_mode"));
+#endif /* NOKIA */
+    //% "Developer mode"
+    DeveloperItem->setTitle(qtTrId("qtn_usb_developer_mode"));
+    //% "MTP mode"
+    MTPItem->setTitle(qtTrId("qtn_usb_mtp_mode"));
 }
 
+#ifdef NOKIA
 void UsbUi::updateSDKItemVisibility()
 {
     if (developerMode->value().toBool()) {
@@ -300,3 +373,4 @@ void UsbUi::updateSDKItemVisibility()
         }
     }
 }
+#endif /* NOKIA */

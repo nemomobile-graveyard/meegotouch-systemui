@@ -81,19 +81,30 @@ private slots:
     void setRequestedUSBMode();
 #endif
     /*!
+     * Sets the USB mode to mass storage.
+     */
+    void setMassStorageMode();
+
+#ifdef NOKIA
+    /*!
      * Sets the USB mode to Ovi Suite.
      */
     void setOviSuiteMode();
 
     /*!
-     * Sets the USB mode to mass storage.
-     */
-    void setMassStorageMode();
-
-    /*!
      * Sets the USB mode to SDK.
      */
     void setSDKMode();
+#endif /* NOKIA */
+    /*! 
+     * Sets the USB mode to MTP.
+     */
+    void setMTPMode();
+
+    /*!
+     * Sets the USB developer mode.
+     */
+    void setDeveloperMode();
 
     /*!
      * Shows the mode selection dialog.
@@ -106,9 +117,10 @@ private slots:
      * \param errorCode the error code of the error to be shown
      */
     void showError(const QString &errorCode);
-
+#ifdef NOKIA
     //! Shows or hides the SDK item from the dialog based on whether developer mode is enabled or not
     void updateSDKItemVisibility();
+#endif
 
 private:
 #ifdef HAVE_QMSYSTEM
@@ -144,11 +156,20 @@ private:
     //! Mass storage mode list item
     MBasicListItem *massStorageItem;
 
+#ifdef NOKIA
     //! Ovi Suite mode list item
     MBasicListItem *oviSuiteItem;
 
     //! SDK mode list item
     MBasicListItem *sdkItem;
+#endif /* NOKIA */
+
+    //! MTP mode list item
+    MBasicListItem *MTPItem;
+
+   //! Developer mode list item
+   MBasicListItem *DeveloperItem;
+
 
 #ifdef UNIT_TEST
     friend class Ut_UsbUi;

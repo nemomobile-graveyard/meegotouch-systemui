@@ -16,9 +16,14 @@ class UsbUiStub : public StubBase {
   virtual void applyUSBMode(MeeGo::QmUSBMode::Mode mode);
   virtual void setRequestedUSBMode();
 #endif
-  virtual void setOviSuiteMode();
   virtual void setMassStorageMode();
+#ifdef NOKIA
+  virtual void setOviSuiteMode();
   virtual void setSDKMode();
+  virtual void updateSDKItemVisibility();
+#endif /* NOKIA */
+  virtual void setMTPMode();
+  virtual void setDeveloperMode();
   virtual void showDialog();
   virtual void showError(const QString &error);
 #ifdef HAVE_QMSYSTEM
@@ -26,7 +31,6 @@ class UsbUiStub : public StubBase {
 #endif
   virtual void hideDialog(bool accept);
   virtual void retranslateUi();
-  virtual void updateSDKItemVisibility();
 }; 
 
 // 2. IMPLEMENT STUB
@@ -53,16 +57,30 @@ void UsbUiStub::setRequestedUSBMode() {
 }
 #endif
 
+#ifdef NOKIA
 void UsbUiStub::setOviSuiteMode() {
   stubMethodEntered("setOviSuiteMode");
 }
 
-void UsbUiStub::setMassStorageMode() {
-  stubMethodEntered("setMassStorageMode");
-}
-
 void UsbUiStub::setSDKMode() {
   stubMethodEntered("setSDKMode");
+}
+
+void UsbUiStub::updateSDKItemVisibility() {
+  stubMethodEntered("updateSDKItemVisibility");
+}
+#endif /* NOKIA */
+
+void UsbUiStub::setMTPMode() {
+  stubMethodEntered("setMTPMode");
+}
+
+void UsbUiStub::setDeveloperMode() {
+  stubMethodEntered("setDeveloperMode");
+}
+
+void UsbUiStub::setMassStorageMode() {
+  stubMethodEntered("setMassStorageMode");
 }
 
 void UsbUiStub::showDialog() {
@@ -93,10 +111,6 @@ void UsbUiStub::retranslateUi() {
   stubMethodEntered("retranslateUi");
 }
 
-void UsbUiStub::updateSDKItemVisibility() {
-  stubMethodEntered("updateSDKItemVisibility");
-}
-
 // 3. CREATE A STUB INSTANCE
 UsbUiStub gDefaultUsbUiStub;
 UsbUiStub* gUsbUiStub = &gDefaultUsbUiStub;
@@ -125,16 +139,30 @@ void UsbUi::setRequestedUSBMode() {
 }
 #endif
 
+#ifdef NOKIA
 void UsbUi::setOviSuiteMode() {
   gUsbUiStub->setOviSuiteMode();
 }
+
+void UsbUi::setSDKMode() {
+  gUsbUiStub->setSDKMode();
+}
+
+void UsbUi::updateSDKItemVisibility() {
+  gUsbUiStub->updateSDKItemVisibility();
+}
+#endif /* NOKIA */
 
 void UsbUi::setMassStorageMode() {
   gUsbUiStub->setMassStorageMode();
 }
 
-void UsbUi::setSDKMode() {
-  gUsbUiStub->setSDKMode();
+void UsbUi::setMTPMode() {
+  gUsbUiStub->setMTPMode();
+}
+
+void UsbUi::setDeveloperMode() {
+  gUsbUiStub->setDeveloperMode();
 }
 
 void UsbUi::showDialog() {
@@ -157,10 +185,6 @@ void UsbUi::hideDialog(bool accept) {
 
 void UsbUi::retranslateUi() {
   gUsbUiStub->retranslateUi();
-}
-
-void UsbUi::updateSDKItemVisibility() {
-  gUsbUiStub->updateSDKItemVisibility();
 }
 
 #endif

@@ -55,7 +55,9 @@ private slots:
 #endif
     void testShowError();
     void testRetranslateUi();
+#ifdef NOKIA
     void testSDKItemVisibleOnlyWhenDeveloperModeEnabled();
+#endif
 
 private:
     MApplication *m_App;

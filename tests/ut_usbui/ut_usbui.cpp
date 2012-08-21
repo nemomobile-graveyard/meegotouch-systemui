@@ -174,17 +174,20 @@ void Ut_UsbUi::testDialogButtons()
 {
     m_subject->applyUSBMode(MeeGo::QmUSBMode::Connected);
 
+#ifdef NOKIA
     m_subject->setOviSuiteMode();
     m_subject->setRequestedUSBMode();
     QCOMPARE(m_subject->usbMode->getMode(), MeeGo::QmUSBMode::OviSuite);
+
+    m_subject->setSDKMode();
+    m_subject->setRequestedUSBMode();
+    QCOMPARE(m_subject->usbMode->getMode(), MeeGo::QmUSBMode::SDK);
+#endif
 
     m_subject->setMassStorageMode();
     m_subject->setRequestedUSBMode();
     QCOMPARE(m_subject->usbMode->getMode(), MeeGo::QmUSBMode::MassStorage);
 
-    m_subject->setSDKMode();
-    m_subject->setRequestedUSBMode();
-    QCOMPARE(m_subject->usbMode->getMode(), MeeGo::QmUSBMode::SDK);
 }
 
 Q_DECLARE_METATYPE(MeeGo::QmLocks::State)
@@ -226,16 +229,21 @@ void Ut_UsbUi::testRetranslateUi()
     m_subject->setTitle(QString());
     m_subject->chargingLabel->setText(QString());
     m_subject->massStorageItem->setTitle(QString());
+#ifdef NOKIA
     m_subject->oviSuiteItem->setTitle(QString());
     m_subject->sdkItem->setTitle(QString());
+#endif
     m_subject->retranslateUi();
     QCOMPARE(m_subject->title(), qtTrId("qtn_usb_connected"));
     QCOMPARE(m_subject->chargingLabel->text(), qtTrId("qtn_usb_charging"));
     QCOMPARE(m_subject->massStorageItem->title(), qtTrId("qtn_usb_mass_storage"));
+#ifdef NOKIA
     QCOMPARE(m_subject->oviSuiteItem->title(), qtTrId("qtn_usb_ovi_suite"));
     QCOMPARE(m_subject->sdkItem->title(), qtTrId("qtn_usb_sdk_mode"));
+#endif
 }
 
+#ifdef NOKIA
 void Ut_UsbUi::testSDKItemVisibleOnlyWhenDeveloperModeEnabled()
 {
     QVERIFY(disconnect(m_subject->developerMode, SIGNAL(valueChanged()), m_subject, SLOT(updateSDKItemVisibility())));
@@ -253,5 +261,6 @@ void Ut_UsbUi::testSDKItemVisibleOnlyWhenDeveloperModeEnabled()
     QCOMPARE(m_subject->layout->count(), 5);
     QCOMPARE(m_subject->sdkItem->parentLayoutItem(), (QGraphicsLayoutItem *)NULL);
 }
+#endif
 
 QTEST_APPLESS_MAIN (Ut_UsbUi)
