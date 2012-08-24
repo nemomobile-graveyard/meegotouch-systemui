@@ -1,6 +1,6 @@
 VolumeBarStyle {
     background-color: black;
-    background-image: "meegoui-volume-level" 12px 12px 12px 12px;
+    background-image: "systemui-fullscreen-volumebar" 12px 12px 12px 12px;
     background-opacity: 0.85;
 
     visible-duration: 1500;
@@ -8,8 +8,8 @@ VolumeBarStyle {
     move-duration: 250;
     volume-bar-opacity: 0.5;
 
-    icon-id: "icon-m-music-video-volume";
-    muted-icon-id: "icon-m-music-video-volume-off";
+    icon-id: "icon-m-toolbar-volume";
+    muted-icon-id: "icon-m-common-volume-off";
     icon-size: 8mm 8mm;
 
     minimum-size: 100% 100%;
