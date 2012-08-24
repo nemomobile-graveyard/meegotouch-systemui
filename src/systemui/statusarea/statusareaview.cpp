@@ -163,10 +163,18 @@ void StatusAreaView::setGeometry(const QRectF &rect)
     int screenWidth = MDeviceProfile::instance()->resolution().width();
     int screenHeight = MDeviceProfile::instance()->resolution().height();
     qreal areaHeight = rect.height() / 2;
-    landscapeWidget->setMinimumSize(screenWidth, areaHeight);
-    landscapeWidget->setMaximumSize(screenWidth, areaHeight);
-    portraitWidget->setMinimumSize(screenHeight, areaHeight);
-    portraitWidget->setMaximumSize(screenHeight, areaHeight);
+
+    if(MDeviceProfile::instance()->orientationFromAngle(M::Angle0)==M::Portrait) {
+        landscapeWidget->setMinimumSize(screenHeight, areaHeight);
+        landscapeWidget->setMaximumSize(screenHeight, areaHeight);
+        portraitWidget->setMinimumSize(screenWidth, areaHeight);
+        portraitWidget->setMaximumSize(screenWidth, areaHeight);
+    } else {
+        landscapeWidget->setMinimumSize(screenWidth, areaHeight);
+        landscapeWidget->setMaximumSize(screenWidth, areaHeight);
+        portraitWidget->setMinimumSize(screenHeight, areaHeight);
+        portraitWidget->setMaximumSize(screenHeight, areaHeight);
+    }
 }
 
 QGraphicsLinearLayout* StatusAreaView::createLandscapeLayout()

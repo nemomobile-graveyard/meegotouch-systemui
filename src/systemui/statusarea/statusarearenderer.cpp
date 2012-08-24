@@ -24,6 +24,7 @@
 #include <QMeeGoLivePixmap>
 #include <QMeeGoGraphicsSystemHelper>
 #include <QX11Info>
+#include <MDeviceProfile>
 #include "x11wrapper.h"
 
 // Update the pixmap 5 times per second at most
@@ -106,8 +107,13 @@ void StatusAreaRenderer::setSizeFromStyle()
 {
     const StatusAreaStyle *style = static_cast<const StatusAreaStyle *>(MTheme::style("StatusAreaStyle"));
     if (style != NULL) {
-        statusAreaHeight = style->preferredSize().height();
-        statusAreaWidth = style->preferredSize().width();
+        if(MDeviceProfile::instance()->orientationFromAngle(M::Angle0)==M::Portrait) {
+            statusAreaHeight = style->preferredSize().height();
+            statusAreaWidth = MDeviceProfile::instance()->resolution().height(); //could be propagated from setPreferredSize but in this case we want anyway full size
+        } else {
+            statusAreaHeight = style->preferredSize().height();
+            statusAreaWidth = style->preferredSize().width();
+        }
         MTheme::releaseStyle(style);
     }
 }
