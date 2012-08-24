@@ -6,8 +6,6 @@ INCLUDEPATH += /usr/include/contextsubscriber /usr/include/resource/qt4
 
 PKGCONFIG += dbus-1
 
-STYLE_HEADERS += $$SRCDIR/screenlock/screenlockwindowstyle.h
-
 # unit test and unit classes
 SOURCES += \
     ut_sysuid.cpp \
@@ -25,8 +23,6 @@ HEADERS += \
     $$SRCDIR/shutdownui.h \
     $$SRCDIR/usbui.h \
     $$ROOTSRCDIR/extensions/screenlock/lockscreen.h \
-    $$SRCDIR/screenlock/screenlockwindow.h \
-    $$SRCDIR/screenlock/screenlockwindowstyle.h \
     $$SRCDIR/screenlock/eventeater.h \
     $$SRCDIR/shutdownbusinesslogic.h \
     $$SRCDIR/batterybusinesslogic.h \

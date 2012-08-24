@@ -15,9 +15,6 @@ class ScreenLockBusinessLogicStub : public StubBase {
   virtual int tklock_close(bool silent);
   virtual void toggleScreenLockUI(bool toggle);
   virtual void toggleEventEater(bool toggle);
-  virtual void registerExtension(MApplicationExtensionInterface *extension);
-  virtual void unregisterExtension(MApplicationExtensionInterface *extension);
-  virtual void reset();
   virtual void unlockScreen();
   virtual void showScreenLock();
   virtual void showLowPowerMode();
@@ -27,7 +24,6 @@ class ScreenLockBusinessLogicStub : public StubBase {
   virtual void hideEventEater();
   virtual bool isScreenLocked();
 #ifdef HAVE_QMSYSTEM
-  virtual void displayStateChanged(MeeGo::QmDisplayState::DisplayState state);
   virtual void systemStateChanged(MeeGo::QmSystemState::StateIndication what);
 #endif
 }; 
@@ -72,22 +68,6 @@ void ScreenLockBusinessLogicStub::toggleEventEater(bool toggle) {
   stubMethodEntered("toggleEventEater",params);
 }
 
-void ScreenLockBusinessLogicStub::registerExtension(MApplicationExtensionInterface *extension) {
-  QList<ParameterBase*> params;
-  params.append( new Parameter<MApplicationExtensionInterface * >(extension));
-  stubMethodEntered("registerExtension",params);
-}
-
-void ScreenLockBusinessLogicStub::unregisterExtension(MApplicationExtensionInterface *extension) {
-  QList<ParameterBase*> params;
-  params.append( new Parameter<MApplicationExtensionInterface * >(extension));
-  stubMethodEntered("unregisterExtension",params);
-}
-
-void ScreenLockBusinessLogicStub::reset() {
-  stubMethodEntered("reset");
-}
-
 void ScreenLockBusinessLogicStub::unlockScreen() {
   stubMethodEntered("unlockScreen");
 }
@@ -122,12 +102,6 @@ bool ScreenLockBusinessLogicStub::isScreenLocked() {
 }
 
 #ifdef HAVE_QMSYSTEM
-void ScreenLockBusinessLogicStub::displayStateChanged(MeeGo::QmDisplayState::DisplayState state) {
-  QList<ParameterBase*> params;
-  params.append( new Parameter<MeeGo::QmDisplayState::DisplayState >(state));
-  stubMethodEntered("displayStateChanged",params);
-}
-
 void ScreenLockBusinessLogicStub::systemStateChanged(MeeGo::QmSystemState::StateIndication what) {
     QList<ParameterBase*> params;
     params.append( new Parameter<MeeGo::QmSystemState::StateIndication >(what));
@@ -167,18 +141,6 @@ void ScreenLockBusinessLogic::toggleEventEater(bool toggle) {
   gScreenLockBusinessLogicStub->toggleEventEater(toggle);
 }
 
-void ScreenLockBusinessLogic::registerExtension(MApplicationExtensionInterface *extension) {
-  gScreenLockBusinessLogicStub->registerExtension(extension);
-}
-
-void ScreenLockBusinessLogic::unregisterExtension(MApplicationExtensionInterface *extension) {
-  gScreenLockBusinessLogicStub->unregisterExtension(extension);
-}
-
-void ScreenLockBusinessLogic::reset() {
-  gScreenLockBusinessLogicStub->reset();
-}
-
 void ScreenLockBusinessLogic::unlockScreen() {
   gScreenLockBusinessLogicStub->unlockScreen();
 }
@@ -212,10 +174,6 @@ bool ScreenLockBusinessLogic::isScreenLocked() const {
 }
 
 #ifdef HAVE_QMSYSTEM
-void ScreenLockBusinessLogic::displayStateChanged(MeeGo::QmDisplayState::DisplayState state) {
-  gScreenLockBusinessLogicStub->displayStateChanged(state);
-}
-
 void ScreenLockBusinessLogic::systemStateChanged(MeeGo::QmSystemState::StateIndication what) {
   gScreenLockBusinessLogicStub->systemStateChanged(what);
 }

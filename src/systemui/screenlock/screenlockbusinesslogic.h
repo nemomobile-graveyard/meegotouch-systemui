@@ -26,11 +26,7 @@
 #include <qmsystemstate.h>
 #endif
 
-class ScreenLockWindow;
 class EventEater;
-class MApplicationExtensionArea;
-class MApplicationExtensionInterface;
-class ScreenLockExtensionInterface;
 class QDBusInterface;
 
 /*!
@@ -92,15 +88,6 @@ private slots:
     //! Shows or hides the event eater window
     void toggleEventEater(bool toggle);
 
-    //! Registers an screen lock extension
-    void registerExtension(MApplicationExtensionInterface *extension);
-
-    //! Unregisters an screen lock extension
-    void unregisterExtension(MApplicationExtensionInterface *extension);
-
-    //! Resets the screen lock to its normal state.
-    void reset();
-
     //! Shows the screen lock window in normal mode and hides the event eater window.
     void showScreenLock();
 
@@ -120,9 +107,6 @@ private slots:
     void hideEventEater();
 
 #ifdef HAVE_QMSYSTEM
-    //! Resets the lock screen when the screen is unblanked and the screenlock is visible
-    void displayStateChanged(MeeGo::QmDisplayState::DisplayState state);
-
     //! Unlocks the touch screen lock on system shutdown
     void systemStateChanged(MeeGo::QmSystemState::StateIndication what);
 #endif
@@ -155,20 +139,8 @@ private:
         TkLockClosed
     };
 
-    //! Creates the lock screen window if it doesn't exist yet
-    void ensureScreenLockWindowExists();
-
-    //! The screen lock window
-    ScreenLockWindow *screenLockWindow;
-
     //! The event eater window
     EventEater *eventEaterWindow;
-
-    //! The extension area containing the screen lock extension
-    MApplicationExtensionArea *extensionArea;
-
-    //! A list of registered screen lock extensions
-    QList<ScreenLockExtensionInterface *> screenLockExtensions;
 
     //! MCE callback D-Bus interface
     QDBusInterface *callbackInterface;
@@ -178,6 +150,9 @@ private:
 
     //! Whether the system is shutting down or not
     bool shuttingDown;
+
+    //! Whether the lockscreen is visible or not
+    bool lockscreenVisible;
 
 #ifdef HAVE_QMSYSTEM
     //! For getting the display state
