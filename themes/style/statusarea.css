@@ -4,7 +4,7 @@ StatusAreaStyle {
     maximum-size: 100% 7.2mm;
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0;
+    margin-top: 4;
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
@@ -20,7 +20,7 @@ MWidgetStyle#StatusBarLandscapeWidget {
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 0;
+    padding-top: 4;
     padding-bottom: 0;
 }
 
@@ -32,7 +32,7 @@ MWidgetStyle#StatusBarPortraitWidget {
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 0;
+    padding-top: 4;
     padding-bottom: 0;
 }
 
@@ -109,7 +109,7 @@ StatusIndicatorIconStyle {
 
 StatusIndicatorAnimationStyle {
     /* This style is used when there is no icon ID defined (width is 0) */
-    margin-top: 0.1mm;
+    margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
@@ -211,7 +211,7 @@ MLabelStyle#StatusIndicatorLabelLimitedService {
     color: #FFFFFF;
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0.3mm;
+    margin-top: 0;
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
@@ -225,7 +225,7 @@ MLabelStyle#StatusIndicatorLabelLandscapeLimitedService {
     color: #FFFFFF;
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0.3mm;
+    margin-top: 0;
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
@@ -239,7 +239,7 @@ MLabelStyle#StatusIndicatorLabelPortraitLimitedService {
     color: #FFFFFF;
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0.3mm;
+    margin-top: 0mm;
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
