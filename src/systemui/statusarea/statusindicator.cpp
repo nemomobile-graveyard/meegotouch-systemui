@@ -289,7 +289,7 @@ BatteryStatusIndicator::BatteryStatusIndicator(ApplicationContext &context, QGra
 {
     setStyleName(QString(metaObject()->className()) + BATTERY_MODE_NORMAL);
 
-    batteryLevel = createContextItem(context, "Battery.ChargeBars");
+    batteryLevel = createContextItem(context, "Battery.ChargePercentage");
     connect(batteryLevel, SIGNAL(contentsChanged()), this, SLOT(batteryLevelChanged()));
 
     batteryCharging = createContextItem(context, "Battery.IsCharging");
@@ -312,33 +312,31 @@ BatteryStatusIndicator::~BatteryStatusIndicator()
 
 void BatteryStatusIndicator::batteryLevelChanged()
 {
-    QList<QVariant> chargeBars = batteryLevel->value().toList();
-    if (chargeBars.count() == 2) {
-        int remainingBars = chargeBars.at(0).toInt();
-        int maximumBars = chargeBars.at(1).toInt();
+    double percentage;
+    double rem_tmp;
+    int remainingBars;
+    int maximumBars;
 
-        // Smoke test - check that charge bar values are valid
-        if((maximumBars > 0) && (remainingBars >= 0) && (maximumBars >= remainingBars)) {
-            if (batteryCharging->value().toBool() && remainingBars == maximumBars) {
-                // While charging always animate at least one bar
-                remainingBars = maximumBars - 1;
-            }
-
-            // imageList contains maximumBars + 2 images (maximumBars is zero inclusive so +1 and then the "battery empty" image)
-            int images = maximumBars + 2;
-
-            if (batteryCharging->value().toBool()) {
-                // While charging don't use the "battery empty" image, so skip it with remainingBars + 1
-                setValue((remainingBars + 1) / (double)images);
-            } else {
-                // While not charging use the "battery empty" icon when 0 bars remaining, otherwise skip it with remainingBars + 1
-                setValue((remainingBars == 0 ? 0 : (remainingBars + 1)) / (double)images);
-            }
-        } else {
-            // Error situation
-            setValue(0.0);
+    percentage    = batteryLevel->value().toDouble();
+    maximumBars   = 8;
+    rem_tmp	  = percentage / (100.0 / maximumBars);
+    remainingBars = rem_tmp;
+    if ((rem_tmp - remainingBars) >= 0.5)
+	remainingBars++;
+    // Smoke test - check that charge bar values are valid
+    if((maximumBars > 0) && (remainingBars >= 0) && (maximumBars >= remainingBars)) {
+        if (batteryCharging->value().toBool() && remainingBars == maximumBars) {
+            // While charging always animate at least one bar
+            remainingBars = maximumBars - 1;
         }
-    }
+        // imageList contains maximumBars + 2 images
+        int images = maximumBars + 2;
+        // First icon is for battery empty situation, hence remainingBars + 1
+        setValue((remainingBars + 1) / (double)images);
+    } else {
+        // Error situation
+        setValue(0.0);
+     }
 }
 
 void BatteryStatusIndicator::batteryChargingChanged()
