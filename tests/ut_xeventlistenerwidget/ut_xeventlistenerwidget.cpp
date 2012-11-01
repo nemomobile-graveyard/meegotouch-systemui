@@ -33,12 +33,12 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
     qWidgetCreateDestroyOldWindow = destroyOldWindow;
 }
 
-bool qWidgetDestroyDestroyWindow = true;
-bool qWidgetDestroyDestroySubWindows = true;
+QList<bool> qWidgetDestroyDestroyWindow;
+QList<bool> qWidgetDestroyDestroySubWindows;
 void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
 {
-    qWidgetDestroyDestroyWindow = destroyWindow;
-    qWidgetDestroyDestroySubWindows = destroySubWindows;
+    qWidgetDestroyDestroyWindow.append(destroyWindow);
+    qWidgetDestroyDestroySubWindows.append(destroySubWindows);
 }
 
 void Ut_XEventListenerWidget::init()
@@ -51,8 +51,8 @@ void Ut_XEventListenerWidget::cleanup()
     qWidgetCreateWindow = 0;
     qWidgetCreateInitializeWindow = true;
     qWidgetCreateDestroyOldWindow = true;
-    qWidgetDestroyDestroyWindow = true;
-    qWidgetDestroyDestroySubWindows = true;
+    qWidgetDestroyDestroyWindow.clear();
+    qWidgetDestroyDestroySubWindows.clear();
 }
 
 void Ut_XEventListenerWidget::initTestCase()
@@ -72,8 +72,9 @@ void Ut_XEventListenerWidget::testConstructionAndDestruction()
     QCOMPARE(qWidgetCreateDestroyOldWindow, false);
 
     delete widget;
-    QCOMPARE(qWidgetDestroyDestroyWindow, false);
-    QCOMPARE(qWidgetDestroyDestroySubWindows, false);
+    QCOMPARE(qWidgetDestroyDestroyWindow.isEmpty(), false);
+    QCOMPARE(qWidgetDestroyDestroyWindow.first(), false);
+    QCOMPARE(qWidgetDestroyDestroySubWindows.first(), false);
 }
 
 void Ut_XEventListenerWidget::testX11Event_data()

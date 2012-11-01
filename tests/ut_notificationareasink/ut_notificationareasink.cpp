@@ -29,13 +29,8 @@
 #include "notificationgroup_stub.h"
 #include "notificationmanager_stub.h"
 
-
-static char *gAppName = (char *)"./ut_notificationareasink";
-
-// QCoreApplication stubs to avoid crashing in processEvents()
-QStringList QCoreApplication::arguments()
+void MApplication::stdExit(int)
 {
-    return QStringList(gAppName);
 }
 
 // MGConfItem stubs
@@ -150,7 +145,8 @@ void Ut_NotificationAreaSink::initTestCase()
 {
     // Create a MAapplication
     static int argc = 1;
-    app = new MApplication(argc, &gAppName);
+    static char *app_name = (char *)"./ut_notificationareasink";
+    app = new MApplication(argc, &app_name);
 }
 
 void Ut_NotificationAreaSink::cleanupTestCase()
@@ -462,8 +458,10 @@ void Ut_NotificationAreaSink::testApplyPrivacySetting()
     // The titles should be as expected
     QCOMPARE(titles.length(), 2);
     QCOMPARE(titles[1], title);
-    QCOMPARE(subtitles.length(), 2);
-    QCOMPARE(subtitles[1], subtitle);
+    QCOMPARE(subtitles.length(), subtitle.isEmpty() ? 0 : 2);
+    if (!subtitle.isEmpty()) {
+        QCOMPARE(subtitles[1], subtitle);
+    }
 
     // Update the notification
     emit addNotification(Notification(0, 0, 2, parameters0, Notification::ApplicationEvent, 1000));
@@ -471,8 +469,10 @@ void Ut_NotificationAreaSink::testApplyPrivacySetting()
     // The titles should still be as expected. The stub is now aware of the banner so updates go to the first occurrence of the banner.
     QCOMPARE(titles.length(), 2);
     QCOMPARE(titles[0], title);
-    QCOMPARE(subtitles.length(), 2);
-    QCOMPARE(subtitles[0], subtitle);
+    QCOMPARE(subtitles.length(), subtitle.isEmpty() ? 0 : 2);
+    if (!subtitle.isEmpty()) {
+        QCOMPARE(subtitles[0], subtitle);
+    }
 }
 
 void Ut_NotificationAreaSink::testNotificationsFetchedFromNotificationManager()

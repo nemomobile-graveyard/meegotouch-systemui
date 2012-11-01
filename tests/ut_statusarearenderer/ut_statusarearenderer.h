@@ -26,6 +26,7 @@
 #include "qmdisplaystate.h"
 #endif
 
+class MApplication;
 class StatusAreaRenderer;
 
 class Ut_StatusAreaRenderer : public QObject
@@ -36,6 +37,7 @@ private:
     void setupXGetPropertiesToDefault();
     void setStatusBarVisibility(bool visible);
 
+    MApplication *app;
     StatusAreaRenderer *statusAreaRenderer;
 
 signals:

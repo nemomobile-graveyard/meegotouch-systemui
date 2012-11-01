@@ -1,7 +1,7 @@
 include(../coverage.pri)
 include(../common_top.pri)
 TARGET = ut_sysuid
-INCLUDEPATH += $$SRCDIR/statusarea $$LIBNOTIFICATIONSRCDIR $$NOTIFICATIONSRCDIR $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol $$SRCDIR/screenlock $$ROOTSRCDIR/extensions/screenlock
+INCLUDEPATH += $$SRCDIR/statusarea $$LIBNOTIFICATIONSRCDIR $$NOTIFICATIONSRCDIR $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol $$SRCDIR/screenlock
 INCLUDEPATH += /usr/include/contextsubscriber /usr/include/resource/qt4
 
 PKGCONFIG += dbus-1
@@ -22,7 +22,6 @@ HEADERS += \
     ut_sysuid.h \
     $$SRCDIR/shutdownui.h \
     $$SRCDIR/usbui.h \
-    $$ROOTSRCDIR/extensions/screenlock/lockscreen.h \
     $$SRCDIR/screenlock/eventeater.h \
     $$SRCDIR/shutdownbusinesslogic.h \
     $$SRCDIR/batterybusinesslogic.h \
@@ -37,10 +36,6 @@ HEADERS += \
     $$NOTIFICATIONSRCDIR/ngfnotificationsink.h \
     $$NOTIFICATIONSRCDIR/notificationstatusindicatorsink.h \
     $$NOTIFICATIONSRCDIR/notificationmanager.h \
-    $$ROOTSRCDIR/extensions/screenlock/unlockarea.h \
-    $$ROOTSRCDIR/extensions/screenlock/unlocknotifications.h \
-    $$ROOTSRCDIR/extensions/screenlock/unlocknotificationsink.h \
-    $$ROOTSRCDIR/extensions/screenlock/unlockmissedevents.h \
     $$SRCDIR/statusarea/statusarearenderer.h \
     $$SRCDIR/statusarea/statusarearendereradaptor.h \
     $$SRCDIR/applicationcontext.h \

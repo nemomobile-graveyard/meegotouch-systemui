@@ -2080,4 +2080,4 @@ void Ut_NotificationManager:: testUpdatingGroupTimestampWhenGroupIsCleared()
     QCOMPARE(arguments.at(0).toUInt(), groupId);
 }
 
-QTEST_MAIN(Ut_NotificationManager)
+QTEST_APPLESS_MAIN(Ut_NotificationManager)

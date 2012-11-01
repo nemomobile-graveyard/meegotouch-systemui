@@ -18,6 +18,7 @@
 ****************************************************************************/
 #include <QtTest/QtTest>
 #include "ut_statusarearenderer.h"
+#include <MApplication>
 #include <MOnDisplayChangeEvent>
 #include "statusarearenderer.h"
 #include "statusarea_stub.h"
@@ -328,10 +329,14 @@ void Ut_StatusAreaRenderer::cleanup()
 
 void Ut_StatusAreaRenderer::initTestCase()
 {
+    static int argc = 1;
+    static char *app_name = (char *)"./ut_statusarearenderer";
+    app = new MApplication(argc, &app_name);
 }
 
 void Ut_StatusAreaRenderer::cleanupTestCase()
 {
+    delete app;
 }
 
 void Ut_StatusAreaRenderer::testSetupStatusBarVisiblePropertyListening()
@@ -923,4 +928,4 @@ void Ut_StatusAreaRenderer::testUpdateStatusBarVisiblePropertyFreesDataCorrectly
     }
 }
 
-QTEST_MAIN(Ut_StatusAreaRenderer)
+QTEST_APPLESS_MAIN(Ut_StatusAreaRenderer)

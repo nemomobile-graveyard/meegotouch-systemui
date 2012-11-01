@@ -137,35 +137,16 @@ UsbUi::UsbUi(QObject *parent) : MDialog(),
 #endif
 }
 
-UsbUi::~UsbUi()
-{
-    MWidget *centralWidget = new MWidget;
-    centralWidget->setLayout(layout);
-    setCentralWidget(centralWidget);
-
-    connect(qApp, SIGNAL(localeSettingsChanged()), this, SLOT(retranslateUi()));
-    retranslateUi();
-
-    if (errorCodeToTranslationID.isEmpty()) {
-        errorCodeToTranslationID.insert("qtn_usb_filessystem_inuse", "qtn_usb_filessystem_inuse");
-        errorCodeToTranslationID.insert("mount_failed", "qtn_usb_mount_failed");
-    }
-
-#ifdef HAVE_QMSYSTEM
-    connect(usbMode, SIGNAL(modeChanged(MeeGo::QmUSBMode::Mode)), this, SLOT(applyUSBMode(MeeGo::QmUSBMode::Mode)));
-    connect(usbMode, SIGNAL(error(const QString &)), this, SLOT(showError(const QString &)));
-
-    // Lazy initialize to improve startup time
-    QTimer::singleShot(500, this, SLOT(applyCurrentUSBMode()));
-#endif
-}
-
 #ifdef NOKIA
 UsbUi::~UsbUi()
 {
     if (sdkItem->parentLayoutItem() == NULL) {
         delete sdkItem;
     }
+}
+#else
+UsbUi::~UsbUi()
+{
 }
 #endif /* NOKIA */
 

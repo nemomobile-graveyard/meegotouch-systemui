@@ -145,42 +145,41 @@ void Ut_StatusIndicator::testModelUpdates()
 void Ut_StatusIndicator::testContextItemSubscribe()
 {
     gContextItemStub->stubReset();
-    m_subject = new PhoneNetworkTypeStatusIndicator(*testContext, NULL);
+    m_subject = new ProfileStatusIndicator(*testContext, NULL);
     QSignalSpy spy(m_subject, SIGNAL(subscriptionMade()));
 
-    testContextItems["Internet.NetworkType"]->setValue(QVariant());
+    testContextItems["Profile.Name"]->setValue(QVariant());
 
     // When the application becomes not visible, the context item updates
     // should be unsubscribed from
     m_subject->exitDisplayEvent();
-    QCOMPARE(gContextItemStub->stubCallCount("unsubscribe"), 6);
+    QCOMPARE(gContextItemStub->stubCallCount("unsubscribe"), 1);
 
-    testContextItems["Internet.NetworkType"]->setValue("WLAN");
-    testContextItems["System.WlanEnabled"]->setValue(true);
+    testContextItems["Profile.Name"]->setValue("silent");
 
     // When the application becomes not visible, the context item updates
     // should be subscribed to
     m_subject->enterDisplayEvent();
-    QCOMPARE(gContextItemStub->stubCallCount("subscribe"), 6);
+    QCOMPARE(gContextItemStub->stubCallCount("subscribe"), 1);
     QCOMPARE(spy.count(), 1);
-    QCOMPARE(m_subject->styleName().contains("WLAN"), QBool(true));
+    QCOMPARE(m_subject->styleName().contains("Silent"), QBool(true));
 }
 
 void Ut_StatusIndicator::testContextItemDeletion()
 {
     gContextItemStub->stubReset();
-    m_subject = new PhoneNetworkTypeStatusIndicator(*testContext, NULL);
+    m_subject = new ProfileStatusIndicator(*testContext, NULL);
 
     // There should be a total of four items constructed using the
     // StatusIndicator::createContextItem() call
-    QCOMPARE(gContextItemStub->stubCallCount("ContextItemConstructor"), 6);
+    QCOMPARE(gContextItemStub->stubCallCount("ContextItemConstructor"), 1);
 
     delete m_subject;
     m_subject = NULL;
 
     // There should be a total of four items deleted by the
     // StatusIndicator destructor
-    QCOMPARE(gContextItemStub->stubCallCount("ContextItemDestructor"), 6);
+    QCOMPARE(gContextItemStub->stubCallCount("ContextItemDestructor"), 1);
 }
 
 void Ut_StatusIndicator::testPhoneNetworkSignalStrength()
@@ -407,37 +406,27 @@ void Ut_StatusIndicator::testBattery()
     m_subject = new BatteryStatusIndicator(*testContext);
 
     // testing full battery
-    QList<QVariant> values;
-    values << QVariant(8) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(100);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 9);
 
     // testing empty battery
-    values.clear();
-    values << QVariant(0) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(0);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 0);
 
     // testing first non-empty battery level
-    values.clear();
-    values << QVariant(1) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(12);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 2);
 
     // testing battery somewhere between empty and full
-    values.clear();
-    values << QVariant(6) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(70);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 7);
 
     // testing battery with invalid charge bar values
-    values.clear();
-    values << QVariant(-1) << QVariant(0);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(-1);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 0);
 
@@ -448,23 +437,17 @@ void Ut_StatusIndicator::testBattery()
     QVERIFY(m_subject->styleName().indexOf("Charging") >= 0);
 
     // testing battery level when charging and battery empty
-    values.clear();
-    values << QVariant(0) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(0);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 1);
 
     // testing battery level when charging and battery non-empty
-    values.clear();
-    values << QVariant(6) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(70);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 7);
 
     // testing battery level when charging and remaining bars equal to maximum bars
-    values.clear();
-    values << QVariant(8) << QVariant(8);
-    testContextItems["Battery.ChargeBars"]->setValue(QVariant(values));
+    testContextItems["Battery.ChargePercentage"]->setValue(100);
     QVERIFY(m_subject->model()->value().type() == QVariant::Double);
     QCOMPARE(qRound(m_subject->model()->value().toDouble() * 10), 8);
 

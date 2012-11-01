@@ -27,6 +27,10 @@
 #include <MLocale>
 #include <MGConfItem>
 
+void MApplication::stdExit(int)
+{
+}
+
 // List of event type files
 QStringList eventTypeFilesList;
 
@@ -356,7 +360,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWithRemoteAction()
     TestNotificationParameters parameters("title0", "subtitle0", "buttonicon0", "content0 0 0 0");
 
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 0, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::FullEventBanner);
     QCOMPARE(infoBanner->title(), QString("title0"));
     QCOMPARE(infoBanner->subtitle(), QString("subtitle0"));
     QCOMPARE(infoBanner->iconID(), QString("buttonicon0"));
@@ -370,7 +374,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWithoutRemoteAction()
 {
     TestNotificationParameters parameters("title1", "subtitle1", "buttonicon1");
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 0, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::FullEventBanner);
     QCOMPARE(infoBanner->title(), QString("title1"));
     QCOMPARE(infoBanner->subtitle(), QString("subtitle1"));
     QCOMPARE(infoBanner->iconID(), QString("buttonicon1"));
@@ -384,7 +388,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWithSystemEvent()
     uint timestamp = QDateTime::currentDateTime().toTime_t();
     parameters.add("timestamp", timestamp);
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 0, parameters, Notification::SystemEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("SystemBanner"));
+    QCOMPARE(infoBanner->styleName(), QString("SystemBanner"));
     // Check that title is not set for system event
     QCOMPARE(infoBanner->title(), QString("subtitle1"));
     QCOMPARE(infoBanner->subtitle(), QString(""));
@@ -399,7 +403,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWithNotificationParameters
     uint timestamp = QDateTime::currentDateTime().toTime_t();
     parameters.add("timestamp", timestamp);
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification::ApplicationEvent, 1, parameters));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::FullEventBanner);
     QCOMPARE(infoBanner->title(), QString("title3"));
     QCOMPARE(infoBanner->subtitle(), QString("subtitle3"));
     QCOMPARE(infoBanner->iconID(), QString("buttonicon3"));
@@ -415,7 +419,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWhenPrivacyIsHonoredButNot
     m_subject->setHonorPrivacySetting(true);
     TestNotificationParameters parameters("title1", "subtitle1", "buttonicon1");
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 0, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::FullEventBanner);
     QCOMPARE(infoBanner->title(), QString("title1"));
     QCOMPARE(infoBanner->subtitle(), QString("subtitle1"));
     QCOMPARE(infoBanner->iconID(), QString("buttonicon1"));
@@ -427,7 +431,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWhenPrivacyIsHonoredAndEna
     gMGConfPrivateNotificationValue = true;
     TestNotificationParameters parameters("title1", "subtitle1", "buttonicon1");
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 0, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::PrivateEventBanner);
     QCOMPARE(infoBanner->title(), QString());
     QCOMPARE(infoBanner->subtitle(), QString());
     QCOMPARE(infoBanner->iconID(), QString("buttonicon1"));
@@ -440,7 +444,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWhenPrivacyIsHonoredAndEna
     TestNotificationParameters parameters("title1", "subtitle1", "buttonicon1");
     parameters.add(NotificationWidgetParameterFactory::genericTextIdKey(), "translationid");
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 0, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::PrivateEventBanner);
     QCOMPARE(infoBanner->title(), QString());
     QCOMPARE(infoBanner->subtitle(), QString());
     QCOMPARE(infoBanner->iconID(), QString("buttonicon1"));
@@ -456,7 +460,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWhenPrivacyIsHonoredAndEna
     parameters.add(NotificationWidgetParameterFactory::genericTextCatalogueKey(), catalogue);
     parameters.add(GenericNotificationParameterFactory::countKey(), "1");
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 1, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::PrivateEventBanner);
     QCOMPARE(infoBanner->title(), QString("translatedstring 1"));
     QCOMPARE(infoBanner->subtitle(), QString());
     QCOMPARE(infoBanner->iconID(), QString("buttonicon1"));
@@ -474,7 +478,7 @@ void Ut_WidgetNotificationSink::testInfoBannerCreationWhenPrivacyIsHonoredAndEna
     parameters.add(NotificationWidgetParameterFactory::genericTextCatalogueKey(), catalogue);
     parameters.add(GenericNotificationParameterFactory::countKey(), "2");
     QScopedPointer<MBanner> infoBanner(m_subject->createInfoBanner(Notification(3, 1, 2, parameters, Notification::ApplicationEvent, 1020)));
-    QCOMPARE(infoBanner->objectName(), QString("EventBanner"));
+    QCOMPARE(infoBanner->styleName(), MBannerType::PrivateEventBanner);
     QCOMPARE(infoBanner->title(), QString("translatedpluralstring 2"));
     QCOMPARE(infoBanner->subtitle(), QString());
     QCOMPARE(infoBanner->iconID(), QString("buttonicon1"));
