@@ -101,11 +101,14 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     shutdownBusinessLogic = new ShutdownBusinessLogic(this);
     new ShutdownBusinessLogicAdaptor(this, shutdownBusinessLogic);
 
-    // Create a status area renderer for rendering the shared status area pixmap
-    statusAreaRenderer = new StatusAreaRenderer(this);
-    new StatusAreaRendererAdaptor(statusAreaRenderer);
-    bus.registerService("com.meego.core.MStatusBar");
-    bus.registerObject("/statusbar", statusAreaRenderer);
+    QString statusAreaEnabled = qgetenv("M_STATUS_AREA_ENABLED");
+    if (statusAreaEnabled.isEmpty() || statusAreaEnabled.contains("1")) {
+        // Create a status area renderer for rendering the shared status area pixmap
+        statusAreaRenderer = new StatusAreaRenderer(this);
+        new StatusAreaRendererAdaptor(statusAreaRenderer);
+        bus.registerService("com.meego.core.MStatusBar");
+        bus.registerObject("/statusbar", statusAreaRenderer);
+    }
 
     // Create a status indicator menu
     statusIndicatorMenuBusinessLogic = new StatusIndicatorMenuBusinessLogic(this);
