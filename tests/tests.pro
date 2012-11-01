@@ -51,7 +51,7 @@ contains(BUILD_FEATURES,coverage) {
 support_files.commands += $$PWD/gen-tests-xml.sh > $$OUT_PWD/tests.xml
 support_files.target = support_files
 support_files.files += $$OUT_PWD/tests.xml
-support_files.path = /usr/share/system-ui-tests
+support_files.path = /opt/tests/meegotouch-systemui-tests/test-definition
 support_files.CONFIG += no_check_exist
 
 dummy_file.commands += touch $$OUT_PWD/keep_this_dir

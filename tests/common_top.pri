@@ -30,5 +30,5 @@ PKGCONFIG += dbus-1
 DEFINES += APPLICATION_EXTENSION_DIR=\'$$quote(\"$$M_APPLICATION_EXTENSION_DIR\")\'
 
 # install tests
-target.path = $$[QT_INSTALL_LIBS]/system-ui-tests
+target.path = /opt/tests/meegotouch-systemui-tests
 INSTALLS += target
