@@ -206,8 +206,7 @@ private slots:
     void setNetworkType();
 
 private:
-    ContextItem *cellularRegistrationStatus;
-    ContextItem *cellularTechnology;
+
     ContextItem *cellularDataTechnology;
     ContextItem *connectionType;
     ContextItem *connectionState;

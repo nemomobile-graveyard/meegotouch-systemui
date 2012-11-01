@@ -184,12 +184,6 @@ void PhoneNetworkSignalStrengthStatusIndicator::setNetworkStatus()
 PhoneNetworkTypeStatusIndicator::PhoneNetworkTypeStatusIndicator(ApplicationContext &context, QGraphicsItem *parent) :
         StatusIndicator(parent)
 {
-    cellularRegistrationStatus = createContextItem(context, "Cellular.RegistrationStatus");
-    connect(cellularRegistrationStatus, SIGNAL(contentsChanged()), this, SLOT(setNetworkType()));
-
-    cellularTechnology = createContextItem(context, "Cellular.Technology");
-    connect(cellularTechnology, SIGNAL(contentsChanged()), this, SLOT(setNetworkType()));
-
     cellularDataTechnology = createContextItem(context, "Cellular.DataTechnology");
     connect(cellularDataTechnology, SIGNAL(contentsChanged()), this, SLOT(setNetworkType()));
 
@@ -227,8 +221,6 @@ void PhoneNetworkTypeStatusIndicator::setNetworkAvailability(bool available)
 
 void PhoneNetworkTypeStatusIndicator::setNetworkType()
 {
-    QString regStatus = cellularRegistrationStatus->value().toString();
-    QString technology = cellularTechnology->value().toString(); //gsm umts lte
     QString dataTechnology = cellularDataTechnology->value().toString(); // gprs egprs umts hspa
     QString state = connectionState->value().toString(); // disconnected connecting connected
     QString connection = connectionType->value().toString(); // GPRS WLAN
@@ -271,14 +263,16 @@ void PhoneNetworkTypeStatusIndicator::setNetworkType()
                 postFix += "Active";
             }
         }
-        animateIfPossible = (connection == "WLAN");
+        animateIfPossible = ((connection == "WLAN" && state != "disconnected" && wlanOn) || postFix.contains("Connecting"));
     } else {
-        if (postFix.isEmpty() && (regStatus == "home" || regStatus == "roam")) {
-            if (technology == "gsm") {
-                postFix += "2G";
-            } else if (technology == "umts") {
-                postFix += "3G";
-            }
+        if (postFix.isEmpty()) {
+            postFix = postFixPacketData;
+        }
+        if (state == "connecting" && !postFix.isEmpty()) {
+            postFix += "Connecting";
+            animateIfPossible = true;
+        } else {
+            animateIfPossible = false;
         }
     }
     if (!postFix.isEmpty()) {
