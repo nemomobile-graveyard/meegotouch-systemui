@@ -38,6 +38,7 @@ HEADERS += \
     $$NOTIFICATIONSRCDIR/notificationmanager.h \
     $$SRCDIR/statusarea/statusarearenderer.h \
     $$SRCDIR/statusarea/statusarearendereradaptor.h \
+    $$SRCDIR/statusarea/statusareastyle.h \
     $$SRCDIR/applicationcontext.h \
     $$SRCDIR/statusindicatormenu/statusindicatormenubusinesslogic.h \
     $$SRCDIR/statusindicatormenu/statusindicatormenuadaptor.h \
@@ -51,5 +52,7 @@ HEADERS += \
     $$STUBSDIR/systemstatestub.h \
     $$STUBSDIR/locksstub.h \
     $$STUBSDIR/testcontextitem.h
+
+STYLE_HEADERS += $$SRCDIR/statusarea/statusareastyle.h
 
 include(../common_bot.pri)

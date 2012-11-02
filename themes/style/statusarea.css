@@ -1,4 +1,5 @@
 StatusAreaStyle {
+    status-area-enabled: true;
     minimum-size: 100% 7.2mm;
     preferred-size: 100% 7.2mm;
     maximum-size: 100% 7.2mm;

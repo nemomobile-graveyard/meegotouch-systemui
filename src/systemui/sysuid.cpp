@@ -31,6 +31,7 @@
 #include "statusarearendereradaptor.h"
 #include "screenlockbusinesslogic.h"
 #include "shutdownbusinesslogic.h"
+#include "statusareastyle.h"
 #include "statusarearenderer.h"
 #include "statusindicatormenubusinesslogic.h"
 #include "statusindicatormenuadaptor.h"
@@ -101,14 +102,15 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     shutdownBusinessLogic = new ShutdownBusinessLogic(this);
     new ShutdownBusinessLogicAdaptor(this, shutdownBusinessLogic);
 
-    QString statusAreaEnabled = qgetenv("M_STATUS_AREA_ENABLED");
-    if (statusAreaEnabled.isEmpty() || statusAreaEnabled.contains("1")) {
+    const StatusAreaStyle *style = static_cast<const StatusAreaStyle *>(MTheme::style("StatusAreaStyle"));
+    if (style->statusAreaEnabled()) {
         // Create a status area renderer for rendering the shared status area pixmap
         statusAreaRenderer = new StatusAreaRenderer(this);
         new StatusAreaRendererAdaptor(statusAreaRenderer);
         bus.registerService("com.meego.core.MStatusBar");
         bus.registerObject("/statusbar", statusAreaRenderer);
     }
+    MTheme::releaseStyle(style);
 
     // Create a status indicator menu
     statusIndicatorMenuBusinessLogic = new StatusIndicatorMenuBusinessLogic(this);

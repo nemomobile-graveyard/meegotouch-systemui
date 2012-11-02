@@ -26,6 +26,9 @@ class StatusAreaStyle : public MWidgetStyle
 {
     Q_OBJECT
     M_STYLE(StatusAreaStyle)
+
+    //! Whether the status area should be enabled or not
+    M_STYLE_ATTRIBUTE(bool, statusAreaEnabled, StatusAreaEnabled)
 };
 
 class StatusAreaStyleContainer : public MWidgetStyleContainer
