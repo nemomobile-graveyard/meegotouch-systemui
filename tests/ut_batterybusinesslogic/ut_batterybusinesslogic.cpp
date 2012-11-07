@@ -108,7 +108,7 @@ void Ut_BatteryBusinessLogic::testLowBatteryAlert()
     m_logic->lowBatteryAlert();
 
     QCOMPARE(mNotificationEventTypes.count(), 1);
-    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery.lowbattery"));
+    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery.lowbattery"));
     QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_lowbatt"));
     QCOMPARE(mNotificationSummaries.at(0), QString());
     QCOMPARE(mNotificationImages.at(0), QString());
@@ -127,7 +127,7 @@ void Ut_BatteryBusinessLogic::testBatteryStateChanged()
     m_logic->batteryStateChanged(MeeGo::QmBattery::StateFull);
 
     QCOMPARE(mNotificationEventTypes.count(), 1);
-    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery.chargingcomplete"));
+    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery.chargingcomplete"));
     QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_charcomp"));
     QCOMPARE(mNotificationSummaries.at(0), QString());
     QCOMPARE(mNotificationImages.at(0), QString());
@@ -143,7 +143,7 @@ void Ut_BatteryBusinessLogic::testBatteryStateChanged()
     m_logic->batteryStateChanged(MeeGo::QmBattery::StateEmpty);
 
     QCOMPARE(mNotificationEventTypes.count(), 2);
-    QCOMPARE(mNotificationEventTypes.at(1), QString("x-nokia.battery.recharge"));
+    QCOMPARE(mNotificationEventTypes.at(1), QString("x-nemo.battery.recharge"));
     QCOMPARE(mNotificationBodies.at(1), qtTrId("qtn_ener_rebatt"));
     QCOMPARE(mNotificationSummaries.at(1), QString());
     QCOMPARE(mNotificationImages.at(1), QString());
@@ -188,7 +188,7 @@ void Ut_BatteryBusinessLogic::testChargingStateChanged()
         m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
 
         QCOMPARE(mNotificationEventTypes.count(), 1);
-        QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery"));
+        QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery"));
         QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_charging"));
         QCOMPARE(mNotificationSummaries.at(0), QString());
         QCOMPARE(mNotificationImages.at(0), m_logic->chargingImageId());
@@ -210,7 +210,7 @@ void Ut_BatteryBusinessLogic::testChargingStateChanged()
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateChargingFailed);
 
     QCOMPARE(mNotificationEventTypes.count(), 1);
-    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery.chargingnotstarted"));
+    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery.chargingnotstarted"));
     QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_repcharger"));
     QCOMPARE(mNotificationSummaries.at(0), QString());
     QCOMPARE(mNotificationImages.at(0), QString());
@@ -220,7 +220,7 @@ void Ut_BatteryBusinessLogic::testChargingStateChanged()
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
 
     QCOMPARE(mNotificationEventTypes.count(), 2);
-    QCOMPARE(mNotificationEventTypes.at(1), QString("x-nokia.battery.notenoughpower"));
+    QCOMPARE(mNotificationEventTypes.at(1), QString("x-nemo.battery.notenoughpower"));
     QCOMPARE(mNotificationBodies.at(1), qtTrId("qtn_ener_nopowcharge"));
     QCOMPARE(mNotificationSummaries.at(1), QString());
     QCOMPARE(mNotificationImages.at(1), QString("icon-m-energy-management-insufficient-power"));
@@ -242,7 +242,7 @@ void Ut_BatteryBusinessLogic::testBatteryChargerEvent()
 
     /* Look for the notification: "Disconnect the charger from..." */
     QCOMPARE(mNotificationEventTypes.count(), 1);
-    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery.removecharger"));
+    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery.removecharger"));
     QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_remcha"));
     QCOMPARE(mNotificationSummaries.at(0), QString());
     QCOMPARE(mNotificationImages.at(0), QString());
@@ -270,7 +270,7 @@ void Ut_BatteryBusinessLogic::testPSMStateChanged()
     m_logic->devicePSMStateChanged(MeeGo::QmDeviceMode::PSMStateOn);
 
     QCOMPARE(mNotificationEventTypes.count(), 1);
-    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery.enterpsm"));
+    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery.enterpsm"));
     QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_ent_psnote"));
     QCOMPARE(mNotificationSummaries.at(0), QString());
     QCOMPARE(mNotificationImages.at(0), m_logic->chargingImageId());
@@ -279,7 +279,7 @@ void Ut_BatteryBusinessLogic::testPSMStateChanged()
     m_logic->devicePSMStateChanged(MeeGo::QmDeviceMode::PSMStateOff);
 
     QCOMPARE(mNotificationEventTypes.count(), 2);
-    QCOMPARE(mNotificationEventTypes.at(1), QString("x-nokia.battery.exitpsm"));
+    QCOMPARE(mNotificationEventTypes.at(1), QString("x-nemo.battery.exitpsm"));
     QCOMPARE(mNotificationBodies.at(1), qtTrId("qtn_ener_exit_psnote"));
     QCOMPARE(mNotificationSummaries.at(1), QString());
     QCOMPARE(mNotificationImages.at(1), m_logic->chargingImageId());
@@ -332,14 +332,14 @@ void Ut_BatteryBusinessLogic::testWhenChargingStopsThenNotificationRemoved()
 #ifdef HAVE_QMSYSTEM
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
     QCOMPARE(mNotificationEventTypes.count(), 1);
-    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nokia.battery"));
+    QCOMPARE(mNotificationEventTypes.at(0), QString("x-nemo.battery"));
     QCOMPARE(mNotificationBodies.at(0), qtTrId("qtn_ener_charging"));
     QCOMPARE(mNotificationSummaries.at(0), QString());
     QCOMPARE(mNotificationImages.at(0), m_logic->chargingImageId());
 
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateNotCharging);
     QVERIFY(gMNotificationRemoveEventType.count() > 0);
-    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery"));
+    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nemo.battery"));
     QCOMPARE(m_logic->notificationTimer.isActive(), false);
 #endif
 }
@@ -351,14 +351,14 @@ void Ut_BatteryBusinessLogic::testWhenChargingStopsWhenConnectedToWallChargerThe
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
     m_logic->batteryChargerEvent(MeeGo::QmBattery::None);
     QVERIFY(gMNotificationRemoveEventType.count() > 0);
-    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery"));
+    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nemo.battery"));
 
     m_logic->batteryChargerEvent(MeeGo::QmBattery::Wall);
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
     m_logic->batteryStateChanged(MeeGo::QmBattery::StateFull);
     m_logic->batteryChargerEvent(MeeGo::QmBattery::None);
     QVERIFY(gMNotificationRemoveEventType.count() > 0);
-    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery.chargingcomplete"));
+    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nemo.battery.chargingcomplete"));
 #endif
 }
 
@@ -380,7 +380,7 @@ void Ut_BatteryBusinessLogic::testWhenChargingStartsWhenRemoveChargerNotifiedThe
     m_logic->batteryChargerEvent(MeeGo::QmBattery::None);
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
     QVERIFY(gMNotificationRemoveEventType.count() > 0);
-    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery.removecharger"));
+    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nemo.battery.removecharger"));
 #endif
 }
 
@@ -401,7 +401,7 @@ void Ut_BatteryBusinessLogic::testWhenStateChargingLowBatteryNotificationRemoved
     m_logic->batteryChargerEvent(MeeGo::QmBattery::Wall);
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
     QVERIFY(gMNotificationRemoveEventType.count() > 0);
-    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery.lowbattery"));
+    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nemo.battery.lowbattery"));
 #endif
 }
 
@@ -412,7 +412,7 @@ void Ut_BatteryBusinessLogic::testWhenBatteryFullWhenChargingNotifiedThenNotific
     m_logic->chargingStateChanged(MeeGo::QmBattery::StateCharging);
     m_logic->batteryStateChanged(MeeGo::QmBattery::StateFull);
     QVERIFY(gMNotificationRemoveEventType.count() > 0);
-    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nokia.battery"));
+    QCOMPARE(gMNotificationRemoveEventType.last(), QString("x-nemo.battery"));
 #endif
 }
 

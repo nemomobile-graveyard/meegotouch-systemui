@@ -78,13 +78,13 @@ void BatteryBusinessLogic::chargingStateChanged(MeeGo::QmBattery::ChargingState 
             // The low battery notifications should not be sent when the battery is charging
             stopLowBatteryNotifier();
 
-            removeNotification(QStringList() << "x-nokia.battery.removecharger" << "x-nokia.battery.chargingcomplete" << "x-nokia.battery.lowbattery");
+            removeNotification(QStringList() << "x-nemo.battery.removecharger" << "x-nemo.battery.chargingcomplete" << "x-nemo.battery.lowbattery");
             sendNotification(NotificationCharging);
         }
         break;
 
     case MeeGo::QmBattery::StateNotCharging:
-        removeNotification(QStringList() << "x-nokia.battery");
+        removeNotification(QStringList() << "x-nemo.battery");
         utiliseLED(false, QString("PatternBatteryCharging"));
         break;
 
@@ -99,7 +99,7 @@ void BatteryBusinessLogic::batteryStateChanged(MeeGo::QmBattery::BatteryState st
     switch(state) {
     case MeeGo::QmBattery::StateFull:
         stopLowBatteryNotifier();
-        removeNotification(QStringList() << "x-nokia.battery");
+        removeNotification(QStringList() << "x-nemo.battery");
         sendNotification(NotificationChargingComplete);
         break;
 
@@ -135,7 +135,7 @@ void BatteryBusinessLogic::batteryChargerEvent(MeeGo::QmBattery::ChargerType typ
          * charging the device.
          */
         if (chargerType == MeeGo::QmBattery::Wall) {
-            removeNotification(QStringList() << "x-nokia.battery" << "x-nokia.battery.chargingcomplete");
+            removeNotification(QStringList() << "x-nemo.battery" << "x-nemo.battery.chargingcomplete");
             sendNotification(NotificationRemoveCharger);
         }
 
@@ -190,57 +190,57 @@ void BatteryBusinessLogic::sendNotification(BatteryBusinessLogic::NotificationID
     switch(id) {
     case NotificationCharging:
         utiliseLED(true, QString("PatternBatteryCharging"));
-        sendNotification("x-nokia.battery",
+        sendNotification("x-nemo.battery",
                 //% "Charging"
                 qtTrId("qtn_ener_charging"), chargingImageId());
         break;
 
     case NotificationChargingComplete:
         utiliseLED(true, QString("PatternBatteryFull"));
-        sendNotification("x-nokia.battery.chargingcomplete",
+        sendNotification("x-nemo.battery.chargingcomplete",
                 //% "Charging complete"
                 qtTrId("qtn_ener_charcomp"));
         break;
 
     case NotificationRemoveCharger:
-        sendNotification("x-nokia.battery.removecharger",
+        sendNotification("x-nemo.battery.removecharger",
                 //% "Disconnect charger from power supply to save energy"
                 qtTrId("qtn_ener_remcha"));
         break;
 
     case NotificationChargingNotStarted:
         utiliseLED(false, QString("PatternBatteryCharging"));
-        sendNotification("x-nokia.battery.chargingnotstarted",
+        sendNotification("x-nemo.battery.chargingnotstarted",
                 //% "Charging not started. Replace charger."
                 qtTrId("qtn_ener_repcharger"));
         break;
 
     case NotificationRechargeBattery:
-        sendNotification("x-nokia.battery.recharge",
+        sendNotification("x-nemo.battery.recharge",
                 //% "Recharge battery"
                 qtTrId("qtn_ener_rebatt"));
         break;
 
     case NotificationEnteringPSM:
-        sendNotification("x-nokia.battery.enterpsm",
+        sendNotification("x-nemo.battery.enterpsm",
                 //% "Entering power save mode"
                 qtTrId("qtn_ener_ent_psnote"), chargingImageId());
         break;
 
     case NotificationExitingPSM:
-        sendNotification("x-nokia.battery.exitpsm",
+        sendNotification("x-nemo.battery.exitpsm",
                 //% "Exiting power save mode"
                 qtTrId("qtn_ener_exit_psnote"), chargingImageId());
         break;
 
     case NotificationLowBattery:
-        sendNotification("x-nokia.battery.lowbattery",
+        sendNotification("x-nemo.battery.lowbattery",
                 //% "Low battery"
                 qtTrId("qtn_ener_lowbatt"));
         break;
 
     case NotificationNoEnoughPower:
-        sendNotification("x-nokia.battery.notenoughpower",
+        sendNotification("x-nemo.battery.notenoughpower",
                 //% "Not enough power to charge"
                 qtTrId("qtn_ener_nopowcharge"), "icon-m-energy-management-insufficient-power");
         break;

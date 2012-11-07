@@ -159,7 +159,7 @@ void Ut_DiskSpaceNotifier::testConstruction()
 {
     delete m_subject;
 
-    // Check that the constructor destroys only any previous notifications of type x-nokia.system-memusage
+    // Check that the constructor destroys only any previous notifications of type x-nemo.system-memusage
     mNotificationNotificationsCount = 5;
     m_subject = new DiskSpaceNotifier();
     QCOMPARE(mNotificationsCreated, mNotificationNotificationsCount);
@@ -169,7 +169,7 @@ void Ut_DiskSpaceNotifier::testConstruction()
 
     mNotificationsCreated = 0;
     mNotificationsDestroyed = 0;
-    mNotificationEventType = "x-nokia.system-memusage";
+    mNotificationEventType = "x-nemo.system-memusage";
     m_subject = new DiskSpaceNotifier();
     QCOMPARE(mNotificationsCreated, mNotificationNotificationsCount);
     QCOMPARE(mNotificationsRemoved, mNotificationNotificationsCount);

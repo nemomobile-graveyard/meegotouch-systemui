@@ -41,11 +41,11 @@ dbus-send --print-reply --dest=com.meego.core.MNotificationManager /notification
 
 sleep $SLEEPTIME; # wait for a while
 echo "******************************************* Test call from 'John Doe'"
-dbus-send --print-reply --dest=com.meego.core.MNotificationManager /notificationmanager com.meego.core.MNotificationManager.addNotification uint32:1000 uint32:0 string:'x-nokia.call' string:'John Doe' string:'Incoming call' string:'' string:'' uint32:0
+dbus-send --print-reply --dest=com.meego.core.MNotificationManager /notificationmanager com.meego.core.MNotificationManager.addNotification uint32:1000 uint32:0 string:'x-nemo.call' string:'John Doe' string:'Incoming call' string:'' string:'' uint32:0
 
 sleep $SLEEPTIME; # wait for a while
 echo "******************************************* Test SMS from 'Santa Claus'"
-dbus-send --print-reply --dest=com.meego.core.MNotificationManager /notificationmanager com.meego.core.MNotificationManager.addNotification uint32:1000 uint32:0 string:'x-nokia.message.arrived' string:'Santa Claus' string:'Happy christmas!' string:'' string:'' uint32:0
+dbus-send --print-reply --dest=com.meego.core.MNotificationManager /notificationmanager com.meego.core.MNotificationManager.addNotification uint32:1000 uint32:0 string:'x-nemo.message.arrived' string:'Santa Claus' string:'Happy christmas!' string:'' string:'' uint32:0
 
 sleep $SLEEPTIME; # wait for a while
 echo "******************************************* Test instant message from 'Bill Gates'"

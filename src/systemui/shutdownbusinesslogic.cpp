@@ -92,13 +92,13 @@ void ShutdownBusinessLogic::createAndPublishNotification(const QString &type, co
 void ShutdownBusinessLogic::thermalShutdown()
 {
     //% "Temperature too high. Device shutting down."
-    createAndPublishNotification("x-nokia.battery.temperature","", qtTrId("qtn_shut_high_temp"));
+    createAndPublishNotification("x-nemo.battery.temperature","", qtTrId("qtn_shut_high_temp"));
 }
 
 void ShutdownBusinessLogic::batteryShutdown()
 {
     //% "Battery empty. Device shutting down."
-    createAndPublishNotification("x-nokia.battery.shutdown", "", qtTrId("qtn_shut_batt_empty"));
+    createAndPublishNotification("x-nemo.battery.shutdown", "", qtTrId("qtn_shut_batt_empty"));
 }
 
 void ShutdownBusinessLogic::shutdownDeniedUSB()
