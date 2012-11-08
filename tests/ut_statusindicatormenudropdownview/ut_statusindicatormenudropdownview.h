@@ -57,8 +57,6 @@ private slots:
     void testPannableAreaBackgroundWidget();
     void testTopRowInitialization();
     void testVerticalExtensionArea();
-    void testWhenNotificationAreaIsDisabledInStyleThenNotificationAreaIsNotCreated();
-    void testWhenNotificationAreaIsEnabledInStyleThenNotificationAreaIsCreated();
     void testWhenWidgetEntersDisplayThenExtensionAreasGetInitialized();
     void testWhenViewIsConstructedThenTimerIsStartedForEnsuringViewability();
     void testCreatedItemsAreRemovedFromTheControllerAndTheScene();

@@ -29,7 +29,6 @@
 class QGraphicsSceneMouseEvent;
 class QGraphicsLinearLayout;
 class MPannableViewport;
-class NotificationArea;
 class MPannableViewport;
 class MApplicationExtensionArea;
 class StatusIndicatorMenuWindow;
@@ -111,14 +110,14 @@ class StatusIndicatorMenuDropDownView : public MSceneWindowView
 
 public:
     /*!
-     * Constructs a view for a notification area.
+     * Constructs a view for a status indicator menu.
      *
      * \param controller the controller of this StatusIndicatorMenuDropDownView
      */
     StatusIndicatorMenuDropDownView(StatusIndicatorMenu *controller);
 
     /*!
-     * Destroys the notification area view.
+     * Destroys the status indicator menu view.
      */
     virtual ~StatusIndicatorMenuDropDownView();
 

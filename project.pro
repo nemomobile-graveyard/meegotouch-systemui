@@ -4,7 +4,6 @@ include(shared.pri)
 TEMPLATE = subdirs
 
 addSubDirs(src)
-addSubDirs(mkspecs)
 addSubDirs(themes)
 addSubDirs(translations)
 addSubDirs(demos)

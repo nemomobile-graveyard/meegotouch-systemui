@@ -35,11 +35,7 @@
 #include "statusarearenderer.h"
 #include "statusindicatormenubusinesslogic.h"
 #include "statusindicatormenuadaptor.h"
-#include "notificationmanager.h"
-#include "mcompositornotificationsink.h"
-#include "ngfnotificationsink.h"
 #include "contextframeworkcontext.h"
-#include "notificationstatusindicatorsink.h"
 #include "closeeventeater.h"
 #include "diskspacenotifier.h"
 #include <QX11Info>
@@ -50,7 +46,6 @@ static const char *SYSTEMUI_DBUS_SERVICE = "com.nokia.systemui";
 static const char *SYSTEMUI_DBUS_PATH = "/";
 static const char *SCREENLOCK_DBUS_SERVICE = "com.nokia.system_ui";
 static const char *SCREENLOCK_DBUS_PATH = "/com/nokia/system_ui/request";
-static int NOTIFICATION_RELAY_INTERVAL = 5000;
 
 Sysuid::Sysuid(QObject* parent) : QObject(parent)
 {
@@ -70,34 +65,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
         abort();
     }
 
-    // Initialize notification system
-    notificationManager = new NotificationManager(NOTIFICATION_RELAY_INTERVAL);
-    mCompositorNotificationSink = new MCompositorNotificationSink;
-    ngfNotificationSink = new NGFNotificationSink;
-    notificationStatusIndicatorSink_ = new NotificationStatusIndicatorSink;
-
-    // Connect the notification signals for the compositor notification sink
-    connect(notificationManager, SIGNAL(notificationUpdated(const Notification &)), mCompositorNotificationSink, SLOT(addNotification(const Notification &)));
-    connect(notificationManager, SIGNAL(notificationRemoved(uint)), mCompositorNotificationSink, SLOT(removeNotification(uint)));
-    connect(mCompositorNotificationSink, SIGNAL(notificationRemovalRequested(uint)), notificationManager, SLOT(removeNotification(uint)));
-
-    // Connect the notification signals for the feedback notification sink
-    connect(notificationManager, SIGNAL(notificationUpdated(const Notification &)), ngfNotificationSink, SLOT(addNotification(const Notification &)));
-    connect(notificationManager, SIGNAL(notificationRemoved(uint)), ngfNotificationSink, SLOT(removeNotification(uint)));
-
-    // Connect the notification signals for the notification status indicator sink
-    connect(notificationManager, SIGNAL(notificationUpdated(const Notification &)), notificationStatusIndicatorSink_, SLOT(addNotification(const Notification &)));
-    connect(notificationManager, SIGNAL(notificationRemoved(uint)), notificationStatusIndicatorSink_, SLOT(removeNotification(uint)));
-    connect(notificationManager, SIGNAL(notificationRestored(const Notification &)), notificationStatusIndicatorSink_, SLOT(addNotification(const Notification &)));
-    connect(notificationManager, SIGNAL(groupUpdated(uint, const NotificationParameters &)), notificationStatusIndicatorSink_, SLOT(addGroup(uint, const NotificationParameters &)));
-
-    // Subscribe to a context property for getting information about the video recording status
-    ContextFrameworkContext context;
-    useMode = QSharedPointer<ContextItem>(context.createContextItem("/com/nokia/policy/camera"));
-    useMode.data()->subscribe();
-    connect(useMode.data(), SIGNAL(contentsChanged()), this, SLOT(applyUseMode()));
-    applyUseMode();
-
     // Create shut down UI
     shutdownBusinessLogic = new ShutdownBusinessLogic(this);
     new ShutdownBusinessLogicAdaptor(this, shutdownBusinessLogic);
@@ -114,7 +81,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
 
     // Create a status indicator menu
     statusIndicatorMenuBusinessLogic = new StatusIndicatorMenuBusinessLogic(this);
-    connect(statusIndicatorMenuBusinessLogic, SIGNAL(statusIndicatorMenuVisibilityChanged(bool)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
     new StatusIndicatorMenuAdaptor(statusIndicatorMenuBusinessLogic);
     bus.registerService("com.meego.core.MStatusIndicatorMenu");
     bus.registerObject("/statusindicatormenu", statusIndicatorMenuBusinessLogic);
@@ -122,8 +88,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     // Create screen lock business logic
     screenLockBusinessLogic = new ScreenLockBusinessLogic(this);
     new ScreenLockBusinessLogicAdaptor(screenLockBusinessLogic);
-    connect(screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
-    connect(screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), mCompositorNotificationSink, SLOT(setTouchScreenLockActive(bool)));
 
     // MCE expects the service to be registered on the system bus
     QDBusConnection systemBus = QDBusConnection::systemBus();
@@ -134,20 +98,11 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
         qWarning("Unable to register screen lock object at path %s: %s", SCREENLOCK_DBUS_PATH, systemBus.lastError().message().toUtf8().constData());
     }
 
-    // Update the enabled status of compositor notification sink based on screen and device locks
-#ifdef HAVE_QMSYSTEM
-    connect(&qmLocks, SIGNAL(stateChanged(MeeGo::QmLocks::Lock, MeeGo::QmLocks::State)), this, SLOT(updateCompositorNotificationSinkEnabledStatus()));
-#endif
-    updateCompositorNotificationSinkEnabledStatus();
-
     // Create an extension area for the volume extension
     volumeExtensionArea = new MApplicationExtensionArea("com.meego.core.VolumeExtensionInterface/0.20");
     volumeExtensionArea->setInProcessFilter(QRegExp("/sysuid-volume.desktop$"));
     volumeExtensionArea->setOutOfProcessFilter(QRegExp("$^"));
     volumeExtensionArea->init();
-
-    // Initialize notifications store after all the signal connections are made to the notification sinks but before any components that may send/remove notifications
-    notificationManager->initializeStore();
 
     // Create components that may create or remove notifications
     batteryBusinessLogic = new BatteryBusinessLogic(this);
@@ -163,10 +118,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
 
 Sysuid::~Sysuid()
 {
-    delete notificationStatusIndicatorSink_;
-    delete ngfNotificationSink;
-    delete mCompositorNotificationSink;
-    delete notificationManager;
     delete volumeExtensionArea;
     instance_ = 0;
 }
@@ -188,7 +139,6 @@ void Sysuid::loadTranslations()
     locale.installTrCatalog("profiles");
     locale.installTrCatalog("screenlock");
     locale.installTrCatalog("status");
-    locale.installTrCatalog("notification");
     locale.installTrCatalog("connectivity");
     locale.installTrCatalog("volume");
     locale.installTrCatalog("memory-usage");
@@ -198,31 +148,4 @@ void Sysuid::loadTranslations()
     locale.installTrCatalog("systemui");
 
     MLocale::setDefault(locale);
-}
-
-NotificationManagerInterface &Sysuid::notificationManagerInterface()
-{
-    return *notificationManager;
-}
-
-NotificationStatusIndicatorSink& Sysuid::notificationStatusIndicatorSink()
-{
-    return *notificationStatusIndicatorSink_;
-}
-
-void Sysuid::applyUseMode()
-{
-    bool videoRecording = useMode->value().toString() == "videorecording";
-
-    mCompositorNotificationSink->setApplicationEventsEnabled(!videoRecording);
-    ngfNotificationSink->setApplicationEventsEnabled(!videoRecording);
-}
-
-void Sysuid::updateCompositorNotificationSinkEnabledStatus()
-{
-    mCompositorNotificationSink->setApplicationEventsDisabled(statusIndicatorMenuBusinessLogic->isStatusIndicatorMenuVisible() || screenLockBusinessLogic->isScreenLocked()
-#ifdef HAVE_QMSYSTEM
-                                             || qmLocks.getState(MeeGo::QmLocks::Device) == MeeGo::QmLocks::Locked
-#endif
-                                             );
 }

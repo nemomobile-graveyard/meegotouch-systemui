@@ -824,21 +824,6 @@ void Ut_StatusIndicator::testCallForwarding()
     QVERIFY(m_subject->styleName().indexOf("Set") >= 0);
 }
 
-void Ut_StatusIndicator::testNotification()
-{
-    NotificationStatusIndicator *statusIndicator = new NotificationStatusIndicator;
-    m_subject = statusIndicator;
-    QCOMPARE(m_subject->styleName().contains("Disabled"), QBool(true));
-
-    statusIndicator->setIconID("test");
-    QVERIFY(statusIndicator->model()->value().type() == QVariant::String);
-    QCOMPARE(statusIndicator->model()->value(), QVariant("test"));
-    QCOMPARE(m_subject->styleName().contains("Disabled"), QBool(false));
-
-    statusIndicator->setIconID(QString());
-    QCOMPARE(m_subject->styleName().contains("Disabled"), QBool(true));
-}
-
 void Ut_StatusIndicator::testDLNA()
 {
     m_subject = new DLNAStatusIndicator(*testContext);

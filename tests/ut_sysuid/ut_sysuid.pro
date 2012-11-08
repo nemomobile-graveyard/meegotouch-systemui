@@ -1,7 +1,7 @@
 include(../coverage.pri)
 include(../common_top.pri)
 TARGET = ut_sysuid
-INCLUDEPATH += $$SRCDIR/statusarea $$LIBNOTIFICATIONSRCDIR $$NOTIFICATIONSRCDIR $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol $$SRCDIR/screenlock
+INCLUDEPATH += $$SRCDIR/statusarea $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol $$SRCDIR/screenlock
 INCLUDEPATH += /usr/include/contextsubscriber /usr/include/resource/qt4
 
 PKGCONFIG += dbus-1
@@ -29,13 +29,6 @@ HEADERS += \
     $$SRCDIR/screenlock/screenlockbusinesslogicadaptor.h \
     $$SRCDIR/sysuid.h \
     $$SRCDIR/contextframeworkcontext.h \
-    $$NOTIFICATIONSRCDIR/eventtypestore.h \
-    $$LIBNOTIFICATIONSRCDIR/notificationsink.h \
-    $$NOTIFICATIONSRCDIR/widgetnotificationsink.h \
-    $$NOTIFICATIONSRCDIR/mcompositornotificationsink.h \
-    $$NOTIFICATIONSRCDIR/ngfnotificationsink.h \
-    $$NOTIFICATIONSRCDIR/notificationstatusindicatorsink.h \
-    $$NOTIFICATIONSRCDIR/notificationmanager.h \
     $$SRCDIR/statusarea/statusarearenderer.h \
     $$SRCDIR/statusarea/statusarearendereradaptor.h \
     $$SRCDIR/statusarea/statusareastyle.h \

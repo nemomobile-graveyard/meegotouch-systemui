@@ -30,11 +30,7 @@ class SysuidStub : public StubBase {
   virtual void SysuidConstructor(QObject *parent);
   virtual void SysuidDestructor();
   virtual Sysuid * sysuid();
-  virtual NotificationManagerInterface & notificationManagerInterface();
-  virtual NotificationStatusIndicatorSink & notificationStatusIndicatorSink();
   virtual void loadTranslations();
-  virtual void applyUseMode();
-  virtual void updateCompositorNotificationSinkEnabledStatus();
 }; 
 
 // 2. IMPLEMENT STUB
@@ -52,27 +48,8 @@ Sysuid * SysuidStub::sysuid() {
   return stubReturnValue<Sysuid *>("sysuid");
 }
 
-NotificationManagerInterface & SysuidStub::notificationManagerInterface() {
-  stubMethodEntered("notificationManagerInterface");
-  return *stubReturnValue<NotificationManagerInterface *>("notificationManagerInterface");
-}
-
-NotificationStatusIndicatorSink & SysuidStub::notificationStatusIndicatorSink() {
-  stubMethodEntered("notificationStatusIndicatorSink");
-  return *stubReturnValue<NotificationStatusIndicatorSink *>("notificationStatusIndicatorSink");
-}
-
 void SysuidStub::loadTranslations() {
   stubMethodEntered("loadTranslations");
-}
-
-void SysuidStub::applyUseMode() {
-    stubMethodEntered("applyUseMode");
-}
-
-void SysuidStub::updateCompositorNotificationSinkEnabledStatus()
-{
-    stubMethodEntered("updateCompositorNotificationSinkEnabledStatus");
 }
 
 
@@ -84,9 +61,8 @@ SysuidStub* gSysuidStub = &gDefaultSysuidStub;
 // 4. CREATE A PROXY WHICH CALLS THE STUB
 Sysuid::Sysuid(QObject* parent) :
     batteryBusinessLogic (0), shutdownBusinessLogic (0),
-    usbUi (0), statusAreaRenderer (0), statusIndicatorMenuBusinessLogic (0), notificationManager (0),
-    mCompositorNotificationSink (0), ngfNotificationSink (0),
-    notificationStatusIndicatorSink_(0), screenLockBusinessLogic(0),
+    usbUi (0), statusAreaRenderer (0), statusIndicatorMenuBusinessLogic (0),
+    screenLockBusinessLogic(0),
     volumeExtensionArea (0)
 {
   gSysuidStub->SysuidConstructor(parent);
@@ -100,24 +76,8 @@ Sysuid * Sysuid::instance() {
   return gSysuidStub->sysuid();
 }
 
-NotificationManagerInterface & Sysuid::notificationManagerInterface() {
-  return gSysuidStub->notificationManagerInterface();
-}
-
-NotificationStatusIndicatorSink & Sysuid::notificationStatusIndicatorSink() {
-  return gSysuidStub->notificationStatusIndicatorSink();
-}
-
 void Sysuid::loadTranslations() {
   gSysuidStub->loadTranslations();
-}
-
-void Sysuid::applyUseMode() {
-  gSysuidStub->applyUseMode();
-}
-
-void Sysuid::updateCompositorNotificationSinkEnabledStatus() {
-  gSysuidStub->updateCompositorNotificationSinkEnabledStatus();
 }
 
 #endif

@@ -15,12 +15,10 @@ CONFIG += meegotouch \
 
 QT += dbus gui meegographicssystemhelper
 
-INCLUDEPATH += ../libnotificationsystem
 QMAKE_LIBDIR += ../../lib
-LIBS += -lnotificationsystem -lX11 -lXdamage -lmeegotouchviews
+LIBS += -lX11 -lXdamage -lmeegotouchviews
 
 SYSTEMUI_SOURCE_DIR = .
-DEFINES += NOTIFICATIONS_EVENT_TYPES=\'$$quote(\"$$M_NOTIFICATIONS_EVENT_TYPES_DIR\")\'
 
 contains(cov, true) {
     message("Coverage options enabled")
@@ -63,8 +61,8 @@ SOURCES +=                              \
 
 include(statusindicatormenu/statusindicatormenu.pri)
 include(statusarea/statusarea.pri)
-include(notifications/notifications.pri)
 include(screenlock/screenlock.pri)
+include(notificationcategories/notificationcategories.pri)
 include(../../localconfig.pri)
 
 contains(DEFINES, HAVE_CONTEXTSUBSCRIBER) {

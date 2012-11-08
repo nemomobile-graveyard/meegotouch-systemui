@@ -27,7 +27,6 @@
 #include <QGraphicsLinearLayout>
 #include <QGraphicsSceneMouseEvent>
 #include <mscenewindowview.h>
-#include "notificationarea.h"
 #include "statusindicatormenu.h"
 #include "statusindicatormenuverticalview.h"
 
