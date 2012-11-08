@@ -22,7 +22,6 @@
 #include "statusindicator.h"
 #include "clock.h"
 #include "contextframeworkcontext.h"
-#include "notificationstatusindicatorsink.h"
 #include "inputmethodstatusindicatoradaptor.h"
 #include "sysuid.h"
 #include <QGraphicsLinearLayout>
@@ -60,8 +59,6 @@ StatusAreaView::StatusAreaView(StatusArea *controller) :
     portraitCallIndicator(new CallStatusIndicator(contextFrameworkContext, controller)),
     landscapeTetheringIndicator(new TetheringStatusIndicator(contextFrameworkContext, controller)),
     portraitTetheringIndicator(new TetheringStatusIndicator(contextFrameworkContext, controller)),
-    landscapeNotificationIndicator(new NotificationStatusIndicator(controller)),
-    portraitNotificationIndicator(new NotificationStatusIndicator(controller)),
     landscapeCallForwardingIndicator(new CallForwardingStatusIndicator(contextFrameworkContext, controller)),
     portraitCallForwardingIndicator(new CallForwardingStatusIndicator(contextFrameworkContext, controller)),
     landscapeDLNAIndicator(new DLNAStatusIndicator(contextFrameworkContext, controller)),
@@ -109,10 +106,6 @@ StatusAreaView::StatusAreaView(StatusArea *controller) :
     landscapePhoneNetworkIndicator->setObjectName(QString(landscapePhoneNetworkIndicator->metaObject()->className()) + "Landscape");
     portraitPhoneNetworkIndicator->setObjectName(QString(portraitPhoneNetworkIndicator->metaObject()->className()) + "Portrait");
 
-    // Connect notification signals
-    connect(&Sysuid::instance()->notificationStatusIndicatorSink(), SIGNAL(iconIdChanged(QString)), landscapeNotificationIndicator, SLOT(setIconID(QString)));
-    connect(&Sysuid::instance()->notificationStatusIndicatorSink(), SIGNAL(iconIdChanged(QString)), portraitNotificationIndicator, SLOT(setIconID(QString)));
-
     // Set up the class for functional testing
     setupTestability();
 }
@@ -141,8 +134,6 @@ void StatusAreaView::setupTestability()
     portraitCallIndicator->setParent(portraitWidget);
     landscapeTetheringIndicator->setParent(landscapeWidget);
     portraitTetheringIndicator->setParent(portraitWidget);
-    landscapeNotificationIndicator->setParent(landscapeWidget);
-    portraitNotificationIndicator->setParent(portraitWidget);
     landscapeClock->setParent(landscapeWidget);
     portraitClock->setParent(portraitWidget);
     landscapeCallForwardingIndicator->setParent(landscapeWidget);
@@ -189,7 +180,6 @@ QGraphicsLinearLayout* StatusAreaView::createLandscapeLayout()
     layout->addItem(landscapePhoneNetworkIndicator);
     layout->addItem(landscapePhoneNetworkTypeIndicator);
     layout->addStretch();
-    layout->addItem(landscapeNotificationIndicator);
     layout->addItem(landscapeTransferStatusIndicator);
     layout->addItem(landscapeCallIndicator);
     layout->addItem(landscapeTetheringIndicator);
@@ -218,7 +208,6 @@ QGraphicsLinearLayout* StatusAreaView::createPortraitLayout()
     layout->addItem(portraitPhoneNetworkIndicator);
     layout->addItem(portraitPhoneNetworkTypeIndicator);
     layout->addStretch();
-    layout->addItem(portraitNotificationIndicator);
     layout->addItem(portraitTransferStatusIndicator);
     layout->addItem(portraitCallIndicator);
     layout->addItem(portraitTetheringIndicator);

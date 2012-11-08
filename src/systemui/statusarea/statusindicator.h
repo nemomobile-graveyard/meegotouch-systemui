@@ -591,29 +591,6 @@ private:
 };
 
 /*!
- * A status indicator for showing the notification status.
- * Sets the value to the related icon ID.
- */
-class NotificationStatusIndicator : public StatusIndicator
-{
-    Q_OBJECT
-    M_CONTROLLER(NotificationStatusIndicator)
-
-public:
-    /*!
-     * Constructs a NotificationStatusIndicator.
-     *
-     * \param parent parent QGraphicsItem
-     */
-    explicit NotificationStatusIndicator(QGraphicsItem *parent = NULL);
-
-    virtual ~NotificationStatusIndicator();
-
-public slots:
-    void setIconID(const QString &iconID);
-};
-
-/*!
  * A status indicator for showing whether DLNA sharing is enabled.
  */
 class DLNAStatusIndicator : public StatusIndicator

@@ -22,7 +22,6 @@
 #include <QObject>
 
 class MApplication;
-class NotificationStatusIndicatorSink;
 class StatusAreaView;
 class StatusArea;
 
@@ -36,13 +35,11 @@ private slots:
     void init();
     void cleanup();
 
-    void testSignalConnections();
     void testObjectNames();
     void testStyleNamesFollowCallState();
 
 private:
     MApplication *app;
-    NotificationStatusIndicatorSink *notificationStatusIndicatorSink;
     StatusAreaView *m_subject;
     StatusArea *statusArea;
 };

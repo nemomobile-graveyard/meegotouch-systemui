@@ -123,10 +123,6 @@ private:
     StatusIndicator *landscapeTetheringIndicator;
     StatusIndicator *portraitTetheringIndicator;
 
-    //! Notification notifier
-    StatusIndicator *landscapeNotificationIndicator;
-    StatusIndicator *portraitNotificationIndicator;
-
     //! Call forwarding status indicator
     StatusIndicator *landscapeCallForwardingIndicator;
     StatusIndicator *portraitCallForwardingIndicator;

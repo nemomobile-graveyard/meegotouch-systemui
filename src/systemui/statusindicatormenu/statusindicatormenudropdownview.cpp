@@ -27,7 +27,6 @@
 #include <MPannableViewport>
 #include <QGraphicsLinearLayout>
 #include <MWidgetView>
-#include "notificationarea.h"
 #include <MViewCreator>
 #include <QGraphicsAnchorLayout>
 #include <QTimer>
@@ -178,13 +177,6 @@ MPannableViewport* StatusIndicatorMenuDropDownView::createPannableArea()
     contentLayout->setContentsMargins(0, 0, 0, 0);
     contentLayout->setSpacing(0);
     contentLayout->addItem(statusIndicatorExtensionArea);
-
-    if(style()->notificationArea()) {
-        NotificationArea *notificationArea = new NotificationArea;
-        notificationArea->setNotificationManagerInterface(Sysuid::instance()->notificationManagerInterface());
-        connect(notificationArea, SIGNAL(bannerClicked()), controller, SIGNAL(hideRequested()));
-        contentLayout->addItem(notificationArea);
-    }
 
     MWidgetController *contentWidget = new MStylableWidget;
     contentWidget->setStyleName("StatusIndicatorMenuContentWidget");
