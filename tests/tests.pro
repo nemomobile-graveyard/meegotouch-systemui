@@ -54,12 +54,6 @@ support_files.files += $$OUT_PWD/tests.xml
 support_files.path = /opt/tests/meegotouch-systemui-tests/test-definition
 support_files.CONFIG += no_check_exist
 
-dummy_file.commands += touch $$OUT_PWD/keep_this_dir
-dummy_file.target = dummy_file
-dummy_file.files += $$OUT_PWD/keep_this_dir
-dummy_file.path = /usr/lib/system-ui-tests
-
 INSTALLS += \
-    support_files \
-    dummy_file
+    support_files
 

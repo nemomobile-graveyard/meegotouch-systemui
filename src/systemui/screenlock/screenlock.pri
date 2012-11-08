@@ -1,6 +1,6 @@
 include(../../mconfig.pri)
 
-system(qdbusxml2cpp screenlockbusinesslogic.xml -a screenlockbusinesslogicadaptor -c ScreenLockBusinessLogicAdaptor -l ScreenLockBusinessLogic -i screenlockbusinesslogic.h -i metatypedeclarations.h)
+system(qdbusxml2cpp screenlockbusinesslogic.xml -a screenlockbusinesslogicadaptor -c ScreenLockBusinessLogicAdaptor -l ScreenLockBusinessLogic -i screenlockbusinesslogic.h)
 
 INCLUDEPATH += screenlock statusarea
 

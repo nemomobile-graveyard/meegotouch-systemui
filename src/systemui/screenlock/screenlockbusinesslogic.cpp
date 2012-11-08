@@ -23,7 +23,6 @@
 #include <QCursor>
 
 #include "screenlockbusinesslogic.h"
-#include "notificationstatusindicatorsink.h"
 #include "eventeater.h"
 #include "closeeventeater.h"
 #include "sysuid.h"

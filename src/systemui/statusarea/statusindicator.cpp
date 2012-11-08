@@ -772,27 +772,6 @@ void CallForwardingStatusIndicator::callForwardingChanged()
     }
 }
 
-NotificationStatusIndicator::NotificationStatusIndicator(QGraphicsItem *parent) :
-    StatusIndicator(parent)
-{
-    setIconID(QString());
-}
-
-NotificationStatusIndicator::~NotificationStatusIndicator()
-{
-}
-
-void NotificationStatusIndicator::setIconID(const QString &iconID)
-{
-    setValue(iconID);
-
-    if (iconID.isEmpty()) {
-        setStyleNameAndUpdate(QString(metaObject()->className()) + "Disabled");
-    } else {
-        setStyleNameAndUpdate(metaObject()->className());
-    }
-}
-
 DLNAStatusIndicator::DLNAStatusIndicator(ApplicationContext &context, QGraphicsItem *parent) :
     StatusIndicator(parent),
     dlnaEnabled(createContextItem(context, "/com/nokia/dlna/dlnaEnabled"))

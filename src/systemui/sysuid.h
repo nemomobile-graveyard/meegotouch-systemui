@@ -34,12 +34,6 @@ class BatteryBusinessLogic;
 class ShutdownBusinessLogic;
 class StatusAreaRenderer;
 class StatusIndicatorMenuBusinessLogic;
-class NotificationManager;
-class NotificationManagerInterface;
-class MCompositorNotificationSink;
-class NGFNotificationSink;
-class UnlockNotificationSink;
-class NotificationStatusIndicatorSink;
 class ScreenLockBusinessLogic;
 class VolumeBarLogic;
 class MApplicationExtensionArea;
@@ -53,36 +47,11 @@ public:
     virtual ~Sysuid();
     static Sysuid* instance();
 
-    /*!
-     * Returns a reference to the notification manager interface.
-     *
-     * \return a reference to the notification manager interface
-     */
-    NotificationManagerInterface &notificationManagerInterface();
-
-    /*!
-     * Returns a reference to the notifier notification sink.
-     *
-     * \return a reference to the notifier notification sink
-     */
-    NotificationStatusIndicatorSink& notificationStatusIndicatorSink();
-
 signals:
     /*!
       * Inform about orientation changes
       */
     void orientationChangeFinished(const M::Orientation &);
-
-private slots:
-    /*!
-     * Enables or disables various sinks according to current use mode
-     */
-    void applyUseMode();
-
-    /*!
-     * Enables or disables the compositor sink based on current state
-     */
-    void updateCompositorNotificationSinkEnabledStatus();
 
 private:
     void loadTranslations();
@@ -99,26 +68,11 @@ private:
     //! Status indicator menu
     StatusIndicatorMenuBusinessLogic *statusIndicatorMenuBusinessLogic;
 
-    //! Notification manager interface
-    NotificationManager *notificationManager;
-
-    //! Notification sink for visualizing the notification outside home
-    MCompositorNotificationSink *mCompositorNotificationSink;
-
-    //! Notification sink for presenting the notification as a feedback
-    NGFNotificationSink *ngfNotificationSink;
-
-    //! Notification sink for the notification status indicator
-    NotificationStatusIndicatorSink *notificationStatusIndicatorSink_;
-
     //! The lock screen business logic
     ScreenLockBusinessLogic *screenLockBusinessLogic;
 
     //! The volume extension area
     MApplicationExtensionArea *volumeExtensionArea;
-
-    //! Context item for getting information about video recording status
-    QSharedPointer<ContextItem> useMode;
 
 #ifdef HAVE_QMSYSTEM
     //! QmSystem watcher for device lock

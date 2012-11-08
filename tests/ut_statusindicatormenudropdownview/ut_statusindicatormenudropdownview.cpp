@@ -29,7 +29,6 @@
 #include <MButton>
 #include <QGraphicsLinearLayout>
 #include <MPannableViewport>
-#include "notificationarea_stub.h"
 #include "sysuid_stub.h"
 #include "x11wrapper_modified_stub.h"
 #include "statusindicatormenustyle.h"
@@ -108,8 +107,6 @@ MSceneManager *MWidget::sceneManager() const
     }
 }
 
-bool showNotificationArea = true;
-
 StatusIndicatorMenuStyleContainer::StatusIndicatorMenuStyleContainer() :
   d_ptr(NULL)
 {
@@ -123,11 +120,6 @@ const char* StatusIndicatorMenuStyleContainer::styleType() const
 
 StatusIndicatorMenuStyleContainer::~StatusIndicatorMenuStyleContainer()
 {
-}
-
-const bool& StatusIndicatorMenuStyle::notificationArea() const
-{
-    return showNotificationArea;
 }
 
 QList<MSceneWindow*> g_visibleSceneWindows;
@@ -233,7 +225,6 @@ void Ut_StatusIndicatorMenuDropDownView::init()
 void Ut_StatusIndicatorMenuDropDownView::cleanup()
 {
     delete m_subject;
-    showNotificationArea = true;
 }
 
 void Ut_StatusIndicatorMenuDropDownView::initTestCase()
@@ -391,26 +382,6 @@ void Ut_StatusIndicatorMenuDropDownView::testVerticalExtensionArea()
     }
 
     QVERIFY2(false, "No valid extension area was created");
-}
-
-void Ut_StatusIndicatorMenuDropDownView::testWhenNotificationAreaIsDisabledInStyleThenNotificationAreaIsNotCreated()
-{
-    cleanup();
-    showNotificationArea = false;
-    init();
-    MWidgetController * contentWidget = dynamic_cast<MWidgetController *>(m_subject->pannableViewport->widget()->layout()->itemAt(0));
-    QCOMPARE(contentWidget->layout()->count(), 1);
-}
-
-void Ut_StatusIndicatorMenuDropDownView::testWhenNotificationAreaIsEnabledInStyleThenNotificationAreaIsCreated()
-{
-    cleanup();
-    showNotificationArea = true;
-    init();
-    MWidgetController * contentWidget = dynamic_cast<MWidgetController *>(m_subject->pannableViewport->widget()->layout()->itemAt(0));
-    QCOMPARE(contentWidget->layout()->count(), 2);
-    NotificationArea* notificationArea = dynamic_cast<NotificationArea*>(contentWidget->layout()->itemAt(1));
-    QVERIFY(notificationArea);
 }
 
 void Ut_StatusIndicatorMenuDropDownView::testWhenWidgetEntersDisplayThenExtensionAreasGetInitialized()

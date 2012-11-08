@@ -26,9 +26,6 @@ class StatusIndicatorMenuStyle : public MSceneWindowStyle
 {
     Q_OBJECT
     M_STYLE(StatusIndicatorMenuStyle)
-
-    //! controls whether to show a notification area in status indicator menu window
-    M_STYLE_ATTRIBUTE(bool, notificationArea, NotificationArea);
 };
 
 class StatusIndicatorMenuStyleContainer : public MSceneWindowStyleContainer

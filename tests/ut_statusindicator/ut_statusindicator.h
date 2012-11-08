@@ -78,7 +78,6 @@ private slots:
     void testTransferStatusIndicatorDBusConnectionCreationInConstructor();
     void testTransferStatusStateChange();
     void testCallForwarding();
-    void testNotification();
     void testDLNA();
 };
 

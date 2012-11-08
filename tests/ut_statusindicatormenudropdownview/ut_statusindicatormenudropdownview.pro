@@ -1,7 +1,7 @@
 include(../coverage.pri)
 include(../common_top.pri)
 TARGET = ut_statusindicatormenudropdownview
-INCLUDEPATH += $$SRCDIR/statusindicatormenu $$NOTIFICATIONSRCDIR $$LIBNOTIFICATIONSRCDIR
+INCLUDEPATH += $$SRCDIR/statusindicatormenu
 
 # unit test and unit classes
 SOURCES += \
@@ -18,7 +18,6 @@ HEADERS += \
     ut_statusindicatormenudropdownview.h \
     $$SRCDIR/statusindicatormenu/statusindicatormenudropdownview.h \
     $$SRCDIR/statusindicatormenu/statusindicatormenu.h \
-    $$SRCDIR/statusindicatormenu/notificationarea.h \
     $$SRCDIR/sysuid.h
 
 LIBS += -lmeegotouchviews
