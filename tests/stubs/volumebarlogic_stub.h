@@ -13,12 +13,17 @@ class VolumeBarLogicStub : public StubBase {
   virtual void VolumeBarLogicDestructor();
   virtual quint32 volume();
   virtual quint32 maxVolume();
-  virtual void setVolume(pa_volume_t value);
-  virtual void stepsUpdated(pa_volume_t value, pa_volume_t maxvalue);
+  virtual void setVolume(quint32 value);
+  virtual void stepsUpdated(quint32 value, quint32 maxvalue);
   virtual void hwKeyEvent(uint key, int state);
+  virtual void initValues();
   virtual void hwKeyResourceAcquired();
   virtual void hwKeyResourceLost();
-  virtual void openConnection();
+  virtual void addSignalMatch();
+  virtual void openConnection(bool init);
+  virtual void ping();
+  virtual void stepsUpdatedSignal(DBusConnection *conn, DBusMessage *message, VolumeBarLogic *logic);
+
 }; 
 
 // 2. IMPLEMENT STUB
@@ -39,7 +44,7 @@ quint32 VolumeBarLogicStub::maxVolume() {
   return stubReturnValue<quint32>("maxVolume");
 }
 
-void VolumeBarLogicStub::setVolume(pa_volume_t value) {
+void VolumeBarLogicStub::setVolume(quint32 value) {
   QList<ParameterBase*> params;
   params.append( new Parameter<quint32>(value));
   stubMethodEntered("setVolume",params);
@@ -59,6 +64,10 @@ void VolumeBarLogicStub::hwKeyEvent(uint key, int state) {
   stubMethodEntered("hwKeyEvent",params);
 }
 
+void VolumeBarLogicStub::initValues() {
+  stubMethodEntered("initValues");
+}
+
 void VolumeBarLogicStub::hwKeyResourceAcquired() {
   stubMethodEntered("hwKeyResourceAcquired");
 }
@@ -67,8 +76,26 @@ void VolumeBarLogicStub::hwKeyResourceLost() {
   stubMethodEntered("hwKeyResourceLost");
 }
 
-void VolumeBarLogicStub::openConnection() {
-  stubMethodEntered("openConnection");
+void VolumeBarLogicStub::addSignalMatch() {
+  stubMethodEntered("addSignalMatch");
+}
+
+void VolumeBarLogicStub::openConnection(bool init) {
+  QList<ParameterBase*> params;
+  params.append( new Parameter<bool >(init));
+  stubMethodEntered("openConnection",params);
+}
+
+void VolumeBarLogicStub::ping() {
+  stubMethodEntered("ping");
+}
+
+void VolumeBarLogicStub::stepsUpdatedSignal(DBusConnection *conn, DBusMessage *message, VolumeBarLogic *logic) {
+  QList<ParameterBase*> params;
+  params.append( new Parameter<DBusConnection * >(conn));
+  params.append( new Parameter<DBusMessage * >(message));
+  params.append( new Parameter<VolumeBarLogic * >(logic));
+  stubMethodEntered("stepsUpdatedSignal",params);
 }
 
 // 3. CREATE A STUB INSTANCE
@@ -93,12 +120,16 @@ quint32 VolumeBarLogic::maxVolume() {
   return gVolumeBarLogicStub->maxVolume();
 }
 
-void VolumeBarLogic::setVolume(pa_volume_t value) {
+void VolumeBarLogic::setVolume(quint32 value) {
   gVolumeBarLogicStub->setVolume(value);
 }
 
-void VolumeBarLogic::stepsUpdated(pa_volume_t value, pa_volume_t maxvalue) {
+void VolumeBarLogic::stepsUpdated(quint32 value, quint32 maxvalue) {
   gVolumeBarLogicStub->stepsUpdated(value, maxvalue);
+}
+
+void VolumeBarLogic::initValues() {
+  gVolumeBarLogicStub->initValues();
 }
 
 void VolumeBarLogic::hwKeyEvent(uint key, int state) {
@@ -113,8 +144,20 @@ void VolumeBarLogic::hwKeyResourceLost() {
   gVolumeBarLogicStub->hwKeyResourceLost();
 }
 
-void VolumeBarLogic::openConnection() {
-  gVolumeBarLogicStub->openConnection();
+void VolumeBarLogic::addSignalMatch() {
+  gVolumeBarLogicStub->addSignalMatch();
+}
+
+void VolumeBarLogic::openConnection(bool init) {
+  gVolumeBarLogicStub->openConnection(init);
+}
+
+void VolumeBarLogic::ping() {
+  gVolumeBarLogicStub->ping();
+}
+
+void VolumeBarLogic::stepsUpdatedSignal(DBusConnection *conn, DBusMessage *message, VolumeBarLogic *logic) {
+  gVolumeBarLogicStub->stepsUpdatedSignal(conn, message, logic);
 }
 
 
