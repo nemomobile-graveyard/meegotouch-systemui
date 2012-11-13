@@ -89,15 +89,34 @@ void VolumeBarLogic::openConnection (bool init)
     if ((dbus_conn != NULL) && (dbus_connection_get_is_connected (dbus_conn)))
         return;
 
+    // Determine dbus-socket location
+    QString *pa_bus_address = 0;
+    // Try XDG_RUNTIME_DIR first
+    const char *xdg_runtime_dir = getenv("XDG_RUNTIME_DIR");
+    if (xdg_runtime_dir)
+    {
+        pa_bus_address = new QString("unix:path=");
+        pa_bus_address->append(xdg_runtime_dir);
+        pa_bus_address->append("/pulse/dbus-socket");
+    }
+
+    // Next try PULSE_DBUS_SERVER environment variable
+    if (!pa_bus_address)
+    {
+        const char *tmp = getenv("PULSE_DBUS_SERVER");
+        if (tmp)
+            pa_bus_address = new QString(tmp);
+    }
+
+    // Last try with DEFAULT_ADDRESS
+    if (!pa_bus_address)
+        pa_bus_address = new QString(DEFAULT_ADDRESS);
+
     DBusError dbus_err;
-    char *pa_bus_address = getenv ("PULSE_DBUS_SERVER");
-
-    if (pa_bus_address == NULL)
-        pa_bus_address = (char *) DEFAULT_ADDRESS;
-
     dbus_error_init (&dbus_err);
 
-    dbus_conn = dbus_connection_open (pa_bus_address, &dbus_err);
+    QByteArray address = pa_bus_address->toAscii();
+    dbus_conn = dbus_connection_open (address.constData(), &dbus_err);
 
     DBUS_ERR_CHECK (dbus_err);
 
@@ -112,6 +131,9 @@ void VolumeBarLogic::openConnection (bool init)
         if (init == true)
             initValues ();
     }
+
+    if (pa_bus_address)
+        delete pa_bus_address;
 }
 
 void VolumeBarLogic::initValues ()
