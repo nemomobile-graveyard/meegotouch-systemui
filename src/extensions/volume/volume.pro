@@ -18,7 +18,6 @@ QMAKE_LIBDIR += $$LOCALLIBSDIR
 STYLE_HEADERS += volumebarstyle.h
 
 HEADERS += \
-    pulseaudio_thread.h \    
     volumeextension.h \
     keysniffer.h \
     volumebarlogic.h \
@@ -28,7 +27,6 @@ HEADERS += \
     ../../systemui/closeeventeater.h
 
 SOURCES += \
-    pulseaudio_thread.cpp \    
     volumeextension.cpp \
     keysniffer.cpp \
     volumebarlogic.cpp \
@@ -48,7 +46,8 @@ contains(DEFINES, HAVE_LIBRESOURCEQT) {
 }
 
 PKGCONFIG += \
-    libpulse
+    dbus-1 \
+    dbus-glib-1
 
 target.path += $$M_APPLICATION_EXTENSION_DIR
 

@@ -23,13 +23,13 @@
 #include <QPointer>
 #include <QTimer>
 #include <QDebug>
+#include <dbus/dbus.h>
 
 #if (HAVE_LIBRESOURCEQT)
 #include <policy/resource-set.h>
 #endif
 
 #include <linux/input.h>
-#include "pulseaudio_thread.h"
 #include "keysniffer.h"
 
 #define VOLUMECLICKTIMEOUT 3000
@@ -65,6 +65,9 @@ public slots:
 
 private slots:
 
+    //! an internal method which queries the actual values from PulseAudio
+    void initValues ();
+
     /*!
      * Internal slot to handle the hardware volume-key presses (see QmKeys API documentation)
      *
@@ -81,17 +84,36 @@ private slots:
     void hwKeyResourceLost();
 #endif
 
-signals:
-    void changeVolume(quint32 value);
-    
 private:
     Q_DISABLE_COPY(VolumeBarLogic)
 
-    /*! opens a client application for PulseAudio daemon*/
-    void openConnection ();
-    
+    /*! an internal method which registers a signal handler to
+     * listen for PulseAudio MainVolume1 StepsUpdated signal
+     */
+    void addSignalMatch ();
+
+    /*! opens a private D-Bus connection for PulseAudio daemon, and optionally
+     * calls initValues () after successfully connection.
+     * \param init An option where can be enabled the initialization.
+     */
+    void openConnection (bool init = false);
+
+    //! a method for ensure the connection to PulseAudio daemon
+    void ping ();
+
+    /*! the signal handler for PulseAudios MainVolume1 signal
+     * \param conn The D-Bus connection structure
+     * \param message The signal message
+     * \param logic The VolumeBarLogic instance who is handling this signal
+     */
+    static void stepsUpdatedSignal (DBusConnection *conn, DBusMessage *message, VolumeBarLogic *logic);
+
+
     //! Volume bar window
     VolumeBarWindow *volumeBarWindow;
+
+    //! A member for accessing D-Bus connection structure
+    DBusConnection  *dbus_conn;
 
     //! The current volume level (< currentmax)
     quint32 currentvolume;
@@ -100,16 +122,13 @@ private:
 
     //! an keysniffer instance to get signals about volume-key presses
     QPointer<keySniffer> hwkeys;
-    
-    //! Pulseaudio thread class to be used for pulseaudio asynchronous communications.
-    QPointer<pulseaudio_thread> mPAThread;
-    
+
     //! Timer to handle possible frozen volumebar
-    QPointer<QTimer> mHideTimer;   
+    QPointer<QTimer> mHideTimer;
 
 #if (HAVE_LIBRESOURCEQT)
     //! A resource object for volume(zoom)-hardware keys
-    ResourcePolicy::ResourceSet *hwkeyResource;      
+    ResourcePolicy::ResourceSet *hwkeyResource;
 #endif
 
 #ifdef UNIT_TEST
