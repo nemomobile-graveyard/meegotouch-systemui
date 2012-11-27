@@ -1,7 +1,7 @@
 include(../coverage.pri)
 include(../common_top.pri)
 TARGET = ut_sysuid
-INCLUDEPATH += $$SRCDIR/statusarea $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol $$SRCDIR/screenlock
+INCLUDEPATH += $$SRCDIR/statusarea $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol
 INCLUDEPATH += /usr/include/contextsubscriber /usr/include/resource/qt4
 
 PKGCONFIG += dbus-1
@@ -22,11 +22,8 @@ HEADERS += \
     ut_sysuid.h \
     $$SRCDIR/shutdownui.h \
     $$SRCDIR/usbui.h \
-    $$SRCDIR/screenlock/eventeater.h \
     $$SRCDIR/shutdownbusinesslogic.h \
     $$SRCDIR/batterybusinesslogic.h \
-    $$SRCDIR/screenlock/screenlockbusinesslogic.h \
-    $$SRCDIR/screenlock/screenlockbusinesslogicadaptor.h \
     $$SRCDIR/sysuid.h \
     $$SRCDIR/contextframeworkcontext.h \
     $$SRCDIR/statusarea/statusarearenderer.h \
