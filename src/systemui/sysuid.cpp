@@ -25,11 +25,8 @@
 
 #include "usbui.h"
 #include "sysuid.h"
-#include "screenlockbusinesslogic.h"
-#include "screenlockbusinesslogicadaptor.h"
 #include "batterybusinesslogic.h"
 #include "statusarearendereradaptor.h"
-#include "screenlockbusinesslogic.h"
 #include "shutdownbusinesslogic.h"
 #include "statusareastyle.h"
 #include "statusarearenderer.h"
@@ -44,8 +41,6 @@ Sysuid* Sysuid::instance_ = NULL;
 
 static const char *SYSTEMUI_DBUS_SERVICE = "com.nokia.systemui";
 static const char *SYSTEMUI_DBUS_PATH = "/";
-static const char *SCREENLOCK_DBUS_SERVICE = "com.nokia.system_ui";
-static const char *SCREENLOCK_DBUS_PATH = "/com/nokia/system_ui/request";
 
 Sysuid::Sysuid(QObject* parent) : QObject(parent)
 {
@@ -85,19 +80,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     bus.registerService("com.meego.core.MStatusIndicatorMenu");
     bus.registerObject("/statusindicatormenu", statusIndicatorMenuBusinessLogic);
 
-    // Create screen lock business logic
-    screenLockBusinessLogic = new ScreenLockBusinessLogic(this);
-    new ScreenLockBusinessLogicAdaptor(screenLockBusinessLogic);
-
-    // MCE expects the service to be registered on the system bus
-    QDBusConnection systemBus = QDBusConnection::systemBus();
-    if (!systemBus.registerService(SCREENLOCK_DBUS_SERVICE)) {
-        qWarning("Unable to register screen lock D-Bus service %s: %s", SCREENLOCK_DBUS_SERVICE, systemBus.lastError().message().toUtf8().constData());
-    }
-    if (!systemBus.registerObject(SCREENLOCK_DBUS_PATH, screenLockBusinessLogic)) {
-        qWarning("Unable to register screen lock object at path %s: %s", SCREENLOCK_DBUS_PATH, systemBus.lastError().message().toUtf8().constData());
-    }
-
     // Create an extension area for the volume extension
     volumeExtensionArea = new MApplicationExtensionArea("com.meego.core.VolumeExtensionInterface/0.20");
     volumeExtensionArea->setInProcessFilter(QRegExp("/sysuid-volume.desktop$"));
@@ -106,14 +88,10 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
 
     // Create components that may create or remove notifications
     batteryBusinessLogic = new BatteryBusinessLogic(this);
-    connect(screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), batteryBusinessLogic, SLOT(setTouchScreenLockActive(bool)));
 
     usbUi = new UsbUi(this);
 
     new DiskSpaceNotifier(this);
-
-    // Unlock the touch screen lock when displaying the USB dialog
-    connect(usbUi, SIGNAL(dialogShown()), screenLockBusinessLogic, SLOT(unlockScreen()));
 }
 
 Sysuid::~Sysuid()
@@ -137,7 +115,6 @@ void Sysuid::loadTranslations()
     locale.installTrCatalog("energy");
     locale.installTrCatalog("shutdown");
     locale.installTrCatalog("profiles");
-    locale.installTrCatalog("screenlock");
     locale.installTrCatalog("status");
     locale.installTrCatalog("connectivity");
     locale.installTrCatalog("volume");

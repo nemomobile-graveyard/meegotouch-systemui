@@ -34,7 +34,6 @@ class BatteryBusinessLogic;
 class ShutdownBusinessLogic;
 class StatusAreaRenderer;
 class StatusIndicatorMenuBusinessLogic;
-class ScreenLockBusinessLogic;
 class VolumeBarLogic;
 class MApplicationExtensionArea;
 
@@ -67,9 +66,6 @@ private:
 
     //! Status indicator menu
     StatusIndicatorMenuBusinessLogic *statusIndicatorMenuBusinessLogic;
-
-    //! The lock screen business logic
-    ScreenLockBusinessLogic *screenLockBusinessLogic;
 
     //! The volume extension area
     MApplicationExtensionArea *volumeExtensionArea;

@@ -61,7 +61,6 @@ SOURCES +=                              \
 
 include(statusindicatormenu/statusindicatormenu.pri)
 include(statusarea/statusarea.pri)
-include(screenlock/screenlock.pri)
 include(notificationcategories/notificationcategories.pri)
 include(../../localconfig.pri)
 

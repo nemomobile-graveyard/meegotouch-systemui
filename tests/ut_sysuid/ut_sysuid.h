@@ -43,7 +43,6 @@ private slots:
     void cleanupTestCase();
 
     // Test cases
-    void testSignalConnections();
 };
 
-#endif //_UT_STATUSBAR_
+#endif //_UT_SYSUID_
