@@ -26,10 +26,7 @@
 #include "batterybusinesslogic_stub.h"
 #include "statusarearenderer_stub.h"
 #include "statusarearendereradaptor_stub.h"
-#include "screenlockbusinesslogic_stub.h"
-#include "screenlockbusinesslogicadaptor_stub.h"
 #include "contextframeworkitem_stub.h"
-#include "screenlockbusinesslogic_stub.h"
 #include "shutdownbusinesslogic_stub.h"
 #include "shutdownbusinesslogicadaptor_stub.h"
 #include "statusindicatormenubusinesslogic_stub.h"
@@ -37,7 +34,6 @@
 #include "shutdownui_stub.h"
 #include "usbui_stub.h"
 #include "x11wrapper_modified_stub.h"
-#include "eventeater_stub.h"
 #include "closeeventeater_stub.h"
 #include "diskspacenotifier_stub.h"
 #include "testcontextitem.h"
@@ -129,12 +125,6 @@ void Ut_Sysuid::cleanup()
 {
     delete sysuid;
     gStatusIndicatorMenuBusinessLogicStub->stubReset();
-}
-
-void Ut_Sysuid::testSignalConnections()
-{
-    QVERIFY(disconnect(sysuid->screenLockBusinessLogic, SIGNAL(screenIsLocked(bool)), sysuid->batteryBusinessLogic, SLOT(setTouchScreenLockActive(bool))));
-    QVERIFY(disconnect(sysuid->usbUi, SIGNAL(dialogShown()), sysuid->screenLockBusinessLogic, SLOT(unlockScreen())));
 }
 
 QTEST_APPLESS_MAIN(Ut_Sysuid)
