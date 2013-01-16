@@ -16,16 +16,6 @@ if [ $? -eq 0 ]; then
     if [ $? -eq 0 ]; then
         echo DEFINES += HAVE_QMSYSTEM >> ${FILENAME}
     fi
-
-    pkg-config --exists libresourceqt1
-    if [ $? -eq 0 ]; then
-        echo DEFINES += HAVE_LIBRESOURCEQT >> ${FILENAME}
-    fi
-
-    pkg-config --exists libngf0
-    if [ $? -eq 0 ]; then
-        echo DEFINES += HAVE_LIBNGF >> ${FILENAME}
-    fi
 fi
 
 VERSION=1.5.3

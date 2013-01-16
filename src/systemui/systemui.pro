@@ -72,17 +72,7 @@ contains(DEFINES, HAVE_QMSYSTEM) {
     PKGCONFIG += qmsystem2
 }
 
-contains(DEFINES, HAVE_AEGIS_CRYPTO) {
-    PKGCONFIG += aegis-crypto
-}
-
-contains(DEFINES, HAVE_LIBNGF) {
-    PKGCONFIG += libngf0
-}
-
 PKGCONFIG += \
-    dbus-1 \
-    dbus-glib-1 \
     xcomposite \
     xfixes
 
