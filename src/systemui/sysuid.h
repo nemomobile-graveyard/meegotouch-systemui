@@ -34,7 +34,6 @@ class BatteryBusinessLogic;
 class ShutdownBusinessLogic;
 class StatusAreaRenderer;
 class StatusIndicatorMenuBusinessLogic;
-class VolumeBarLogic;
 class MApplicationExtensionArea;
 
 class Sysuid : public QObject
@@ -66,9 +65,6 @@ private:
 
     //! Status indicator menu
     StatusIndicatorMenuBusinessLogic *statusIndicatorMenuBusinessLogic;
-
-    //! The volume extension area
-    MApplicationExtensionArea *volumeExtensionArea;
 
 #ifdef HAVE_QMSYSTEM
     //! QmSystem watcher for device lock

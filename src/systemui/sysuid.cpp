@@ -80,12 +80,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     bus.registerService("com.meego.core.MStatusIndicatorMenu");
     bus.registerObject("/statusindicatormenu", statusIndicatorMenuBusinessLogic);
 
-    // Create an extension area for the volume extension
-    volumeExtensionArea = new MApplicationExtensionArea("com.meego.core.VolumeExtensionInterface/0.20");
-    volumeExtensionArea->setInProcessFilter(QRegExp("/sysuid-volume.desktop$"));
-    volumeExtensionArea->setOutOfProcessFilter(QRegExp("$^"));
-    volumeExtensionArea->init();
-
     // Create components that may create or remove notifications
     batteryBusinessLogic = new BatteryBusinessLogic(this);
 
@@ -96,7 +90,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
 
 Sysuid::~Sysuid()
 {
-    delete volumeExtensionArea;
     instance_ = 0;
 }
 
@@ -117,7 +110,6 @@ void Sysuid::loadTranslations()
     locale.installTrCatalog("profiles");
     locale.installTrCatalog("status");
     locale.installTrCatalog("connectivity");
-    locale.installTrCatalog("volume");
     locale.installTrCatalog("memory-usage");
     locale.installTrCatalog("cellular-adaptation");
 

@@ -1,7 +1,7 @@
 include(../coverage.pri)
 include(../common_top.pri)
 TARGET = ut_sysuid
-INCLUDEPATH += $$SRCDIR/statusarea $$SRCDIR/statusindicatormenu $$SRCDIR/volumecontrol
+INCLUDEPATH += $$SRCDIR/statusarea $$SRCDIR/statusindicatormenu
 INCLUDEPATH += /usr/include/contextsubscriber /usr/include/resource/qt4
 
 PKGCONFIG += dbus-1
