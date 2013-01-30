@@ -23,7 +23,6 @@
 #include <QDBusConnection>
 #include <MApplication>
 #include <MLocale>
-#include "batterybusinesslogic_stub.h"
 #include "statusarearenderer_stub.h"
 #include "statusarearendereradaptor_stub.h"
 #include "contextframeworkitem_stub.h"

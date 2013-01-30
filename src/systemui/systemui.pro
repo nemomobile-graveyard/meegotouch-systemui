@@ -30,8 +30,6 @@ STYLE_HEADERS += shutdownwindowstyle.h
 
 HEADERS +=                              \
     closeeventeater.h                   \
-    batterybusinesslogic.h              \
-    lowbatterynotifier.h                \
     sysuid.h                            \
     shutdownui.h                        \
     shutdownwindowstyle.h               \
@@ -47,8 +45,6 @@ HEADERS +=                              \
 SOURCES +=                              \
     main.cpp                            \
     closeeventeater.cpp                 \
-    batterybusinesslogic.cpp            \
-    lowbatterynotifier.cpp              \
     sysuid.cpp                          \
     shutdownui.cpp                      \
     shutdownbusinesslogic.cpp           \
@@ -61,7 +57,6 @@ SOURCES +=                              \
 
 include(statusindicatormenu/statusindicatormenu.pri)
 include(statusarea/statusarea.pri)
-include(notificationcategories/notificationcategories.pri)
 include(../../localconfig.pri)
 
 contains(DEFINES, HAVE_CONTEXTSUBSCRIBER) {

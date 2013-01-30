@@ -25,7 +25,6 @@
 
 #include "usbui.h"
 #include "sysuid.h"
-#include "batterybusinesslogic.h"
 #include "statusarearendereradaptor.h"
 #include "shutdownbusinesslogic.h"
 #include "statusareastyle.h"
@@ -81,8 +80,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     bus.registerObject("/statusindicatormenu", statusIndicatorMenuBusinessLogic);
 
     // Create components that may create or remove notifications
-    batteryBusinessLogic = new BatteryBusinessLogic(this);
-
     usbUi = new UsbUi(this);
 
     new DiskSpaceNotifier(this);
@@ -105,7 +102,6 @@ void Sysuid::loadTranslations()
     // Install real translations
     locale.installTrCatalog("usb");
     locale.installTrCatalog("reset");
-    locale.installTrCatalog("energy");
     locale.installTrCatalog("shutdown");
     locale.installTrCatalog("profiles");
     locale.installTrCatalog("status");
