@@ -23,7 +23,6 @@
 #include <MApplicationExtensionArea>
 #include <QDBusConnection>
 
-#include "usbui.h"
 #include "sysuid.h"
 #include "statusarearendereradaptor.h"
 #include "shutdownbusinesslogic.h"
@@ -80,8 +79,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
     bus.registerObject("/statusindicatormenu", statusIndicatorMenuBusinessLogic);
 
     // Create components that may create or remove notifications
-    usbUi = new UsbUi(this);
-
     new DiskSpaceNotifier(this);
 }
 

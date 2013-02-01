@@ -31,7 +31,6 @@
 #include "statusindicatormenubusinesslogic_stub.h"
 #include "statusindicatormenuadaptor_stub.h"
 #include "shutdownui_stub.h"
-#include "usbui_stub.h"
 #include "x11wrapper_modified_stub.h"
 #include "closeeventeater_stub.h"
 #include "diskspacenotifier_stub.h"

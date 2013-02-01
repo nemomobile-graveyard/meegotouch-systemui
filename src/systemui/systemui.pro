@@ -34,7 +34,6 @@ HEADERS +=                              \
     shutdownui.h                        \
     shutdownwindowstyle.h               \
     shutdownbusinesslogic.h             \
-    usbui.h                             \
     contextframeworkcontext.h           \
     applicationcontext.h                \
     x11wrapper.h                        \
@@ -48,7 +47,6 @@ SOURCES +=                              \
     sysuid.cpp                          \
     shutdownui.cpp                      \
     shutdownbusinesslogic.cpp           \
-    usbui.cpp                           \
     contextframeworkcontext.cpp         \
     x11wrapper.cpp                      \
     xeventlistener.cpp                  \
