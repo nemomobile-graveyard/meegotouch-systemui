@@ -26,14 +26,9 @@ contains(cov, true) {
     QMAKE_LFLAGS += --coverage
 }
 
-STYLE_HEADERS += shutdownwindowstyle.h
-
 HEADERS +=                              \
     closeeventeater.h                   \
     sysuid.h                            \
-    shutdownui.h                        \
-    shutdownwindowstyle.h               \
-    shutdownbusinesslogic.h             \
     contextframeworkcontext.h           \
     applicationcontext.h                \
     x11wrapper.h                        \
@@ -45,8 +40,6 @@ SOURCES +=                              \
     main.cpp                            \
     closeeventeater.cpp                 \
     sysuid.cpp                          \
-    shutdownui.cpp                      \
-    shutdownbusinesslogic.cpp           \
     contextframeworkcontext.cpp         \
     x11wrapper.cpp                      \
     xeventlistener.cpp                  \

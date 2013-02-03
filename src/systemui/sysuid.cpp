@@ -25,7 +25,6 @@
 
 #include "sysuid.h"
 #include "statusarearendereradaptor.h"
-#include "shutdownbusinesslogic.h"
 #include "statusareastyle.h"
 #include "statusarearenderer.h"
 #include "statusindicatormenubusinesslogic.h"
@@ -57,10 +56,6 @@ Sysuid::Sysuid(QObject* parent) : QObject(parent)
         qCritical("Unable to register system-ui object at path %s: %s", SYSTEMUI_DBUS_PATH, bus.lastError().message().toUtf8().constData());
         abort();
     }
-
-    // Create shut down UI
-    shutdownBusinessLogic = new ShutdownBusinessLogic(this);
-    new ShutdownBusinessLogicAdaptor(this, shutdownBusinessLogic);
 
     const StatusAreaStyle *style = static_cast<const StatusAreaStyle *>(MTheme::style("StatusAreaStyle"));
     if (style->statusAreaEnabled()) {
@@ -99,7 +94,6 @@ void Sysuid::loadTranslations()
     // Install real translations
     locale.installTrCatalog("usb");
     locale.installTrCatalog("reset");
-    locale.installTrCatalog("shutdown");
     locale.installTrCatalog("profiles");
     locale.installTrCatalog("status");
     locale.installTrCatalog("connectivity");

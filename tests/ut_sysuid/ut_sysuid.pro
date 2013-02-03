@@ -20,10 +20,6 @@ SOURCES += \
 # unit test and unit classes
 HEADERS += \
     ut_sysuid.h \
-    $$SRCDIR/shutdownui.h \
-    $$SRCDIR/usbui.h \
-    $$SRCDIR/shutdownbusinesslogic.h \
-    $$SRCDIR/batterybusinesslogic.h \
     $$SRCDIR/sysuid.h \
     $$SRCDIR/contextframeworkcontext.h \
     $$SRCDIR/statusarea/statusarearenderer.h \
