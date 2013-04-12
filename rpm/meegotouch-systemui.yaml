@@ -9,13 +9,11 @@ Sources:
     - "%{name}-%{version}.tar.bz2"
 ExtraSources:
     - meegotouch-systemui.desktop;%{_sysconfdir}/xdg/autostart
-    - lock.desktop;%{_datadir}/applications
     - meegotouch-systemui.service;%{_libdir}/systemd/user/
 Description: |
     This package contains the system UI daemon.
 PkgBR:
     - expat-devel
-    - desktop-file-utils
 PkgConfigBR:
     - QtGui
     - QtOpenGL
@@ -49,7 +47,6 @@ Files:
     - "%config %{_sysconfdir}/xdg/autostart/meegotouch-systemui.desktop"
     - "%{_libdir}/systemd/user/meegotouch-systemui.service"
     - "%{_bindir}/sysuid"
-    - "%{_datadir}/applications/lock.desktop"
     - "%{_datadir}/l10n/meegotouch/systemui.qm"
     - "%{_datadir}/themes/base/meegotouch/sysuid/*.conf"
     - "%{_datadir}/themes/base/meegotouch/sysuid/feedbacks"

@@ -16,8 +16,7 @@ License:    LGPLv2.1
 URL:        https://github.com/nemomobile/meegotouch-systemui
 Source0:    %{name}-%{version}.tar.bz2
 Source1:    meegotouch-systemui.desktop
-Source2:    lock.desktop
-Source3:    meegotouch-systemui.service
+Source2:    meegotouch-systemui.service
 Source100:  meegotouch-systemui.yaml
 Requires:   contextkit-plugin-cellular
 Requires:   contextkit-plugin-internet
@@ -36,7 +35,6 @@ BuildRequires:  pkgconfig(xcomposite)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xdamage)
 BuildRequires:  expat-devel
-BuildRequires:  desktop-file-utils
 BuildRequires:  fdupes
 
 %description
@@ -83,7 +81,7 @@ This package contains the unit tests for the MeeGo System UI Daemon.
 
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{version}
 
 # >> setup
 # << setup
@@ -108,16 +106,11 @@ rm -rf %{buildroot}
 %qmake_install
 mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
 cp -a %{SOURCE1} %{buildroot}%{_sysconfdir}/xdg/autostart
-mkdir -p %{buildroot}%{_datadir}/applications
-cp -a %{SOURCE2} %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_libdir}/systemd/user/
-cp -a %{SOURCE3} %{buildroot}%{_libdir}/systemd/user/
+cp -a %{SOURCE2} %{buildroot}%{_libdir}/systemd/user/
 
 
 # >> install post
-desktop-file-install --delete-original       \
---dir %{buildroot}%{_datadir}/applications             \
-%{buildroot}%{_datadir}/applications/*.desktop
 # << install post
 
 %fdupes  %{buildroot}/%{_datadir}
@@ -128,7 +121,6 @@ desktop-file-install --delete-original       \
 %config %{_sysconfdir}/xdg/autostart/meegotouch-systemui.desktop
 %{_libdir}/systemd/user/meegotouch-systemui.service
 %{_bindir}/sysuid
-%{_datadir}/applications/lock.desktop
 %{_datadir}/l10n/meegotouch/systemui.qm
 %{_datadir}/themes/base/meegotouch/sysuid/*.conf
 %{_datadir}/themes/base/meegotouch/sysuid/feedbacks
