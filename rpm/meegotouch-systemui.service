@@ -5,5 +5,5 @@ Requires=dbus.socket xorg.target mthemedaemon.service
 
 [Service]
 ExecStart=/usr/bin/sysuid -remote-theme
-
+KillSignal=SIGKILL
 
