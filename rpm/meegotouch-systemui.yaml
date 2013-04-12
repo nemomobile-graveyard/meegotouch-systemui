@@ -8,7 +8,6 @@ URL: https://github.com/nemomobile/meegotouch-systemui
 Sources:
     - "%{name}-%{version}.tar.bz2"
 ExtraSources:
-    - meegotouch-systemui.desktop;%{_sysconfdir}/xdg/autostart
     - meegotouch-systemui.service;%{_libdir}/systemd/user/
 Description: |
     This package contains the system UI daemon.
@@ -44,7 +43,6 @@ RunFdupes:
 UseAsNeeded: no
 Files:
     - "%config %{_sysconfdir}/dbus-1/system.d/systemui.conf"
-    - "%config %{_sysconfdir}/xdg/autostart/meegotouch-systemui.desktop"
     - "%{_libdir}/systemd/user/meegotouch-systemui.service"
     - "%{_bindir}/sysuid"
     - "%{_datadir}/l10n/meegotouch/systemui.qm"

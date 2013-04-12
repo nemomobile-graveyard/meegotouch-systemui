@@ -15,8 +15,7 @@ Group:      System/Desktop
 License:    LGPLv2.1
 URL:        https://github.com/nemomobile/meegotouch-systemui
 Source0:    %{name}-%{version}.tar.bz2
-Source1:    meegotouch-systemui.desktop
-Source2:    meegotouch-systemui.service
+Source1:    meegotouch-systemui.service
 Source100:  meegotouch-systemui.yaml
 Requires:   contextkit-plugin-cellular
 Requires:   contextkit-plugin-internet
@@ -104,10 +103,8 @@ rm -rf %{buildroot}
 # >> install pre
 # << install pre
 %qmake_install
-mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
-cp -a %{SOURCE1} %{buildroot}%{_sysconfdir}/xdg/autostart
 mkdir -p %{buildroot}%{_libdir}/systemd/user/
-cp -a %{SOURCE2} %{buildroot}%{_libdir}/systemd/user/
+cp -a %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
 
 
 # >> install post
@@ -118,7 +115,6 @@ cp -a %{SOURCE2} %{buildroot}%{_libdir}/systemd/user/
 %files
 %defattr(-,root,root,-)
 %config %{_sysconfdir}/dbus-1/system.d/systemui.conf
-%config %{_sysconfdir}/xdg/autostart/meegotouch-systemui.desktop
 %{_libdir}/systemd/user/meegotouch-systemui.service
 %{_bindir}/sysuid
 %{_datadir}/l10n/meegotouch/systemui.qm
