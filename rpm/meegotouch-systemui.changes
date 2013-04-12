@@ -1,0 +1,335 @@
+* Sun Feb 03 2013 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.7
+- Move shutdown screen to Lipstick
+
+* Fri Feb 01 2013 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.6
+- Move USB mode selection dialog to Lipstick
+
+* Wed Jan 30 2013 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.5
+- Move battery notifications to Lipstick
+
+* Mon Jan 28 2013 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.4
+- New icon IDs for system notifications
+
+* Wed Jan 16 2013 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.3
+- Remove volume handling from System UI since it's now handled by Lipstick
+
+* Tue Jan 15 2013 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.2
+- Use the proper feedback related hints in notification category definitions
+
+* Thu Jan 10 2013 Marko Saukko <marko.saukko@jollamobile.com> - 1.5.1
+- Updated packaging.
+
+* Thu Nov 29 2012 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.1
+- Move the screen locking logic completely to Lipstick
+
+* Fri Nov 09 2012 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.5.0
+- Remove the unused notification manager
+
+* Wed Nov 07 2012 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.4.2
+- Use Lipstick's notification system category definitions
+
+* Fri Nov 02 2012 Vesa Halttunen <vesa.halttunen@jollamobile.com> - 1.4.1
+- Possibility to disable the status area completely through StatusAreaStyle
+- Fixed unit tests
+
+* Thu Oct 04 2012 Denis Zalevskiy <denis.zalevskiy@jollamobile.com> - 1.4.0-2
+- More generic deps: from contextkit-plugin instead of contextkit-meego
+
+* Sun Sep 30 2012 Carsten Munk <carsten.munk@jollamobile.com> - 1.4.0
+- Add systemd user session .service file
+
+* Thu Aug 30 2012 Robin Burchell <robin+mer@viroteck.net> - 1.4.0
+- Move to our own git repository, integrate pretty much all existing patches
+- Add 0001-rip-out-screenlock-support-from-systemui.patch, experimental
+  support for ripping sysuid lockscreen out.
+
+* Tue Aug 21 2012 Philippe De Swert <philippedeswert@gmail.com> - 1.3.2-2
+- Change USB dialog to support MTP and developer mode. Remove Nokia 
+  specific ovi-suite mode
+
+* Wed Aug 15 2012 Simonas Leleiva <simonas.leleiva@gmail.com> - 1.3.2-1
+- Added poweroff dialog (button&query) to the status menu,
+  Fixes NEMO#74: Add poweroff dialog to systemui
+  
+* Tue Jul 31 2012 Dmitry Rozhkov <dmitry.rozhkov@jollamobile.com> - 1.3.2-1
+- Added dependency on contextkit-meego-internet required to show Wifi
+  status.
+
+* Thu Jun 07 2012 Marko Saukko <sage@merproject.org> - 1.3.2-1
+- Added X-Meego-Watchdog=Restart to xdg/autostart desktop file.
+
+* Wed Jun 06 2012 Marko Saukko <sage@merproject.org> - 1.3.2-1
+- Depend on specific contextkit plugin instead of the main package.
+
+* Tue May 29 2012 Marko Saukko <marko.saukko@gmail.com> - 1.3.2-1
+- Updated to version 1.3.2-1
+- Added assert to pulseaudio client code.
+- Dependency to meegotouch-systemui-volume-fullscreen and 
+  meegotouch-systemui-volume-fullscreen removed and moved
+  to package groups.
+
+* Thu Jan 26 2012 Marko Saukko <marko.saukko@cybercom.com> - 1.2.24-2
+- Updated to 1.2.24-2.
+- Improved mutex handling in BMC_9319_pulseaudio-client.patch
+
+* Wed Dec 21 2011 Marko Saukko <marko.saukko@cybercom.com> - 1.2.20-1
+- Added meegotouch-systemui-1.2.20-1-add-missing-libs-for-linking.patch 
+  to fix linking with newer toolchain.
+
+* Thu Dec 15 2011 Marko Saukko <marko.saukko@cybercom.com> - 1.2.20-1
+- Updated to version 1.2.20-1.
+
+* Mon Nov 28 2011 Vesa-Matti Hartikainen <vesa-matti.hartikainen@nokia.com> - 1.2.18
+- NEMO#11 - System UI includes profile-icon in menu
+-- Removed install of statusindicatormenu-profile.desktop
+- NEMO#12 - System UI menu opens too much down 
+
+* Thu Nov 24 2011 Marko Saukko <marko.saukko@cybercom.com> - 1.2.18
+- Added dependency to contextkit-meego to get status indicators work.
+
+* Mon Nov 21 2011 Robin Burchell <robin+nemo@viroteck.net> - 1.2.18
+- Updated to latest upstream.
+- Remove meegotouch-systemui-pulseaudio-client.patch, seems to be a dupe of
+  BMC_9319_pulseaudio-client.patch
+
+* Thu Nov 17 2011 Robin Burchell <robin+nemo@viroteck.net> - 1.2.17
+- Updated to latest upstream.
+- Re-enable BMC_16893-MR_5.patch, applies perfectly on top of upstream.
+
+* Wed Nov 02 2011 Marko Saukko <marko.saukko@cybercom.com> - 1.2.16
+- Updated to latest upstream.
+- Removed upstreamed/fixed/not needed patches:
+  - temp_remove_lowmemorynotifier.patch
+  - temp_reverted_SDK_usb_mode_requires_new_qmsystem.patch
+- Readded libngf0 dependency.
+- Disabled following patches:
+  - BMC_16893-MR_5.patch
+
+* Fri Sep 30 2011 Marko Saukko <marko.saukko@cybercom.com> - 1.1.9
+- Dropped libngf0 and mssf-crypto dependencies.
+
+* Tue Sep 27 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.1.9
+- BMC#21860 - Battery charging icon appears after disconnecting the charger
+- added BMC_21860_battery_charging_animation.patch
+
+* Fri Sep 16 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.1.9
+- BMC#22817 - Rename meegocontrolpanel-* packages meegotouchcp-*
+-- renamed meegocontrolpanel-privatemodeapplet to meegotouchcp-privatemodeapplet
+-- removed dependency on meegotouchcp-privatemodeapplet, it is handled from package groups now
+
+* Wed Aug 10 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.1.9
+- upgrade
+
+* Wed Jul 27 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.0.13
+- BMC#14815 - [REG]No time show on systemui in portrait mode.
+-- added BMC_14815_statusbar_width_for_default_portrait.patch 
+   which adapts status area size  also for devices which boots up in portrait
+
+* Wed Jun 29 2011 Mika Laitio <ext-mika.1.laitio@nokia.com> - 1.0.13
+- BMC#19366 - [CE] System top bar items are mis-aligned  
+-- more verticaly aligned status indicators in BMC_19366_System_top_bar_items_are_mis-aligned.patch
+
+* Tue Jun 28 2011 Jouni Peltonen <jouni.peltonen@cybercom.com> - 1.0.13
+- BMC#19765 added more stability to BMC_9319_pulseaudio-client.patch.  
+
+* Wed Jun 22 2011 Mika Laitio <ext-mika.1.laitio@nokia.com> - 1.0.13
+- BMC#18298 - Amount of remaining bars was earlier always rounded down
+  to nearest integer. In some cases it needs to be rounded up in order
+  to show correct battery bar count.
+
+* Tue Jun 21 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.0.13
+- BMC#17994 	[CE] System info banner for plugged/unplugged usb-cable is empty 
+-- seems the banner logic is somehow swapped - this is just fast fix to not have empty banners
+
+* Tue Jun 21 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.0.13
+- BMC#19381 - [CE] 3.5 is displayed in system UI after connecting to wifi network. 
+-- rebased and enabled BMC_16893-MR_5.patch because wifi statusfix  from upstream does not work properly
+
+* Mon Jun 20 2011 Jouni Peltonen <jouni.peltonen@cybercom.com> - 1.0.13
+- BMC#9319 - Unable to adjust volume by volume key
+-- Added BMC_9319_pulseaudio-client.patch to correct BMC#9319 
+-- addd BMC_9319_volume_control_images.patch  to show right icons
+
+* Mon Jun 20 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.0.13
+- BMC#17258 and others: profile settings from systemui are redirected to settings applet
+-- added dependency on meegotouchcp-profiles to get the click from sysui working
+-- added  BMC_19366_System_top_bar_items_are_mis-aligned.patch to center a bit statusbar icons
+- BMC# 18546   meegotouch application framework update for Meego 1.2
+-- updated to 1.0.13 - solves white screen flickering
+- renamed temp_BMC_17585_unlock_device_from_lock_screen.patch 
+
+* Fri Jun 17 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.0.12
+- BMC#9940 - No new email notification is displayed when a new email received (patch adapted for libmeegotouch 0.22.4)
+
+* Tue Jun 14 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 1.0.12
+- BMC#17258 and others: profile settings from systemui are redirected to settings applet
+-- added BMC_17258_Profile_Dialog_replaced_by_settings_profileapplet.patch 
+- BMC#18546 - meegotouch application framework update for Meego 1.2
+-- updated to 1.0.12-1
+- added temp_reverted_SDK_usb_mode_requires_new_qmsystem.patch to disable SDK usb conneciton (req qmsystem >=2)
+- disabled BMC_16893-MR_5.patch - there should be upstream fix for that
+
+* Sun May 29 2011 Mika Laitio <ext-mika.1.laitio@nokia.com> - 0.20.38-3
+- Added BMC17585_unlock_device_from_lock_screen.patch also to yaml file.
+
+* Wed May 25 2011 Shenghua Liu <shenghua.liu@digia.com> - 0.20.38
+- BMC#17585 - Add BMC17585_unlock_device_from_lock_screen.patch
+
+* Wed May 18 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.38
+- BMC#16860 - [DE] 3G signal strength indicator is missing from system UI
+- BMC#16893 - [DE] After creating 3G connection wrong icon appears to system UI
+-- added BMC_16893-MR_5.patch which solves 3G indicators
+
+* Tue May 17 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.38
+- BMC#9940 - No new email notification is displayed when a new email received (patch adapted for libmeegotouch 0.21.4)
+-- added BMC_9940-No-new-email-notification-is-displayed.patch (https://meego.gitorious.org/meegotouch/meegotouch-systemui/merge_requests/7)
+- BMC#17553 - [DE] [N900] Notification cloud in notification area is not adjusted to landscape mode
+-- added  BMC_17553-DE-N900-Notification-cloud-in-notifi.patch (https://meego.gitorious.org/meegotouch/meegotouch-systemui/merge_requests/8)
+- removed integrated BMC15893_Portrait_mode_is_shifted_upwards.patch
+
+* Thu May 12 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.38
+- BMC#14873 - Unwanted screen unlock during landscape to portrait rotation 
+  added patch BMC_14873_reset_dad_on_rotation.patch (https://meego.gitorious.org/meegotouch/meegotouch-systemui/merge_requests/6)
+
+* Thu May 05 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.38
+- BMC#9940 -No new email notification is displayed when a new email received. 
+- BMC#2313 - No sms notification information when a new message arriving
+  - moved libstatusindicatormenu-profile.so to notification system
+
+* Fri Apr 15 2011 Fathi Boudra <fathi.boudra@nokia.com> - 0.20.38
+- Add BMC15893_Portrait_mode_is_shifted_upwards.patch (BMC#15893)
+
+* Mon Apr 11 2011 Mika Laitio <ext-mika.1.laitio@nokia.com> - 0.20.38
+- BMC#15548 - Use Battery.ChargePercentage value received from the contextkit instead
+  of using the Battery.ChargeBars. Every battery contextkit driver does
+  provide Battery.ChargePercentage but only some of them provides the
+  Battery.ChargeBars. Especially the Contextkit-meego-battery-upower
+  that N900 plan to use in future does not provide Battery.ChargeBars value.
+  
+* Thu Apr 07 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.38
+- BMC#15199 - Update to 0.20.38 to make the theme working
+- Add versioned BuildRequires: qmsystem2 >= 1.1.6
+
+* Thu Mar 31 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.13
+- BMC#8267 - There is only Settings icon displayed in drop down menu
+- BMC#11367 - sysuid crashed if there is no sound hardware available, and caused duihome to crash (black screen in QEMU)
+- BMC#9940 - No new email notification is displayed when a new email received
+- Add dependency on the systemui applets so they are always installed with systemui
+
+* Thu Mar 24 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.13
+- BMC#8108 - [N900] Volume control does not work
+- added dependency on QtOpenGL because we use QMeeGoLivePixmap
+- BMC#8267 - There is only Settings icon displayed in drop down menu.
+- BMC#9677 - [1.2: daily] No sound volume settings in device.
+
+* Wed Mar 23 2011 Mika Laitio <mika.laitio@tieto.com> - 0.20.12
+- Remove BMC8100_battery_charge_status_icon_order_fix.patch
+  rejected upstream because the id's should have been corrected on
+  meegotouch-theme-meego.
+
+* Thu Mar 17 2011 Mika Laitio <mika.laitio@tieto.com> - 0.20.12
+- Fix the battery charge status animation (BMC#8100)
+  status icon id's provided by the meegotouch-theme-meego package is opposite
+  to order where the icons are loaded in meegotouch-systemui to array used for
+  the animation (2 empty battery icons are in correct order)
+
+* Wed Mar 02 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.12
+- BMC#14028 - Update meegotouch components to week 9
+  - update to 0.20.12
+
+* Thu Feb 24 2011 Luis Araujo <luis.araujo@collabora.co.uk> - 0.20.7
+- Update to release tag 0.20.7-1 (BMC#13802)
+
+* Thu Feb 17 2011 Luis Araujo <luis.araujo@collabora.co.uk> - 0.20.5
+- Update to release tag 0.20.5-1 (BMC#13632)
+- Add the volume-fullscreen extension subpackage.
+
+* Fri Feb 10 2011 Miroslav Safr <miroslav.safr@tieto.com.com> - 0.20.4
+- BMC#13441 - Update meegotouch components to week 6
+ - updated to 0.20.4-1
+	
+* Wed Feb 09 2011 Luis Araujo <luis.araujo@collabora.co.uk> - 0.20.2
+- Update to release tag 0.20.2-1 (BMC#13382)
+
+* Fri Feb 04 2011 Miroslav Safr <miroslav.safr@tieto.com> - 0.20.0
+- BMC#13257 - Update meegotouch components to week 5
+ -  updated to release 0.20.0-1
+
+* Fri Jan 28 2011 Luis Araujo <luis.araujo@collabora.co.uk> - 0.19.13
+- Add libnotificationsystem0 and libnotificationsystem-devel packages (BMC#13098)
+
+* Mon Jan 24 2011 Luis Araujo <luis.araujo@collabora.co.uk> - 0.19.13
+- BMC#12803 - Update meegotouch-systemui to release tag 0.19.13-1
+- BMC#12009 - [REG]White screen occurs while launch lock application
+- Added qmsystem2, libnfg0, mssf-crypto new BuildRequires dependencies 
+- Renamed applet to meegocontrolpanel-privatemodeapplet
+- Added tests package
+- Added screenlock-padlock package
+
+* Fri Jan 21 2011 Miroslav Safr <miroslav.safr@tieto.com> - 0.19.12
+- Added build dependency on meegotouch-controlpanel devel package
+- Added applet package (duicontrolpanel-privatemodeapplet)
+
+* Mon Dec 20 2010 Miroslav Safr <miroslav.safr@tieto.com> - 0.19.5
+- BMC#8065: updated to release 0.19.5-1
+
+* Thu Dec 02 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.18.15
+- BMC#10027 - Update to release tag 0.18.15-1; this fixes a sysuid startup error
+- Fixes also include: 
+-   Lock/unlock related fixes
+-   Modify the LED feedback of unhandled notifications to follow the UI spec
+-   Unable to dismiss the USB connection selection menu.
+-   Homescreen: Service Provider name is almost not visible in LHS corner
+-   Unable to close the status indicator menu
+-   Status indicator menu does not rotate
+-   Use the proper style names for banners appearing on top of all apps
+-   Banner background is transparent - makes the banner text very hard to see
+-   Sysuid dies uncontrollable when initctl stop xsession/sysuid is used
+-   Percentage to bars not correctly shown in status area Battery icon
+-   Need handling of error messages coming from usb_moded
+-   Volume indicator not displayed in call view when adjustingvolume via HW key
+
+* Mon Oct 04 2010 Miroslav Safr <miroslav.safr@tieto.com> - 0.18.0
+- updated to release 0.18.0-1
+- added new files, postun section
+- removed unnecessery patches and temporary disbled tests building because of errors
+
+* Mon Oct 04 2010 Miroslav Safr <miroslav.safr@tieto.com> - 0.16.13
+- BMC#9659 - lock.desktop file icon id changed to right one
+
+* Mon Oct 04 2010 Fathi Boudra <fathi.boudra@nokia.com> - 0.16.13
+- Various cleanup in the packaging
+- Remove useless BuildRequires (messageserver and icu)
+- Use qmake macros
+
+* Fri Sep 17 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.16.13
+- Update to release tag 0.16.13-2
+
+* Wed Aug 11 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.16.6
+- Remove redundant Qt BuildRequires and add x11
+
+* Fri Jul 09 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.16.6
+- Update to release tag 0.16.6-1
+- This release fixes BMC #3289, BMC #3375
+
+* Thu Jul 08 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.1.1
+- Change X-DUI to X-MEEGO-HS in the megotouch-systemui.desktop autostart file
+
+* Thu Jul 1 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.1.1
+- Replace QtMessagingFramework with messageserver as pkgconfig 
+  file name has changed
+
+* Thu Jun 24 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.1.1
+- Clean up desktop file to use properly escaped strings
+- BMC #3375 - Add patch to disable unlockConfirmed() call.
+
+* Mon Jun 21 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.1.1
+- Add a desktop file to display lock application - BMC #3325
+- Add '-remote-theme' to exec command in systemui.desktop - BMC #3338
+
+* Wed Jun 16 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.1.1
+- Change package name to align with git repo rename
+
+* Wed May 26 2010 Kaitlin Rupert <kaitlin.rupert@intel.com> - 0.1
+- Initial import of package
+

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Lock
+Icon=icon-m-common-locked
+Type=Application
+Exec=dbus-send --print-reply --system --dest=com.nokia.system_ui /com/nokia/system_ui/request com.nokia.system_ui.request.tklock_open string:"org.fubar" string:"/org/fubar" string:"asdf" string: uint32:1 boolean:false boolean:false

@@ -1,0 +1,95 @@
+Name: meegotouch-systemui
+Summary: System UI daemon
+Version: 1.5.7
+Release: 2
+Group: System/Desktop
+License: LGPLv2.1
+URL: https://github.com/nemomobile/meegotouch-systemui
+Sources:
+    - "%{name}-%{version}.tar.bz2"
+ExtraSources:
+    - meegotouch-systemui.desktop;%{_sysconfdir}/xdg/autostart
+    - lock.desktop;%{_datadir}/applications
+    - meegotouch-systemui.service;%{_libdir}/systemd/user/
+Description: |
+    This package contains the system UI daemon.
+PkgBR:
+    - expat-devel
+    - desktop-file-utils
+PkgConfigBR:
+    - QtGui
+    - QtOpenGL
+    - contextsubscriber-1.0
+    - dbus-1
+    - dbus-glib-1
+    - glib-2.0
+    - meegotouch >= 0.20.37
+    - meegotouch-controlpanel
+    - qmsystem2 >= 1.1.6
+    - x11
+    - xcomposite
+    - xext
+    - xdamage
+Requires:
+    # Needed for 3G/phone status indicators
+    - contextkit-plugin-cellular
+    # Needed for Wifi status indicators
+    - contextkit-plugin-internet
+    - mce >= 1.12.4
+# HACK PLEASE REMOVE.
+# NoDesktop is here because of bug in spectacle 0.24
+NoDesktop: True
+Configure: none
+Builder: qmake
+RunFdupes:
+    - "%{_datadir}"
+UseAsNeeded: no
+Files:
+    - "%config %{_sysconfdir}/dbus-1/system.d/systemui.conf"
+    - "%config %{_sysconfdir}/xdg/autostart/meegotouch-systemui.desktop"
+    - "%{_libdir}/systemd/user/meegotouch-systemui.service"
+    - "%{_bindir}/sysuid"
+    - "%{_datadir}/applications/lock.desktop"
+    - "%{_datadir}/l10n/meegotouch/systemui.qm"
+    - "%{_datadir}/themes/base/meegotouch/sysuid/*.conf"
+    - "%{_datadir}/themes/base/meegotouch/sysuid/feedbacks"
+    - "%{_datadir}/themes/base/meegotouch/sysuid/style/*.css"
+SubPackages:
+    - Name: devel
+      Summary: Development files for system UI daemon
+      Group: Development/System
+      Description: |
+          This package contains the system UI daemon development files.
+      Files:
+          - "%{_includedir}/system-ui/*"
+          - "%{_datadir}/qt4/mkspecs/features/system-ui.prf"
+
+    - Name: demos
+      Summary: Demo extensions for system-ui
+      Group: System/GUI/Other
+      Description: |
+          This package contains demo extensions for system-ui.
+      Files:
+          - "%{_libdir}/meegotouch/applicationextensions/libstatusindicatormenu-profile.so"
+
+    - Name: meegotouchcp-privatemodeapplet
+      AsWholeName: yes
+      Summary: Private mode control panel applet
+      Group: System/GUI/Other
+      Description: |
+          This package contains the private mode control panel applet.
+      Provides:
+          - meegocontrolpanel-privatemodeapplet
+      Obsoletes:
+          - meegocontrolpanel-privatemodeapplet
+      Files:
+          - "%{_libdir}/duicontrolpanel/applets/libprivatemodeapplet.so"
+          - "%{_libdir}/duicontrolpanel/privatemode.desktop"
+
+    - Name: tests
+      Summary: Unit tests for the MeeGo System UI Daemon
+      Group: Development/Libraries
+      Description: |
+          This package contains the unit tests for the MeeGo System UI Daemon.
+      Files:
+          - "/opt/tests/meegotouch-systemui-tests/*"
