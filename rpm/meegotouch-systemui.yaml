@@ -44,6 +44,7 @@ UseAsNeeded: no
 Files:
     - "%config %{_sysconfdir}/dbus-1/system.d/systemui.conf"
     - "%{_libdir}/systemd/user/meegotouch-systemui.service"
+    - "%{_libdir}/systemd/user/user-session.target.wants/meegotouch-systemui.service" 
     - "%{_bindir}/sysuid"
     - "%{_datadir}/l10n/meegotouch/systemui.qm"
     - "%{_datadir}/themes/base/meegotouch/sysuid/*.conf"
